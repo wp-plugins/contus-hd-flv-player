@@ -31,7 +31,8 @@ Check and make sure that you have the appropriate hook in your template file for
 
 = How can I get help? =
 
-* [HDFLVPlayer Download Site (Current Version)](http://hdflvplayer.net/)
-* [HDFLVPlayer Frequently Asked Questions (F.A.Q.)](http://hdflvplayer.net/forum/faq.php)
-* [HDFLVPlayer Support Forum](http://hdflvplayer.net/forum/)
+* [HDFLVPlayer Wordpress Demo](http://www.hdflvplayer.net/wordpress/demo)
+* [HDFLVPlayer Download Site (Current Version)](http://www.hdflvplayer.net/wordpress)
+* [HDFLVPlayer Frequently Asked Questions (F.A.Q.)](http://www.hdflvplayer.net/)
+* [HDFLVPlayer Support Forum](http://www.hdflvplayer.net/forum/)
 
