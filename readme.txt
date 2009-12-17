@@ -1,5 +1,5 @@
 === CONTUS HDFLVPlayer ===
-Contributors: ContusSupport
+Contributors: Contus Support
 Donate link: http://www.hdflvplayer.net/
 Tags: flv player, flv player plugin, hd flv player plugin, hd flv player, video player, video player for wordpress
 Requires at least: 2.8
