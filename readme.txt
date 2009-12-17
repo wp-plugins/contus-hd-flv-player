@@ -25,10 +25,6 @@ Provides full support for skinning the player(currently two different skins avai
 
 == Frequently Asked Questions ==
 
-= I have activated the plugin, but don't see the player. What do I do? =
-
-Check and make sure that you have the appropriate hook in your template file for the header: `<?php wp_head(); ?>`
-
 = How can I get help? =
 
 * [HDFLVPlayer Wordpress Demo](http://www.hdflvplayer.net/wordpress/demo)
