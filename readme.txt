@@ -2,9 +2,9 @@
 Contributors: ContusSupport
 Donate link: http://www.hdflvplayer.net/
 Tags: hdvideo, hdflv, flv, hdflvplayer, wordpress, plugin, swf
-Requires at least: 2.2.2
-Tested up to: 2.7
-Stable tag: 4.3
+Requires at least: 1.0
+Tested up to: 1.0
+Stable tag: 1.0
 
 The HDFLVPlayer plugin for WordPress allows the addition of video to a WordPress website using HDFLVPlayer and SWFObject Javascript Library.
 
