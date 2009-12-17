@@ -1,4 +1,4 @@
-=== HDFLVPlayer ===
+=== CONTUS HDFLVPlayer ===
 Contributors: ContusSupport
 Donate link: http://www.hdflvplayer.net/
 Tags: flv player, flv player plugin, hd flv player plugin, hd flv player, video player, video player for wordpress
