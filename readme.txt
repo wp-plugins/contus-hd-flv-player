@@ -43,9 +43,10 @@ Player Home Page    - www.hdflvplayer.net/wordpress/
 4. That's it! You're done. You can now enter the following into a post or page in WordPress to insert a video: [hdplay file="video/myvideo.flv" /] or [hdplay file=video/video.flv /]
 
 == Frequently Asked Questions ==
-
-=  Where can I see the working demo of this player? =
+= Where can I see the working demo of this player? =
 You can see the demo of this player in this link - http://www.hdflvplayer.net/wordpress/demo
+
+
 
 = What are all the file formats HD FLV PLAYER can play? =
     Our player supports FLV & H.264 encoded video including MP3, MP4, M4V, M4A, MOV, Mp4v, F4V formats.
