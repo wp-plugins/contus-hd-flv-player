@@ -44,7 +44,7 @@ Player Home Page    - www.hdflvplayer.net/wordpress/
 
 == Frequently Asked Questions ==
 = Where can I see the working demo of this player? =
-You can see the demo of this player in this link - http://www.hdflvplayer.net/wordpress/demo
+You can see the demo of this player in this link - http://www.hdflvplayer.net/wordpress/demo .
 
 
 
