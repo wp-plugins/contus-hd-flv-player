@@ -3,10 +3,10 @@
 /*
 Plugin Name: Contus HDFLVPlayer Plugin
 Version: 1.0
-Plugin URI: http://www.contussupport.com
+Plugin URI: http://www.hdflvplayer.net/wordpress/
 Description: Simplifies the process of adding video to a WordPress blog. Powered by Contus Support HDFLVPlayer and SWFObject by Geoff Stearns.
 Author: Contus Support.
-Author URI: http://www.contussupport.com
+Author URI: http://www.hdflvplayer.net/wordpress/
 
 HDFLVPlayer for Wordpress
 
@@ -92,6 +92,10 @@ function FlashVideo_Render($matches) {
 			}
 		}
 	}
+    if($options[0][23]['v'] != 'true')
+    {
+        $options[0][10]['v']='';
+    }
     $output .= 's' . $videoid . '.addVariable("logopath","' . $site_url . '/wp-content/plugins/contus-hd-flv-player/hdflvplayer/images/' . $options[0][10]['v'] . '");' . "\n";
 	$output .= 's' . $videoid . '.addVariable("file","' . $arguments['file'] . '");' . "\n";
 	$output .= 's' . $videoid . '.write("video' . $videoid . '");' . "\n";
@@ -150,9 +154,9 @@ function FlashOptions() {
 	echo '<h2>HDFLVPlayer Options</h2>';
 	echo $message;
 	echo '<form method="post" enctype="multipart/form-data" action="options-general.php?page=hdflvplugin.php">';
-	echo "<p>Welcome to the HDFLVPlayer plugin options menu! <br><br>";
-    echo "<li style='background:#D0D0D0;list-style:none;width:850px'><p style='padding-left:6px'>You can also set different width and height for the player in different posts irrespective of the values specified here.<br><br>
-           <b>For example:</b>[hdplay file=http://www.yoursitename.com/videos/filename.flv width=400 height=400 /]<br><br><b>Example for YoutubeURL:</b>[hdplay file=http://www.youtube.com/watch?v=-galhgKDvNg width=400 height=400 /]</p></li>";
+	echo "<p>Welcome to the HDFLVPlayer plugin options menu! </p>";
+    echo "<div style='background:#D0D0D0;list-style:none;width:850px'><p style='padding-left:6px'>You can also set different width and height for the player in different posts irrespective of the values specified here.<br><br>
+           <b>For example:</b>[hdplay file=http://www.yoursitename.com/videos/filename.flv width=400 height=400 /]<br><br><b>Example for YoutubeURL:</b>[hdplay file=http://www.youtube.com/watch?v=-galhgKDvNg width=400 height=400 /]</p></div>";
 
 	$ski =  str_replace('wp-admin', 'wp-content', dirname($_SERVER['SCRIPT_FILENAME'])) .'/plugins/contus-hd-flv-player/hdflvplayer/skin';
 
@@ -247,6 +251,7 @@ function FlashVideoLoadDefaults() {
 	$f[0][4]['t'] = 'cb';
 	$f[0][4]['v'] = 'true';
 
+
     $f[0][5]['on'] = 'logoalpha';
 	$f[0][5]['dn'] = 'Logo Alpha';
 	$f[0][5]['t'] = 'tx';
@@ -273,10 +278,7 @@ function FlashVideoLoadDefaults() {
 	$f[0][10]['t'] = 'file';
 	$f[0][10]['v'] = "platoon.png";
 
-    $f[0][11]['on'] = 'playlistXML';
-	$f[0][11]['dn'] = 'Playlist Path';
-	$f[0][11]['t'] = 'tx';
-	$f[0][11]['v'] = '';
+
 
     $f[0][12]['on'] = 'stagecolor';
 	$f[0][12]['dn'] = 'Background Color';
@@ -333,6 +335,12 @@ function FlashVideoLoadDefaults() {
 	$f[0][22]['dn'] = 'Full Screen';
 	$f[0][22]['t'] = 'cb';
 	$f[0][22]['v'] = 'true';
+
+    $f[0][23]['on'] = 'display_logo';
+	$f[0][23]['dn'] = 'Display logo';
+	$f[0][23]['t'] = 'cb';
+	$f[0][23]['v'] = 'true';
+
 
 
 
