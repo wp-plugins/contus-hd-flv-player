@@ -19,9 +19,9 @@
       logoalpha = "50"
       skin_autohide="false"
       stagecolor=""
-      skin="http://localhost/wordpress/wp-content/plugins/hdflvplugin/hdflvplayer/skin/skin_black/skin_black.swf"
+      skin=""
       embed_visible="false"
-      playlistXML="http://localhost/wordpress/wp-content/plugins/hdflvplugin/hdflvplayer/xml/playlist.xml"
+      playlistXML=""
       adXML=""
       midrollXML=""
       debug="true">
