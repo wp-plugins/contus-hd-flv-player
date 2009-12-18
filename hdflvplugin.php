@@ -1,7 +1,7 @@
 <?php
 
 /*
-Plugin Name: hdflvplugin
+Plugin Name: Contus HDFLVPlayer Plugin
 Version: 1.0
 Plugin URI: http://www.contussupport.com
 Description: Simplifies the process of adding video to a WordPress blog. Powered by Contus Support HDFLVPlayer and SWFObject by Geoff Stearns.
@@ -56,7 +56,7 @@ function FlashVideo_Render($matches) {
 	if ( array_key_exists('height', $arguments) ) {
 		$options[0][16]['v'] = $arguments['height'];
 	}
-	
+
 	if(strpos($arguments['file'], 'http://') !== false || isset($arguments['streamer']) || strpos($arguments['file'], 'https://') !== false) {
 		// This is a remote file, so leave it alone but clean it up a little
 		$arguments['file'] = str_replace('&#038;','&',$arguments['file']);
@@ -66,7 +66,7 @@ function FlashVideo_Render($matches) {
 	$output .= "\n" . '<span id="video' . $videoid . '" class="flashvideo">' . "\n";
    	$output .= '<a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this player.</span>' . "\n";
     $output .= '<script type="text/javascript">' . "\n";
-	$output .= 'var s' . $videoid . ' = new SWFObject("' . $site_url . '/wp-content/plugins/hdflvplugin/hdflvplayer/hdplayer.swf' . '","n' . $videoid . '","' . $options[0][17]['v'] . '","' . $options[0][16]['v'] . '","7");' . "\n";
+	$output .= 'var s' . $videoid . ' = new SWFObject("' . $site_url . '/wp-content/plugins/contus-hd-flv-player/hdflvplayer/hdplayer.swf' . '","n' . $videoid . '","' . $options[0][17]['v'] . '","' . $options[0][16]['v'] . '","7");' . "\n";
 	$output .= 's' . $videoid . '.addParam("allowfullscreen","true");' . "\n";
 	$output .= 's' . $videoid . '.addParam("allowscriptaccess","always");' . "\n";
 	$output .= 's' . $videoid . '.addParam("wmode","opaque");' . "\n";
@@ -84,7 +84,7 @@ function FlashVideo_Render($matches) {
 				if($value['on'] == 'skin') {
                     if($value['v'] != 'undefined')
 					 {
-						$output .= 's' . $videoid . '.addVariable("' . $value['on'] . '","' . $site_url . '/wp-content/plugins/hdflvplugin/hdflvplayer/skin/' . $value['v'] . '/' . trim($value['v']) . '.swf");' . "\n";
+						$output .= 's' . $videoid . '.addVariable("' . $value['on'] . '","' . $site_url . '/wp-content/plugins/contus-hd-flv-player/hdflvplayer/skin/' . $value['v'] . '/' . trim($value['v']) . '.swf");' . "\n";
 					}
 				} else {
 					$output .= 's' . $videoid . '.addVariable("' . $value['on'] . '","' . trim($value['v']) . '");' . "\n";
@@ -92,14 +92,14 @@ function FlashVideo_Render($matches) {
 			}
 		}
 	}
-    $output .= 's' . $videoid . '.addVariable("logopath","' . $site_url . '/wp-content/plugins/hdflvplugin/hdflvplayer/images/' . $options[0][10]['v'] . '");' . "\n";
+    $output .= 's' . $videoid . '.addVariable("logopath","' . $site_url . '/wp-content/plugins/contus-hd-flv-player/hdflvplayer/images/' . $options[0][10]['v'] . '");' . "\n";
 	$output .= 's' . $videoid . '.addVariable("file","' . $arguments['file'] . '");' . "\n";
 	$output .= 's' . $videoid . '.write("video' . $videoid . '");' . "\n";
 	$output .= '</script>' . "\n";
 
 	$videoid++;
     return $output;
-	
+
 }
 
 
@@ -113,7 +113,7 @@ function FlashOptions() {
 	$g = array(0=>'Properties');
 
 	$options = get_option('FlashVideoSettings');
-   
+
 
 
 	// Process form submission
@@ -138,10 +138,10 @@ function FlashOptions() {
                 }
 			}
 		}
-        
+
 		update_option('FlashVideoSettings', $options);
-         
-         move_uploaded_file($_FILES["file"]["tmp_name"],"../wp-content/plugins/hdflvplugin/hdflvplayer/images/" . $_FILES["file"]["name"]);
+
+         move_uploaded_file($_FILES["file"]["tmp_name"],"../wp-content/plugins/contus-hd-flv-player/hdflvplayer/images/" . $_FILES["file"]["name"]);
 		$message = '<div class="updated"><p><strong>Options saved.</strong></p></div>';
 	}
 
@@ -154,7 +154,7 @@ function FlashOptions() {
     echo "<li style='background:#D0D0D0;list-style:none;width:850px'><p style='padding-left:6px'>You can also set different width and height for the player in different posts irrespective of the values specified here.<br><br>
            <b>For example:</b>[hdplay file=http://www.yoursitename.com/videos/filename.flv width=400 height=400 /]<br><br><b>Example for YoutubeURL:</b>[hdplay file=http://www.youtube.com/watch?v=-galhgKDvNg width=400 height=400 /]</p></li>";
 
-	$ski =  str_replace('wp-admin', 'wp-content', dirname($_SERVER['SCRIPT_FILENAME'])) .'/plugins/hdflvplugin/hdflvplayer/skin';
+	$ski =  str_replace('wp-admin', 'wp-content', dirname($_SERVER['SCRIPT_FILENAME'])) .'/plugins/contus-hd-flv-player/hdflvplayer/skin';
 
 	$skins = array();
 
@@ -170,7 +170,7 @@ function FlashOptions() {
 	    }
 	    closedir($handle);
 	}
-  
+
 	$options[0][18]['op'] = $skins;
     $options[0][18]['name'] = $skins;
 
@@ -219,7 +219,7 @@ function FlashOptions() {
 
 function FlashVideo_head() {
 	global $site_url;
-	echo '<script type="text/javascript" src="' . $site_url . '/wp-content/plugins/hdflvplugin/swfobject.js"></script>' . "\n";
+	echo '<script type="text/javascript" src="' . $site_url . '/wp-content/plugins/contus-hd-flv-player/swfobject.js"></script>' . "\n";
 }
 
 add_action('wp_head', 'FlashVideo_head');
