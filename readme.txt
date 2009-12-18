@@ -46,10 +46,9 @@ Player Home Page    - www.hdflvplayer.net/wordpress/
 = Where can I see the working demo of this player? =
 You can see the demo of this player in this link - http://www.hdflvplayer.net/wordpress/demo .
 
-
-
 = What are all the file formats HD FLV PLAYER can play? =
-    Our player supports FLV & H.264 encoded video including MP3, MP4, M4V, M4A, MOV, Mp4v, F4V formats.
+Our player supports FLV & H.264 encoded video including MP3, MP4, M4V, M4A, MOV, Mp4v, F4V formats.
+
 
 = How to contact the support / development team of HD FLV Player? =
     You can contact us through,
