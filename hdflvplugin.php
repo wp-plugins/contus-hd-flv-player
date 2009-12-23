@@ -15,12 +15,12 @@ HDFLVPlayer for Wordpress
 $videoid = 0;
 $site_url = get_option('siteurl');
 
-function FlashVideo_Parse($content) {
-	$content = preg_replace_callback("/\[hdplay ([^]]*)\/\]/i", "FlashVideo_Render", $content);
+function HDFLV_Parse($content) {
+	$content = preg_replace_callback("/\[hdplay ([^]]*)\/\]/i", "HDFLV_Render", $content);
 	return $content;
 }
 
-function FlashVideo_Render($matches) {
+function HDFLV_Render($matches) {
 
 	global $videoid, $site_url;
 	$output = '';
@@ -46,7 +46,7 @@ function FlashVideo_Render($matches) {
 	}
 
 
-	$options = get_option('FlashVideoSettings');
+	$options = get_option('HDFLVSettings');
 
 	/* Override inline parameters */
 	if ( array_key_exists('width', $arguments) ) {
@@ -63,10 +63,10 @@ function FlashVideo_Render($matches) {
 	} else {
 		$arguments['file'] = $site_url . '/' . $arguments['file'];
 	}
-	$output .= "\n" . '<span id="video' . $videoid . '" class="flashvideo">' . "\n";
+	$output .= "\n" . '<span id="video' . $videoid . '" class="HDFLV">' . "\n";
    	$output .= '<a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this player.</span>' . "\n";
     $output .= '<script type="text/javascript">' . "\n";
-	$output .= 'var s' . $videoid . ' = new SWFObject("' . $site_url . '/wp-content/plugins/contus-hd-flv-player/hdflvplayer/hdplayer.swf' . '","n' . $videoid . '","' . $options[0][17]['v'] . '","' . $options[0][16]['v'] . '","7");' . "\n";
+	$output .= 'var s' . $videoid . ' = new SWFObject("' . $site_url . '/wp-content/plugins/'.dirname( plugin_basename(__FILE__) ).'/hdflvplayer/hdplayer.swf' . '","n' . $videoid . '","' . $options[0][17]['v'] . '","' . $options[0][16]['v'] . '","7");' . "\n";
 	$output .= 's' . $videoid . '.addParam("allowfullscreen","true");' . "\n";
 	$output .= 's' . $videoid . '.addParam("allowscriptaccess","always");' . "\n";
 	$output .= 's' . $videoid . '.addParam("wmode","opaque");' . "\n";
@@ -84,7 +84,7 @@ function FlashVideo_Render($matches) {
 				if($value['on'] == 'skin') {
                     if($value['v'] != 'undefined')
 					 {
-						$output .= 's' . $videoid . '.addVariable("' . $value['on'] . '","' . $site_url . '/wp-content/plugins/contus-hd-flv-player/hdflvplayer/skin/' . $value['v'] . '/' . trim($value['v']) . '.swf");' . "\n";
+						$output .= 's' . $videoid . '.addVariable("' . $value['on'] . '","' . $site_url . '/wp-content/plugins/'.dirname( plugin_basename(__FILE__) ).'/hdflvplayer/skin/' . $value['v'] . '/' . trim($value['v']) . '.swf");' . "\n";
 					}
 				} else {
 					$output .= 's' . $videoid . '.addVariable("' . $value['on'] . '","' . trim($value['v']) . '");' . "\n";
@@ -96,7 +96,7 @@ function FlashVideo_Render($matches) {
     {
         $options[0][10]['v']='';
     }
-    $output .= 's' . $videoid . '.addVariable("logopath","' . $site_url . '/wp-content/plugins/contus-hd-flv-player/hdflvplayer/images/' . $options[0][10]['v'] . '");' . "\n";
+    $output .= 's' . $videoid . '.addVariable("logopath","' . $site_url . '/wp-content/plugins/'.dirname( plugin_basename(__FILE__) ).'/hdflvplayer/images/' . $options[0][10]['v'] . '");' . "\n";
 	$output .= 's' . $videoid . '.addVariable("file","' . $arguments['file'] . '");' . "\n";
 	$output .= 's' . $videoid . '.write("video' . $videoid . '");' . "\n";
 	$output .= '</script>' . "\n";
@@ -107,16 +107,16 @@ function FlashVideo_Render($matches) {
 }
 
 
-function FlashVideoAddPage() {
-	add_options_page('HDFLVPlayer Options', 'HDFLVPlayer Options', '8', 'hdflvplugin.php', 'FlashOptions');
+function HDFLVAddPage() {
+	add_options_page('HDFLVPlayer Options', 'HDFLVPlayer Options', '8', 'hdflvplugin.php', 'HDFLVOptions');
 }
 
-function FlashOptions() {
+function HDFLVOptions() {
 	global $site_url;
 	$message = '';
 	$g = array(0=>'Properties');
 
-	$options = get_option('FlashVideoSettings');
+	$options = get_option('HDFLVSettings');
 
 
 
@@ -143,9 +143,9 @@ function FlashOptions() {
 			}
 		}
 
-		update_option('FlashVideoSettings', $options);
+		update_option('HDFLVSettings', $options);
 
-         move_uploaded_file($_FILES["file"]["tmp_name"],"../wp-content/plugins/contus-hd-flv-player/hdflvplayer/images/" . $_FILES["file"]["name"]);
+         move_uploaded_file($_FILES["file"]["tmp_name"],"../wp-content/plugins/".dirname( plugin_basename(__FILE__) )."/hdflvplayer/images/" . $_FILES["file"]["name"]);
 		$message = '<div class="updated"><p><strong>Options saved.</strong></p></div>';
 	}
 
@@ -158,7 +158,7 @@ function FlashOptions() {
     echo "<div style='background:#D0D0D0;list-style:none;width:850px'><p style='padding-left:6px'>You can also set different width and height for the player in different posts irrespective of the values specified here.<br><br>
            <b>For example:</b>[hdplay file=http://www.yoursitename.com/videos/filename.flv width=400 height=400 /]<br><br><b>Example for YoutubeURL:</b>[hdplay file=http://www.youtube.com/watch?v=-galhgKDvNg width=400 height=400 /]</p></div>";
 
-	$ski =  str_replace('wp-admin', 'wp-content', dirname($_SERVER['SCRIPT_FILENAME'])) .'/plugins/contus-hd-flv-player/hdflvplayer/skin';
+	$ski =  str_replace('wp-admin', 'wp-content', dirname($_SERVER['SCRIPT_FILENAME'])) .'/plugins/'.dirname( plugin_basename(__FILE__) ).'/hdflvplayer/skin';
 
 	$skins = array();
 
@@ -221,14 +221,14 @@ function FlashOptions() {
 	echo '</div>';
 }
 
-function FlashVideo_head() {
+function HDFLV_head() {
 	global $site_url;
-	echo '<script type="text/javascript" src="' . $site_url . '/wp-content/plugins/contus-hd-flv-player/swfobject.js"></script>' . "\n";
+	echo '<script type="text/javascript" src="' . $site_url . '/wp-content/plugins/'.dirname( plugin_basename(__FILE__) ).'/swfobject.js"></script>' . "\n";
 }
 
-add_action('wp_head', 'FlashVideo_head');
+add_action('wp_head', 'HDFLV_head');
 
-function FlashVideoLoadDefaults() {
+function HDFLVLoadDefaults() {
 	$f = array();
 
 	/*
@@ -348,25 +348,25 @@ function FlashVideoLoadDefaults() {
 	return $f;
 }
 
-function FlashVideo_activate() {
-	update_option('FlashVideoSettings', FlashVideoLoadDefaults());
+function HDFLV_activate() {
+	update_option('HDFLVSettings', HDFLVLoadDefaults());
 }
 
-register_activation_hook(__FILE__,'FlashVideo_activate');
+register_activation_hook(__FILE__,'HDFLV_activate');
 
-function FlashVideo_deactivate() {
-	delete_option('FlashVideoSettings');
+function HDFLV_deactivate() {
+	delete_option('HDFLVSettings');
 }
 
-register_deactivation_hook(__FILE__,'FlashVideo_deactivate');
+register_deactivation_hook(__FILE__,'HDFLV_deactivate');
 
 // CONTENT FILTER
 
-add_filter('the_content', 'FlashVideo_Parse');
+add_filter('the_content', 'HDFLV_Parse');
 
 
 // OPTIONS MENU
 
-add_action('admin_menu', 'FlashVideoAddPage');
+add_action('admin_menu', 'HDFLVAddPage');
 
 ?>
