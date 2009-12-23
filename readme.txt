@@ -37,10 +37,21 @@ Player Home Page    - www.hdflvplayer.net/wordpress/
 
 == Installation ==
 
+= Minimal Requirements =
+* PHP: 5.x.x
+* mySQL: 4.0, 4.1 or 5.x
+* WordPress: 2.0 or newer
+
+= Recommended Requirements =
+* PHP: 5.2.x or newer
+* mySQL: 5.x
+* WordPress: 2.8 or newer
+
+= Basic Installation =
 1. Download and unzip the current version of the HDFLVPlayer plugin.
 2. Transfer the entire hdflvplugin directory to your `/wp-content/plugins/` directory
 3. Activate the plugin through the 'Plugins' menu in WordPress
-4. That's it! You're done. You can now enter the following into a post or page in WordPress to insert a video: [hdplay file="video/myvideo.flv" /] or [hdplay file=video/video.flv /]
+4. That's it! You're done. You can now enter the following into a post or page in WordPress to insert a video: [hdplay file=http://www.yoursitename.com/videos/filename.flv /] or any youtube url [hdplay file=http://www.youtube.com/watch?v=-galhgKDvNg /]
 
 == Frequently Asked Questions ==
 = Where can I see the working demo of this player? =
