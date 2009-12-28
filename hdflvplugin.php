@@ -292,7 +292,7 @@ function HDFLVLoadDefaults() {
 
 
 
-    $f[0][14]['on'] = 'bufferlength';
+    $f[0][14]['on'] = 'buffer';
 	$f[0][14]['dn'] = 'Buffer Length';
 	$f[0][14]['t'] = 'tx';
 	$f[0][14]['v'] = '1';
