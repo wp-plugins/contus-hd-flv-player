@@ -324,7 +324,7 @@ function show_main()
 <!-- Manage Playlist-->
 <div class="wrap">
     <h2><?php _e('Playlist', 'hdflv') ?> (<a href="<?php echo $this->base_page; ?>&mode=playlist"><?php _e('Add or Edit','hdflv') ?></a>)</h2>
-    <p><?php _e('You can show all videos/media files in a playlist. Show this playlist with the tag', 'hdflv') ?> <strong> [hdplay playlistid=id /]</strong></p>
+    <p><?php _e('You can show all videos/media files in a playlist. Show this playlist with the tag', 'hdflv') ?> <strong> [hdplay playlistid=id ]</strong></p>
     <form name="selectlist" method="post">
         <input type="hidden" name="apage" value="<?php echo $page; ?>" />
         <input type="hidden" name="search" value="<?php echo $search; ?>" />
@@ -368,7 +368,7 @@ function show_main()
                         <div id="submitpost" class="submitbox">
                             <div class="misc-pub-section">
                                 <p><?php _e('See global settings for the HDFLV Player under', 'hdflv') ?>&nbsp;<a href="options-general.php?page=hdflvplugin"><?php _e('Options->HDFLVPlayer', 'hdflv')?></a> <br /><br />
-                                <?php _e('If you want to show this media file in your page, enter the tag :', 'hdflv') ?><br /><strong>[hdplay id=<?php echo $this->act_vid; ?> /]</strong></p>
+                                <?php _e('If you want to show this media file in your page, enter the tag :', 'hdflv') ?><br /><strong>[hdplay id=<?php echo $this->act_vid; ?> ]</strong></p>
                             </div>
                             <div class="misc-pub-section">
                             
