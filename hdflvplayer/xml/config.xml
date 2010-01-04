@@ -24,6 +24,7 @@
       playlistXML=""
       adXML=""
       midrollXML=""
+      playlist="true"
       debug="true">
 
 <timer>true</timer>
