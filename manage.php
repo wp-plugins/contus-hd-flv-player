@@ -244,7 +244,7 @@ function show_main()
         <h2><?php _e('Manage Media files','hdflv'); ?></h2>
         <div style='background:#D0D0D0;list-style:none;width:850px;float:left'><p style='padding-left:6px'>You can also set different width and height for the player in different posts irrespective of the values specified here.<br><br>
 
-           <b>For example:</b>[hdplay id=3 playlistid=2 width=400 height=400 /] or [hdplay playlistid=2 /] or [hdplay id=3 /] <br><br>* id will be created when u add videos in the manage media section</p></div><div style=float:left;color:red;>&nbsp;&nbsp;&nbsp;<a style=color:red; href="options-general.php?page=hdflvplugin"><?php _e('Options->HDFLVPlayer Settings', 'hdflv')?></a></div><div style=clear:both></div>
+           <b>For example:</b>[hdplay id=3 playlistid=2 width=400 height=400 ] or [hdplay playlistid=2 ] or [hdplay id=3 ] <br><br>* id will be created when u add videos in the manage media section</p></div><div style=float:left;color:red;>&nbsp;&nbsp;&nbsp;<a style=color:red; href="options-general.php?page=hdflvplugin"><?php _e('Options->HDFLVPlayer Settings', 'hdflv')?></a></div><div style=clear:both></div>
         <ul class="subsubsub">
             <li>&nbsp;</li>
         </ul>
