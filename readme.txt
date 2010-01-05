@@ -71,16 +71,16 @@ This plugin standard tag style:
 
 
 = To Add video =
-1.Logon to Admin panel.
-2.Media -> HDFLVPlayer - > Add Video.
-3.Provide Youtube URL or Absolute path of the video (Eg.  Upload your videos to videos folder through FTP and provide the path as http://www.yourdomain.com/video/video.mp4).
-4.Create and select the playlist from the Right column of the window to assign the video to the particular playlist.
-5.Provide the sort / order number next to playlist to play the video in order.
+1. Logon to Admin panel.
+2. Media -> HDFLVPlayer - > Add Video.
+3. Provide Youtube URL or Absolute path of the video (Eg.  Upload your videos to videos folder through FTP and provide the path as http://www.yourdomain.com/video/video.mp4).
+4. Create and select the playlist from the Right column of the window to assign the video to the particular playlist.
+5. Provide the sort / order number next to playlist to play the video in order.
 
 = To change the global settings of the player =
-1.Logon to Admin panel.
-2.Look for Settings on the Left column and click HDFLVPlayer Options.
-3.Change the settings as you wish.
+1. Logon to Admin panel.
+2. Look for Settings on the Left column and click HDFLVPlayer Options.
+3. Change the settings as you wish.
 
 == Frequently Asked Questions ==
 = Where can I see the working demo of this player? =
