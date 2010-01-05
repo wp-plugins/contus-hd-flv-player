@@ -70,7 +70,7 @@ This plugin standard tag style:
     -width and height(optional).
 
 
-= How To Add video =
+= To Add video =
 1.Logon to Admin panel.
 2.Media -> HDFLVPlayer - > Add Video.
 3.Provide Youtube URL or Absolute path of the video (Eg.  Upload your videos to videos folder through FTP and provide the path as http://www.yourdomain.com/video/video.mp4).
