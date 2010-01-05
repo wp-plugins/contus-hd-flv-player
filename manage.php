@@ -241,16 +241,16 @@ function show_main()
 <div class="wrap">
 
     <form name="filterType" method="post" id="posts-filter">
-        <h2><?php _e('Manage Media files','hdflv'); ?></h2>
+        <h2><?php _e('Manage Video files','hdflv'); ?></h2>
         <div style='background:#D0D0D0;list-style:none;width:850px;float:left'><p style='padding-left:6px'>You can also set different width and height for the player in different posts irrespective of the values specified here.<br><br>
 
-           <b>For example:</b>[hdplay id=3 playlistid=2 width=400 height=400 ] or [hdplay playlistid=2 ] or [hdplay id=3 ] <br><br>* id will be created when u add videos in the manage media section</p></div><div style=float:left;color:red;>&nbsp;&nbsp;&nbsp;<a style=color:red; href="options-general.php?page=hdflvplugin"><?php _e('Options->HDFLVPlayer Settings', 'hdflv')?></a></div><div style=clear:both></div>
+           <b>For example:</b>[hdplay id=3 playlistid=2 width=400 height=400 ] or [hdplay playlistid=2 ] or [hdplay id=3 ] <br><br>* id will be created when u add videos in the manage Video section</p></div><div style=float:left;color:red;>&nbsp;&nbsp;&nbsp;<a style=color:red; href="options-general.php?page=hdflvplugin"><?php _e('Options->HDFLVPlayer Settings', 'hdflv')?></a></div><div style=clear:both></div>
         <ul class="subsubsub">
             <li>&nbsp;</li>
         </ul>
         <p class="search-box">
             <input type="text" class="search-input" name="search" value="<?php echo $search; ?>" size="10" />
-            <input type="submit" class="button-primary" value="<?php _e('Search Media','hdflv'); ?>" />
+            <input type="submit" class="button-primary" value="<?php _e('Search Video','hdflv'); ?>" />
             <input type="hidden" name="cancel" value="2"/>
         </p>
         <div class="tablenav">
@@ -282,12 +282,12 @@ function show_main()
                         $class = ( $class == 'class="alternate"' ) ? '' : 'class="alternate"';
                         echo "<tr $class>\n";
                         echo "<th scope=\"row\">$table->vid</th>\n";
-                        echo "<td class='post-title column-title''><strong><a title='" . __('Edit this media','hdflv') . "' href='$this->base_page&amp;mode=edit&amp;id=$table->vid'>" . stripslashes($table->name) . "</a></strong>\n";
+                        echo "<td class='post-title column-title''><strong><a title='" . __('Edit this video','hdflv') . "' href='$this->base_page&amp;mode=edit&amp;id=$table->vid'>" . stripslashes($table->name) . "</a></strong>\n";
                         echo "<span class='edit'>
-                                                        <a title='" . __('Edit this media','hdflv') . "' href='$this->base_page&amp;mode=edit&amp;id=$table->vid'>" . __('Edit') . "</a>
+                                                        <a title='" . __('Edit this video','hdflv') . "' href='$this->base_page&amp;mode=edit&amp;id=$table->vid'>" . __('Edit') . "</a>
                                                       </span> | ";
                         echo "<span class='delete'>
-                                                        <a title='" . __('Delete this media','hdflv') . "' href='$this->base_page&amp;mode=delete&amp;id=$table->vid' onclick=\"javascript:check=confirm( '".__("Delete this file ?",'hdflv')."');if(check==false) return false;\">" . __('Delete') . "</a>
+                                                        <a title='" . __('Delete this video','hdflv') . "' href='$this->base_page&amp;mode=delete&amp;id=$table->vid' onclick=\"javascript:check=confirm( '".__("Delete this file ?",'hdflv')."');if(check==false) return false;\">" . __('Delete') . "</a>
                                                       </span>";
                         echo "</td>\n";
                         echo "<td>".htmlspecialchars(stripslashes($table->file), ENT_QUOTES)."</td>\n";
@@ -324,7 +324,7 @@ function show_main()
 <!-- Manage Playlist-->
 <div class="wrap">
     <h2><?php _e('Playlist', 'hdflv') ?> (<a href="<?php echo $this->base_page; ?>&mode=playlist"><?php _e('Add or Edit','hdflv') ?></a>)</h2>
-    <p><?php _e('You can show all videos/media files in a playlist. Show this playlist with the tag', 'hdflv') ?> <strong> [hdplay playlistid=id ]</strong></p>
+    <p><?php _e('You can show all videos files in a playlist. Show this playlist with the tag', 'hdflv') ?> <strong> [hdplay playlistid=id ]</strong></p>
     <form name="selectlist" method="post">
         <input type="hidden" name="apage" value="<?php echo $page; ?>" />
         <input type="hidden" name="search" value="<?php echo $search; ?>" />
@@ -358,7 +358,7 @@ function show_main()
         ?>
 <!-- Edit Video -->
 <div class="wrap">
-    <h2> <?php _e('Edit media file', 'hdflv') ?> </h2>
+    <h2> <?php _e('Edit video file', 'hdflv') ?> </h2>
     <form name="table_options" method="post" id="video_options">
         <div id="poststuff" class="has-right-sidebar">
             <div class="inner-sidebar">
