@@ -2,7 +2,7 @@
 
 /*
 Plugin Name: Contus HDFLVPlayer Plugin
-Version: 1.0
+Version: 1.1
 Plugin URI: http://www.hdflvplayer.net/wordpress/
 Description: Simplifies the process of adding video to a WordPress blog. Powered by Contus Support HDFLVPlayer and SWFObject by Geoff Stearns.
 Author: Contus Support.
