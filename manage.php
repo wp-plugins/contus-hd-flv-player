@@ -314,7 +314,7 @@ function show_main()
         <div class="tablenav">
             <?php $this->navigation($this->PerPage, $page, $total, $search, $sort, $plfilter); ?>
             <div class="alignleft actions">
-                <input class="button-secondary" type="submit" value="<?php _e('Insert new media file','hdflv') ?> &raquo;" name="show_add"/>
+                <input class="button-secondary" type="submit" value="<?php _e('Add Video','hdflv') ?> &raquo;" name="show_add"/>
             </div>
             <br class="clear"/>
         </div>
