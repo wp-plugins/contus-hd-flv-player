@@ -56,6 +56,12 @@ function HDFLV_Render($matches) {
         $row = mysql_fetch_array($result, MYSQL_NUM);
         $arguments['file']= $row[0];
     }
+
+    if(array_key_exists('playlistid', $arguments))
+    {
+        $sql3= "select * from ".$wpdb->prefix."hdflv_med2play where playlist_id=".$arguments['playlistid']."";
+        $result4 = mysql_query($sql3);
+    }
     
 
 
@@ -112,7 +118,13 @@ function HDFLV_Render($matches) {
     }
     if($options[0][25]['v'] == 'true')
     {
-      $output .= 's' . $videoid . '.addVariable("playlistXML","'. get_option('siteurl').'/wp-content/plugins/' . dirname( plugin_basename(__FILE__) ).'/myextractXML.php?id='.$arguments['playlistid'].'");' . "\n";
+      if(array_key_exists('playlistid', $arguments))
+        {
+            if(mysql_num_rows($result4))
+            {
+                $output .= 's' . $videoid . '.addVariable("playlistXML","'. get_option('siteurl').'/wp-content/plugins/' . dirname( plugin_basename(__FILE__) ).'/myextractXML.php?id='.$arguments['playlistid'].'");' . "\n";
+            }else    $output .= 's' . $videoid . '.addVariable("playlist","false");' . "\n";
+        }else $output .= 's' . $videoid . '.addVariable("playlist","false");' . "\n";
     }
 
     $output .= 's' . $videoid . '.addVariable("logopath","' . $site_url . '/wp-content/plugins/'.dirname( plugin_basename(__FILE__) ).'/hdflvplayer/images/' . $options[0][10]['v'] . '");' . "\n";
@@ -427,12 +439,12 @@ function HDFLVLoadDefaults() {
 	$f[0][25]['v'] = 'true';
 
 
-    $f[0][27]['on'] = 'usedefault';
+    /*$f[0][27]['on'] = 'usedefault';
 	$f[0][27]['dn'] = 'Use default file upload';
 	$f[0][27]['t'] = 'rb';
 	$f[0][27]['v'] = '1';
 
-    $f[0][28]['v'] = "wp-content/uploads";
+    $f[0][28]['v'] = "wp-content/uploads";*/
     
     $f[0][29]['on'] = 'logo_target';
 	$f[0][29]['dn'] = 'Logo Path';
