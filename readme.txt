@@ -14,31 +14,18 @@ Player Demo         - www.hdflvplayer.net/wordpress/demo
 Player Home Page    - www.hdflvplayer.net/wordpress/
 
 * Easy to install FLV Player Plugin comes with complete control on player through admin panel, with fantastic support.
-
 * It supports FLV & H.264 encoded video including MP3, MP4, M4V, M4A, MOV, Mp4v, F4V
-
 * Send to friend features
-
 * Bookmark option (diggit, myspace, facebook, del.icio.us, spurl, furl, google)
-
 * Tool tips
-
 * Flexible player size
-
 * Ability to turn on/off, share, volume functions
-
 * Full screen feature
-
 * 1X, 2X and 3X zoom capabilities
-
 * Logo (opacity control)
-
 * Mouse wheel support (Rewind and forward)
-
 * Playlist Option available.
-
 * Individual sort order for each Playlist.
-
 * Add Media Option.
 
 == Installation ==
