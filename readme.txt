@@ -87,7 +87,9 @@ Forums  at www.hdflvplayer.net/forum
 Yes, but there will be an additional charges based on the request for customization has to be made by the requester.
 
 =  How can I play Youtube videos in this player? =
-Using the tag line [hdplay file=http://www.youtube.com/watch?v=-galhgKDvNg width=400 height=400 /] in your post.
+Using the tag line [hdplay id=1 playlistid=1 width=250 height=400 ] in your post.
+-playlistid(optional).
+-width and height(optional).
 
 = What is the advantage of using this Player? =
 To know more features and advantages of our payer, visit this link - http://www.hdflvplayer.net/wordpress/hd-flv-player-features.php
