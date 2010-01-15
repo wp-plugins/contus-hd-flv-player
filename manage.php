@@ -714,7 +714,7 @@ $tables = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."hdflv".$join.$where
                             <br /><?php _e('Here you need to enter the URL to the HD video file','hdflv') ?>
                         </td>
                     </tr>
-                     <tr><th scope="row"><?php _e('URL to yhumb image file','hdflv') ?></th>
+                     <tr><th scope="row"><?php _e('URL to Thumb image file','hdflv') ?></th>
                         <td><input type="text" size="50" name="filepath4" id="filepath4" />
                             <br /><?php _e('Here you need to enter the URL to the image file','hdflv') ?>
                         </td>
