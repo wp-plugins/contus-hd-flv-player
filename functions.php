@@ -154,6 +154,7 @@ function hd_add_media($wptfile_abspath, $wp_urlpath) {
 				if ($act_image == '') 	$act_image = $youtube_data['thumbnail_url'];
 				if ($act_tags == '') 	$act_tags = $youtube_data['tags'];
 				if ($act_link == '') 	$act_link = $act_filepath;
+                $act_filepath = preg_replace('/^(http)s?:\/+/i', '',$act_filepath);
 			} else		
 		 		render_error( __('Could not retrieve Youtube video information','hdflv'));
 		}
