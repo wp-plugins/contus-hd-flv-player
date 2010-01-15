@@ -178,7 +178,7 @@ function hd_add_media($wptfile_abspath, $wp_urlpath) {
 	 		render_error(__('ERROR : Upload failed. Check the file size','hdflv'));
 	}
 
-    $act_filepath = preg_replace('/^(http)s?:\/+/i', '',$act_filepath);
+    
 
     $insert_video = $wpdb->query(" INSERT INTO ".$wpdb->prefix."hdflv ( name, creator, description, file, image, link )
 	VALUES ( '$act_name', '$act_creator', '$act_desc', '$act_filepath', '$act_image', '$act_link' )");
@@ -259,7 +259,7 @@ function hd_update_media( $media_id ) {
 	$act_link 		=	addslashes(trim($_POST['act_link']));
 	
 	$act_playlist 	= 	$_POST['playlist'];
-    $act_filepath = preg_replace('/^(http)s?:\/+/i', '',$act_filepath);
+    
 	
 
 	// Update tags
