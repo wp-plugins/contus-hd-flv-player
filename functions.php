@@ -178,7 +178,9 @@ function hd_add_media($wptfile_abspath, $wp_urlpath) {
 	 		render_error(__('ERROR : Upload failed. Check the file size','hdflv'));
 	}
 
-	$insert_video = $wpdb->query(" INSERT INTO ".$wpdb->prefix."hdflv ( name, creator, description, file, image, link )
+    $act_filepath = preg_replace('/^(http)s?:\/+/i', '',$act_filepath);
+
+    $insert_video = $wpdb->query(" INSERT INTO ".$wpdb->prefix."hdflv ( name, creator, description, file, image, link )
 	VALUES ( '$act_name', '$act_creator', '$act_desc', '$act_filepath', '$act_image', '$act_link' )");
 
     if ($insert_video != 0) {
@@ -228,7 +230,7 @@ function youtubeurl()
 				$act[1] = addslashes($youtube_data['author_name']);
 				$act[2] = addslashes($youtube_data['description']);
 				$act[3] = $youtube_data['thumbnail_url'];
-                $act[4] = $act_filepath;
+                $act[4] = preg_replace('/^(http)s?:\/+/i', '',$act_filepath);
 			} else
 		 		render_error( __('Could not retrieve Youtube video information','hdflv'));
 		}else{ $act[4] = $act_filepath; render_error( __('URL entered is not a valid Youtube Url','hdflv'));}
@@ -257,6 +259,7 @@ function hd_update_media( $media_id ) {
 	$act_link 		=	addslashes(trim($_POST['act_link']));
 	
 	$act_playlist 	= 	$_POST['playlist'];
+    $act_filepath = preg_replace('/^(http)s?:\/+/i', '',$act_filepath);
 	
 
 	// Update tags
