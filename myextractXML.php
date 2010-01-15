@@ -23,12 +23,6 @@ $title = 'hdflv Playlist';
 $themediafiles = array();
 $limit = '';
 
-if (substr($playlist_id,0,4) == 'last') {
-	$l= (int) substr($playlist_id,4);
-	if ($l <= 0) $l = 10;
-	$limit = ' LIMIT 0,'.$l;
-	$playlist_id = '0';
-}
 
 // Otherwise gets most viewed
 
@@ -51,31 +45,32 @@ if (substr($playlist_id,0,4) == 'last') {
 	 	$title = $playlist->playlist_name;
 	}
 
-
+$options1 = get_option('HDFLVSettings');
+if($options1[0][26]['v'] == "true" ) $ap ="true"; else $ap="false";
 
 // Create XML / XSPF output
 header("content-type:text/xml;charset=utf-8");
 echo '<?xml version="1.0" encoding="utf-8"?>';
-echo "<playlist autoplay='true' random='false'>";
+echo "<playlist autoplay='$ap' random='false'>";
 
 
 if (is_array ($themediafiles)){
 
 	foreach ($themediafiles as $media) {
-        
-
 
                 if ($media->image == '')
 					$image = get_option('siteurl').'/wp-content/plugins/' . dirname( plugin_basename(__FILE__) ).'/images/hdflv.jpg';
 				else
 					$image = $media->image;
   				$file = pathinfo($media->file);
+                if($media->hdfile != '') $hd="true"; else $hd="false";
 
 		echo '<mainvideo';
         
 		echo ' url="'.htmlspecialchars($media->file).'"';
 		echo ' thu_image="'.htmlspecialchars($image).'"';
-        echo ' hd="false">';
+        echo ' hd="'.$hd.'"';
+        echo ' hdpath="'.$media->hdfile.'">';
         echo htmlspecialchars($media->name);
         //echo '<![CDATA[SampleMovie]]> ';
         echo "".'</mainvideo>';

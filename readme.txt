@@ -1,9 +1,9 @@
-=== CONTUS HD FLV Player ===
+=== CONTUS HDFLVPlayer ===
 Contributors: Contus Support
 Tags: wordpress flv player,flv player plugin,flv player 2009,wp flv player,play flv wordpress,flv player wordpress,wp flv,Wp flash video player,wp hd flv player,wordpress flv plugin,wp flv plugin
 Requires at least: 2.8
 Tested up to: 2.8.6
-Stable tag: 1.1
+Stable tag: 1.0
 
 The HDFLVPlayer plugin for WordPress allows the addition of video to a WordPress website using HDFLVPlayer and SWFObject Javascript Library.
 
@@ -35,52 +35,12 @@ Player Home Page    - www.hdflvplayer.net/wordpress/
 
 * Mouse wheel support (Rewind and forward)
 
-* Playlist Option available.
-
-* Individual sort order for each Playlist.
-
-* Add Media Option.
-
 == Installation ==
 
-= Minimal Requirements =
-* PHP: 5.x.x
-* mySQL: 4.0, 4.1 or 5.x
-* WordPress: 2.0 or newer
-
-= Recommended Requirements =
-* PHP: 5.2.x or newer
-* mySQL: 5.x
-* WordPress: 2.8 or newer
-
-= Basic Installation =
 1. Download and unzip the current version of the HDFLVPlayer plugin.
 2. Transfer the entire hdflvplugin directory to your `/wp-content/plugins/` directory
 3. Activate the plugin through the 'Plugins' menu in WordPress
-4. That's it! You're done.
-
-== Other Notes ==
-
-= Usage Example =
-This plugin standard tag style:
-
-    [hdplay id=1 playlistid=1 width=250 height=400 ]
-
-    -playlistid(optional).
-    -width and height(optional).
-
-
-= To Add video =
-1.Logon to Admin panel.
-2.Media -> HDFLVPlayer - > Add Video.
-3.Provide Youtube URL or Absolute path of the video (Eg.  Upload your videos to videos folder through FTP and provide the path as http://www.yourdomain.com/video/video.mp4).
-4.Create and select the playlist from the Right column of the window to assign the video to the particular playlist.
-5.Provide the sort / order number next to playlist to play the video in order.
-
-= To change the global settings of the player =
-1.Logon to Admin panel.
-2.Look for Settings on the Left column and click HDFLVPlayer Options.
-3.Change the settings as you wish.
+4. That's it! You're done. You can now enter the following into a post or page in WordPress to insert a video: [hdplay file="video/myvideo.flv" /] or [hdplay file=video/video.flv /]
 
 == Frequently Asked Questions ==
 = Where can I see the working demo of this player? =

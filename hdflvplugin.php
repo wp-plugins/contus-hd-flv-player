@@ -2,7 +2,7 @@
 
 /*
 Plugin Name: Contus HDFLVPlayer Plugin
-Version: 1.0
+Version: 1.1
 Plugin URI: http://www.hdflvplayer.net/wordpress/
 Description: Simplifies the process of adding video to a WordPress blog. Powered by Contus Support HDFLVPlayer and SWFObject by Geoff Stearns.
 Author: Contus Support.
@@ -12,10 +12,6 @@ HDFLVPlayer for Wordpress
 
 */
 
-
-
-
- 
 $videoid = 0;
 $site_url = get_option('siteurl');
 
@@ -33,7 +29,7 @@ function HDFLV_Render($matches) {
 	preg_match_all('/([.\w]*)=(.*?) /i', $matches[1], $attributes);
 
 	$arguments = array();
-    
+
 	foreach ( (array) $attributes[1] as $key => $value ) {
 		// Strip out legacy quotes
 		$arguments[$value] = str_replace('"', '', $attributes[2][$key]);
@@ -41,20 +37,21 @@ function HDFLV_Render($matches) {
 	}
 
 	if ( !array_key_exists('id', $arguments) && !array_key_exists('playlistid', $arguments) ) {
-
 		return '<div style="background-color:#ff9;padding:10px;"><p>Error: Required parameter "id" or "playlistid" is missing!</p></div>';
         exit;
 	}
 
-	
+
 
 
     if(array_key_exists('id', $arguments))
     {
-        $sql1= "select file from ".$wpdb->prefix."hdflv where vid=".$arguments['id']."";
+        $sql1= "select file,hdfile from ".$wpdb->prefix."hdflv where vid=".$arguments['id']."";
         $result = mysql_query($sql1);
         $row = mysql_fetch_array($result, MYSQL_NUM);
         $arguments['file']= $row[0];
+        $arguments['hdpath']= $row[1];
+        echo $arguments['hdpath'];
     }
 
     if(array_key_exists('playlistid', $arguments))
@@ -62,7 +59,7 @@ function HDFLV_Render($matches) {
         $sql3= "select * from ".$wpdb->prefix."hdflv_med2play where playlist_id=".$arguments['playlistid']."";
         $result4 = mysql_query($sql3);
     }
-    
+
 
 
 	$options = get_option('HDFLVSettings');
@@ -101,14 +98,17 @@ function HDFLV_Render($matches) {
 			if ( $value['v'] != '' ) {
 				// Check to see if we're processing a "skin". If so, make the filename absolute using the
 				// fully qualified path. This will ensure the player displays correctly on category pages as well.
-				if($value['on'] == 'skin') {
-                    if($value['v'] != 'undefined')
-					 {
-						$output .= 's' . $videoid . '.addVariable("' . $value['on'] . '","' . $site_url . '/wp-content/plugins/'.dirname( plugin_basename(__FILE__) ).'/hdflvplayer/skin/' . $value['v'] . '/' . trim($value['v']) . '.swf");' . "\n";
-					}
-				} else {
-					$output .= 's' . $videoid . '.addVariable("' . $value['on'] . '","' . trim($value['v']) . '");' . "\n";
-				}
+                if($value['on'] != 'playauto')
+                {
+                    if($value['on'] == 'skin') {
+                        if($value['v'] != 'undefined')
+                         {
+                            $output .= 's' . $videoid . '.addVariable("' . $value['on'] . '","' . $site_url . '/wp-content/plugins/'.dirname( plugin_basename(__FILE__) ).'/hdflvplayer/skin/' . $value['v'] . '/' . trim($value['v']) . '.swf");' . "\n";
+                        }
+                    } else {
+                        $output .= 's' . $videoid . '.addVariable("' . $value['on'] . '","' . trim($value['v']) . '");' . "\n";
+                    }
+                }
 			}
 		}
 	}
@@ -122,9 +122,14 @@ function HDFLV_Render($matches) {
         {
             if(mysql_num_rows($result4))
             {
-                $output .= 's' . $videoid . '.addVariable("playlistXML","'. get_option('siteurl').'/wp-content/plugins/' . dirname( plugin_basename(__FILE__) ).'/myextractXML.php?id='.$arguments['playlistid'].'");' . "\n";
+      $output .= 's' . $videoid . '.addVariable("playlistXML","'. get_option('siteurl').'/wp-content/plugins/' . dirname( plugin_basename(__FILE__) ).'/myextractXML.php?id='.$arguments['playlistid'].'");' . "\n";
             }else    $output .= 's' . $videoid . '.addVariable("playlist","false");' . "\n";
         }else $output .= 's' . $videoid . '.addVariable("playlist","false");' . "\n";
+    }
+    if($arguments['hdpath'] != '')
+    {
+        $output .= 's' . $videoid . '.addVariable("hd","true");' . "\n";
+        $output .= 's' . $videoid . '.addVariable("hdpath","' . $arguments['hdpath'] . '");' . "\n";
     }
 
     $output .= 's' . $videoid . '.addVariable("logopath","' . $site_url . '/wp-content/plugins/'.dirname( plugin_basename(__FILE__) ).'/hdflvplayer/images/' . $options[0][10]['v'] . '");' . "\n";
@@ -163,7 +168,7 @@ function HDFLV_Render($matches) {
 
 function HDFLVAddPage() {
     add_media_page  ( __('hdflv','hdflv'), __('HDFLVPlayer','hdflv'), 'edit_posts' , 'hdflv', 'show_menu' );
-    
+
 	add_options_page('HDFLVPlayer Options', 'HDFLVPlayer Options', '8', 'hdflvplugin.php', 'FlashOptions');
 }
 
@@ -171,7 +176,7 @@ function show_menu()
 {
     switch ($_GET["page"]){
 			case "hdflv" :
-                
+
 				include_once (dirname (__FILE__). '/functions.php');	// admin functions
 				include_once (dirname (__FILE__). '/manage.php');
                 echo $wpdb;// admin functions
@@ -232,7 +237,7 @@ function FlashOptions() {
 	echo '<h2>HDFLVPlayer Options</h2>';
 	echo $message;
 	echo '<form method="post" enctype="multipart/form-data" action="options-general.php?page=hdflvplugin.php">';
-	echo "<p>Welcome to the HDFLVPlayer plugin options menu! &nbsp;&nbsp; <a style=color:red; href=$site_url/wp-admin/upload.php?page=hdflv>Add Media</a></p>";
+	echo "<p>Welcome to the HDFLVPlayer plugin options menu! &nbsp;&nbsp; <a style=color:red; href=$site_url/wp-admin/upload.php?page=hdflv>Add Video</a></p>";
    // echo "<a href=$site_url/wp-admin/upload.php?page=hdflv>Add Media</a>";
 
 	$ski =  str_replace('wp-admin', 'wp-content', dirname($_SERVER['SCRIPT_FILENAME'])) .'/plugins/'.dirname( plugin_basename(__FILE__) ).'/hdflvplayer/skin';
@@ -297,10 +302,10 @@ function FlashOptions() {
 				echo '</td></tr>' . "\n";
 			}
 			echo '</table>' . "\n";
-		}   
+		}
 	echo '<p class="submit"><input class="button-primary" type="submit" method="post" value="Update Options"></p>';
 	echo '</form>';
-	echo '</div>';  
+	echo '</div>';
 }
 
 
@@ -427,7 +432,7 @@ function HDFLVLoadDefaults() {
 	$f[0][23]['dn'] = 'Display logo';
 	$f[0][23]['t'] = 'cb';
 	$f[0][23]['v'] = 'true';
-    
+
     $f[0][24]['on'] = 'share';
 	$f[0][24]['dn'] = 'Share';
 	$f[0][24]['t'] = 'cb';
@@ -438,14 +443,19 @@ function HDFLVLoadDefaults() {
 	$f[0][25]['t'] = 'cb';
 	$f[0][25]['v'] = 'true';
 
+    $f[0][26]['on'] = 'playauto';
+	$f[0][26]['dn'] = 'Playlist Autoplay';
+	$f[0][26]['t'] = 'cb';
+	$f[0][26]['v'] = 'true';
 
-    /*$f[0][27]['on'] = 'usedefault';
+
+    $f[0][27]['on'] = 'usedefault';
 	$f[0][27]['dn'] = 'Use default file upload';
 	$f[0][27]['t'] = 'rb';
 	$f[0][27]['v'] = '1';
 
-    $f[0][28]['v'] = "wp-content/uploads";*/
-    
+    $f[0][28]['v'] = "wp-content/uploads";
+
     $f[0][29]['on'] = 'logo_target';
 	$f[0][29]['dn'] = 'Logo Path';
 	$f[0][29]['t'] = 'tx';
@@ -470,7 +480,6 @@ function hdflv_deinstall() {
 
 
 }
-
 
 
 function hd_install() {

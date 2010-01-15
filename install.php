@@ -45,16 +45,11 @@ function hdflv_install() {
 			$sql = "CREATE TABLE ".$table_name." (
 				vid MEDIUMINT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	      			name MEDIUMTEXT NULL,
-	      			creator MEDIUMTEXT NULL,
-					description LONGTEXT NULL,
 	      			file MEDIUMTEXT NULL,
+                    hdfile MEDIUMTEXT NULL,
 	      			image MEDIUMTEXT NULL,
-	      			link MEDIUMTEXT NULL,
-	      			width SMALLINT(5) NOT NULL,
-	      			height SMALLINT(5) NOT NULL,
-	      			autostart TINYINT(1) NULL DEFAULT '0',
-					disableads TINYINT(1) NULL DEFAULT '0',
-					counter MEDIUMINT(10) NULL DEFAULT '0'
+                    opimage MEDIUMTEXT NULL,
+	      			link MEDIUMTEXT NULL
 	     			) $charset_collate;";
 	     
 			$res = $wpdb->get_results($sql);
@@ -79,7 +74,7 @@ function hdflv_install() {
 				media_id BIGINT(10) NOT NULL DEFAULT '0',
 				playlist_id BIGINT(10) NOT NULL DEFAULT '0',
 				porder MEDIUMINT(10) NOT NULL DEFAULT '0',
-                sorder INT(3) NOT NULL
+                sorder INT(3) NOT NULL DEFAULT '0'
 				) $charset_collate;";
 	     
 			$res = $wpdb->get_results($sql);

@@ -199,20 +199,15 @@ function youtubeurl($url) {
     $response=http_test_existance($vid_location);
     $uri=$response["location"];
     $vid_location2 = $uri;
-    $vid_location = "http://www.youtube.com/get_video.php?video_id=$videoid&t=$t";
-    $response=http_test_existance($vid_location);
-    $uri=$response["location"];
-    $vid_location3 = $uri;
-    return array($vid_location1,$vid_location2,$vid_location3);
+    return array($vid_location1,$vid_location2);
 }
 
 $url = $_GET['url'];
 $location = youtubeurl($url);
 $location[0] = str_replace("&","$",$location[0]);
 $location[1] = str_replace("&","$",$location[1]);
-$location[2] = str_replace("&","$",$location[2]);
-print("&location1=".$location[0]."&location2=".$location[1]."&location3=".$location[2]);
+print("&location1=".$location[0]."&location2=".$location[1]);
 
-
+exit();
 ?>
 
