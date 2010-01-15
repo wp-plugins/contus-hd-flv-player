@@ -3,7 +3,7 @@ Contributors: Contus Support
 Tags: wordpress flv player,flv player plugin,flv player 2009,wp flv player,play flv wordpress,flv player wordpress,wp flv,Wp flash video player,wp hd flv player,wordpress flv plugin,wp flv plugin
 Requires at least: 2.8
 Tested up to: 2.8.6
-Stable tag: 1.2
+Stable tag: 1.1
 
 The HDFLVPlayer plugin for WordPress allows the addition of video to a WordPress website using HDFLVPlayer and SWFObject Javascript Library.
 
