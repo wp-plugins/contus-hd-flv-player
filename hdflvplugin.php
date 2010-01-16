@@ -51,7 +51,6 @@ function HDFLV_Render($matches) {
         $row = mysql_fetch_array($result, MYSQL_NUM);
         $arguments['file']= $row[0];
         $arguments['hdpath']= $row[1];
-        echo $arguments['hdpath'];
     }
 
     if(array_key_exists('playlistid', $arguments))
@@ -179,7 +178,7 @@ function show_menu()
 
 				include_once (dirname (__FILE__). '/functions.php');	// admin functions
 				include_once (dirname (__FILE__). '/manage.php');
-                echo $wpdb;// admin functions
+               // echo $wpdb;// admin functions
 				$MediaCenter = new HDFLVManage();
 				break;
 
