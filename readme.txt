@@ -1,6 +1,6 @@
 === CONTUS HD FLV Player ===
 Contributors: Contus Support
-Tags: wordpress flv player,flv player plugin,flv player 2009,wp flv player,play flv wordpress,flv player wordpress,wp flv,Wp flash video player,wp hd flv player,wordpress flv plugin,wp flv plugin
+Tags: wordpress flv player,flv player plugin,flv player 2009,wp flv player,play flv wordpress,flv player wordpress,wp flv,Wp flash video player,wp hd flv player,wordpress flv plugin,wp flv plugin,video plugin, flash video player, video player plugin, flv player, youtube plugin, youtube video player, video, flash player, hd flv player,high definition video player,flash,player
 Requires at least: 2.8
 Tested up to: 2.8.6
 Stable tag: 1.2
