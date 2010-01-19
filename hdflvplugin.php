@@ -46,12 +46,12 @@ function HDFLV_Render($matches) {
 
     if(array_key_exists('id', $arguments))
     {
-        $sql1= "select file,hdfile from ".$wpdb->prefix."hdflv where vid=".$arguments['id']."";
+        $sql1= "select file,hdfile,opimage from ".$wpdb->prefix."hdflv where vid=".$arguments['id']."";
         $result = mysql_query($sql1);
         $row = mysql_fetch_array($result, MYSQL_NUM);
         $arguments['file']= $row[0];
         $arguments['hdpath']= $row[1];
-        echo $arguments['hdpath'];
+        $arguments['opimage']= $row[2];
     }
 
     if(array_key_exists('playlistid', $arguments))
@@ -137,6 +137,7 @@ function HDFLV_Render($matches) {
     if(array_key_exists('id', $arguments))
     {
         $output .= 's' . $videoid . '.addVariable("file","' . $arguments['file'] . '");' . "\n";
+        $output .= 's' . $videoid . '.addVariable("Preview","' . $arguments['opimage'] . '");' . "\n";
     }
 
     $output .= 's' . $videoid . '.write("video' . $videoid . '");' . "\n";
@@ -179,7 +180,7 @@ function show_menu()
 
 				include_once (dirname (__FILE__). '/functions.php');	// admin functions
 				include_once (dirname (__FILE__). '/manage.php');
-                echo $wpdb;// admin functions
+               // echo $wpdb;// admin functions
 				$MediaCenter = new HDFLVManage();
 				break;
 

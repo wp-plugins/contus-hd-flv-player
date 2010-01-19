@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 +	hdflv-XML
-+	
++
 +	required for hdflv
 +----------------------------------------------------------------+
 */
@@ -66,15 +66,16 @@ if (is_array ($themediafiles)){
                 if($media->hdfile != '') $hd="true"; else $hd="false";
 
 		echo '<mainvideo';
-        
+
 		echo ' url="'.htmlspecialchars($media->file).'"';
 		echo ' thu_image="'.htmlspecialchars($image).'"';
+        echo ' Preview="'.htmlspecialchars($media->opimage).'"';
         echo ' hd="'.$hd.'"';
         echo ' hdpath="'.$media->hdfile.'">';
         echo htmlspecialchars($media->name);
         //echo '<![CDATA[SampleMovie]]> ';
         echo "".'</mainvideo>';
-		
+
 	}
 }
 
