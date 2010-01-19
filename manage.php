@@ -10,7 +10,7 @@
       handle : '.handle',
       update : function () {
 		  var order = $('#test-list').sortable('serialize');
-        
+
           //alert(order);
           var playid = document.getElementById('playlistid2').value;
           //$("#info").load("../wp-content/plugins/<?= $contus ?>/process-sortable.php?"+order+"&playid="+playid);
@@ -18,7 +18,7 @@
           showUser(playid,order);
           //alert(myarray1);
           //document.filterType.submit();
-          
+
       }
     });
 });
@@ -51,12 +51,12 @@
         uploadqueue.push(whichForm);
         if (uploadqueue.length == 1)
         {
-             
+
             processQueue();
         }
         else
         {
-            
+
             holdQueue();
         }
 
@@ -206,10 +206,11 @@
                             document.getElementById('customurl1').value = document.getElementById('filepath2').value;
                             document.getElementById('customhd1').value = document.getElementById('filepath3').value;
                             document.getElementById('customimage').value = document.getElementById('filepath4').value;
+                            document.getElementById('custompreimage').value = document.getElementById('filepath5').value;
                             return true;
                         }
                 }else { alert("Wait for Uploading to Finish"); return false; }
-                
+
          }
           function extension(fname)
     {
@@ -241,7 +242,7 @@
 /*
 +----------------------------------------------------------------+
 +	hdflv-admin
-+	
++
 +   required for hdflv
 +----------------------------------------------------------------+
 */
@@ -265,10 +266,10 @@ class HDFLVManage   {
         add_filter('upload_dir', array(&$this, 'upload_dir'));
 
         $wp_upload = wp_upload_dir();
-        
+
         $this->wptfile_abspath = $wp_upload['path'].'/';
         $this->wp_urlpath = $wp_upload['url'].'/';
-   
+
         // output Manage screen
         $this->controller();
     }
@@ -406,7 +407,7 @@ $pledit = true;
 $where = '';
 $join = '';
 
-            
+
 // check for page navigation
 $sort     = 'ASC';
 $search   = ( isset($_REQUEST['search']))   ? $_REQUEST['search'] : '';
@@ -487,7 +488,7 @@ $tables = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."hdflv".$join.$where
             <tbody id="test-list" class="list:post">
             <input type=hidden id=playlistid2 name=playlistid2 value=<?= $plfilter ?> >
             <div name=txtHint ></div>
-                <?php 
+                <?php
                 if($tables) {
                     $i = 0;
                     foreach($tables as $table) {
@@ -560,7 +561,9 @@ $tables = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."hdflv".$join.$where
         $act_hdpath = stripslashes($media->hdfile);
         $act_image = stripslashes($media->image);
         $act_link = stripslashes($media->link);
-        
+        $act_opimg = stripslashes($media->opimage);
+
+
 
         ?>
 <!-- Edit Video -->
@@ -579,7 +582,7 @@ $tables = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."hdflv".$join.$where
                             </div>
                             <div class="misc-pub-section">
 
-                           
+
                                 <h4> <?php _e('Playlist','hdflv'); ?> &nbsp;&nbsp;
                                 <a style="cursor:pointer"  onclick="playlistdisplay()"><?php _e('Create New', 'hdflv')?></a></h4>
                                  <div id="playlistcreate"><?php _e('Name','hdflv'); ?><input type="text" size="20" name="p_name" value="" />
@@ -620,6 +623,11 @@ $tables = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."hdflv".$join.$where
                         <tr valign="top">
                             <th scope="row"><?php _e('Thumbnail URL','hdflv') ?></th>
                             <td><input type="text" size="80"  name="act_image" value="<?php echo $act_image ?>" />
+                            <br /><?php _e('Enter the URL to show a thumbnail of the video file','hdflv') ?></td>
+                        </tr>
+                        <tr valign="top">
+                            <th scope="row"><?php _e('Preview Image URL','hdflv') ?></th>
+                            <td><input type="text" size="80"  name="act_opimg" value="<?php echo $act_opimg ?>" />
                             <br /><?php _e('Enter the URL to show a preview of the video file','hdflv') ?></td>
                         </tr>
                         <tr valign="top">
@@ -664,7 +672,7 @@ $tables = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."hdflv".$join.$where
         function t1(t2)
         {
             if(t2.value == "y" )
-            { 
+            {
                 document.getElementById('upload2').style.display = "block"
                 document.getElementById('youtube').style.display = "none";
                  document.getElementById('customurl').style.display = "none";
@@ -680,8 +688,8 @@ $tables = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."hdflv".$join.$where
                 document.getElementById('upload2').style.display = "none";
             }
         }
-   
-       
+
+
     </script>
 
     <h2> <?php _e('Add a new video file','hdflv'); ?> </h2>
@@ -701,7 +709,7 @@ $tables = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."hdflv".$join.$where
                     </tr>
                 </table>
             </div>
-           
+
            <div id="customurl" class="inside" style="margin:15px;">
                 <table class="form-table">
                     <tr>
@@ -717,6 +725,11 @@ $tables = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."hdflv".$join.$where
                      <tr><th scope="row"><?php _e('URL to Thumb image file','hdflv') ?></th>
                         <td><input type="text" size="50" name="filepath4" id="filepath4" />
                             <br /><?php _e('Here you need to enter the URL to the image file','hdflv') ?>
+                        </td>
+                    </tr>
+                    <tr><th scope="row"><?php _e('URL to Thumb Preview image file(Optional)','hdflv') ?></th>
+                        <td><input type="text" size="50" name="filepath5" id="filepath5" />
+                            <br /><?php _e('Here you need to enter the URL to the Preview image file','hdflv') ?>
                         </td>
                     </tr>
                 </table>
@@ -745,7 +758,7 @@ $tables = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."hdflv".$join.$where
                                 <span id="f1-upload-message" style="float:right;font-size:10px;background:#FFAFAE;">
                                     <b>Upload Failed:</b> User Cancelled the upload
                                 </span></div>
-                                
+
 
                             </div>
                     </td></tr>
@@ -839,6 +852,7 @@ $tables = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."hdflv".$join.$where
                     <input type="hidden" name="customurl" id="customurl1"  value="" />
                     <input type="hidden" name="customhd" id="customhd1"  value="" />
                     <input type="hidden" name="customimage" id="customimage"  value="" />
+                    <input type="hidden" name="custompreimage" id="custompreimage"  value="" />
             <div class="inner-sidebar" >
                 <div id="submitdiv" class="postbox">
                     <h3 class="hndle" style="color:white;background:none;background-color:black"><span><?php _e('Playlist','hdflv') ?></span></h3>
@@ -888,12 +902,12 @@ $tables = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."hdflv".$join.$where
                 <p><input type="submit" name="add_media" class="button-primary" value="<?php _e('Add video file','hdflv'); ?>" class="button" /><input type="submit" class="button-secondary" name="cancel" value="<?php _e('Cancel'); ?>" class="button" /></p>
             </div>
         </div><!--END Poststuff -->
-        
+
     </form><script>document.getElementById('upload2').style.display = "none";
                   document.getElementById('customurl').style.display = "none";
         document.getElementById('name').value = document.getElementById('act0').value;
          document.getElementById('filepath1').value = document.getElementById('act4').value;
-         
+
         </script>
         <script> document.getElementById('playlistcreate1').style.display = "none";
             document.getElementById('generate').style.visibility  = "hidden";
