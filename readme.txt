@@ -1,11 +1,11 @@
-=== Video Plugin From Contus ===
+=== FLASH VIDEO PLAYER PLUGIN ===
 Contributors: Contus Support
-Tags: video player plugin, video, flash player, flv player, flash video player, flv player wordpress, hd flv player, youtube plugin, youtube video player, high definition video player, flash, play flv wordpress, player, video plugin, wp flv player, wp flv plugin, flv player 2009, Wp flash video player, wp flv, wordpress flv plugin, wp hd flv player, flv player plugin, wordpress flv player
+Tags: Video Player plugin, video, flash player, flv player, flash Video Player, flv player wordpress, hd flv player, youtube plugin, youtube Video Player, high definition Video Player, flash, play flv wordpress, player, Video Plugin, wp flv player, wp flv plugin, flv player 2009, Wp flash Video Player, wp flv, wordpress flv plugin, wp hd flv player, flv player plugin, wordpress flv player
 Requires at least: 2.8
 Tested up to: 2.8.6
 Stable tag: 1.2
 
-Get the most exciting FLV player in the internet, designed and modified to suit your Wordpress websites.  Installing this video plugin is real easy and if you have any difficulty in installation, contact our Video Player support team and quickly resolve your issue.  You can either download this video plugin directly from our website or through Wordpress plugins page itself.  This Flash video player has many advanced features that you cannot find elsewhere, such as that you can play youtube videos directly through this player, and it can also aptly be called as a youtube player.
+Get the most exciting FLV player in the internet, designed and modified to suit your Wordpress websites.  Installing this Video Plugin is real easy and if you have any difficulty in installation, contact our Video Player support team and quickly resolve your issue.  You can either download this Video Plugin directly from our website or through Wordpress plugins page itself.  This Flash Video Player has many advanced features that you cannot find elsewhere, such as that you can play youtube videos directly through this player, and it can also aptly be called as a youtube player.
 
 == Description ==
 
@@ -14,17 +14,17 @@ Player Demo - http://www.hdflvplayer.net/wordpress/demo
 Player Home Page - http://www.hdflvplayer.net/wordpress/
 
 * Easy to install FLV Video Player Plugin comes with complete control on player through admin panel, with fantastic support.
-* FLV plugin which can play FLV video & H.264 encoded video including MP3, MP4, M4V, M4A, MOV, Mp4v, F4V formats.
-* Video player which has option send to friend feature.
+* FLV Video plugin which can play FLV video & H.264 encoded video including MP3, MP4, M4V, M4A, MOV, Mp4v, F4V formats.
+* Video Player which has option send to friend feature.
 * Bookmark option (diggit, myspace, facebook, del.icio.us, spurl, furl, google)
 * Tool tips
 * Flexible player size
 * Ability to turn on/off, share, volume functions
-* Full screen feature
+* This Video Plugin has Full screen feature
 * 1X, 2X and 3X zoom capabilities
 * Logo (opacity control)
 * Mouse wheel support (Rewind and forward)
-* Playlist Option available in this Flash video player.
+* Playlist Option available in this Flash Video Player.
 * Individual sort order for each Playlist in this FLV player.
 * Add Media Option.
 * Directly play youtube videos like a youtube player.
@@ -42,9 +42,9 @@ Player Home Page - http://www.hdflvplayer.net/wordpress/
 * WordPress: 2.8 or newer
 
 = Basic Installation =
-1. Download and unzip the current version of the HDFLVPlayer plugin.
-2. Transfer the entire hdflvplugin directory to your `/wp-content/plugins/` directory
-3. Activate the plugin through the 'Plugins' menu in WordPress
+1. Download and unzip the current version of the HD FLV Video Player plugin.
+2. Transfer the entire hd flv plugin directory to your /wp-content/plugins/ directory
+3. Activate the FLV Player plugin through the 'Plugins' menu in WordPress
 4. That's it! You're done.
 
 == Other Notes ==
@@ -71,8 +71,8 @@ This plugin standard tag style:
 3. Change the settings as you wish.
 
 == Frequently Asked Questions ==
-= Where can I see the working demo of this player? =
-You can see the demo of our Flash Video Player or video plugin in this link - http://www.hdflvplayer.net/wordpress/demo .
+= Where can I see the working demo of this Video Player or Video Plugin? =
+You can see the demo of our Flash Video Player or Video Plugin in this link - http://www.hdflvplayer.net/wordpress/demo.
 
 = What are all the file formats HD FLV PLAYER can play? =
 Our FLV player supports FLV & H.264 encoded video including MP3, MP4, M4V, M4A, MOV, Mp4v, F4V formats.
@@ -83,7 +83,7 @@ Live Chat at http://www.hdflvplayer.net
 Email: support@hdflvplayer.net
 Forums at http://www.hdflvplayer.net/forum
 
-= Can I get the player customized to my needs? =
+= Can I get the Video plugin player customized to my needs? =
 Yes, but there will be additional charges based on the request for customization has to be made by the requester.
 
 =  How can I play Youtube videos in this player? =
