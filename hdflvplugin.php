@@ -295,10 +295,10 @@ function FlashOptions() {
 					echo ' />';
 					break;
                 case 'rb': ?>
-                            <label><input name=<? echo $setting['on'] ?> type="radio" value="1" <? if( $setting['v'] == 1) echo 'checked'; ?> /> <?php _e('Standard upload folder : ','hdflv') ?></label><code><?php echo get_option('upload_path'); ?></code><br />
-                            <label><input name=<? echo $setting['on'] ?> type="radio" value="0"  <? if( $setting['v'] == 0) echo 'checked'; ?> /> <?php _e('Store uploads in this folder : ','hdflv') ?></label>
+                            <label><input name=<?php echo $setting['on'] ?> type="radio" value="1" <?php if( $setting['v'] == 1) echo 'checked'; ?> /> <?php _e('Standard upload folder : ','hdflv') ?></label><code><?php echo get_option('upload_path'); ?></code><br />
+                            <label><input name=<?php echo $setting['on'] ?> type="radio" value="0"  <?php if( $setting['v'] == 0) echo 'checked'; ?> /> <?php _e('Store uploads in this folder : ','hdflv') ?></label>
                             <input type="text" size="50" maxlength="200" name="uploadurl" value="<?php echo $options[0][28]['v'] ?>" />
-                    <? break;
+                    <?php break;
 				}
 				echo '</td></tr>' . "\n";
 			}
