@@ -1,8 +1,8 @@
-<? $contus = dirname( plugin_basename(__FILE__)); ?>
-<script type="text/javascript" src="../wp-content/plugins/<?= $contus ?>/jquery-1.3.2.min.js"></script>
-<script type="text/javascript" src="../wp-content/plugins/<?= $contus ?>/jquery-ui-1.7.1.custom.min.js"></script>
-<script type="text/javascript" src="../wp-content/plugins/<?= $contus ?>/selectuser.js"></script>
-<link rel='stylesheet' href='../wp-content/plugins/<?= $contus ?>/styles123.css' type='text/css' media='all' />
+<?php $contus = dirname( plugin_basename(__FILE__)); ?>
+<script type="text/javascript" src="../wp-content/plugins/<?php echo $contus; ?>/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="../wp-content/plugins/<?php echo $contus; ?>/jquery-ui-1.7.1.custom.min.js"></script>
+<script type="text/javascript" src="../wp-content/plugins/<?php echo $contus; ?>/selectuser.js"></script>
+<link rel='stylesheet' href='../wp-content/plugins/<?php echo $contus; ?>/styles123.css' type='text/css' media='all' />
 <script type="text/javascript">
   // When the document is ready set up our sortable with it's inherant function(s)
   $(document).ready(function() {
@@ -13,7 +13,7 @@
 
           //alert(order);
           var playid = document.getElementById('playlistid2').value;
-          //$("#info").load("../wp-content/plugins/<?= $contus ?>/process-sortable.php?"+order+"&playid="+playid);
+          //$("#info").load("../wp-content/plugins/<?php echo $contus ?>/process-sortable.php?"+order+"&playid="+playid);
 
           showUser(playid,order);
           //alert(myarray1);
@@ -344,9 +344,9 @@ if (isset($_POST['add_media']))
 if (isset($_POST['youtube_media']))
 {
     $act1 = youtubeurl();
-   ?> <input type="hidden" name="act" id="act3" value="<? echo $act1[3] ?>" />
-    <input type="hidden" name="act" id="act0" value="<? echo $act1[0] ?>" />
-    <input type="hidden" name="act" id="act4" value="<? echo $act1[4] ?>" /><?
+   ?> <input type="hidden" name="act" id="act3" value="<?php echo $act1[3]; ?>" />
+    <input type="hidden" name="act" id="act0" value="<?php echo $act1[0]; ?>" />
+    <input type="hidden" name="act" id="act4" value="<?php echo $act1[4]; ?>" /><?php
    $this->mode = 'add';// hd_add_media($this->wptfile_abspath, $this->wp_urlpath);
 }
 
@@ -480,13 +480,13 @@ $tables = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."hdflv".$join.$where
                     <th id="id" class="manage-column column-id" scope="col"><?php _e('ID','hdflv'); ?> </th>
                     <th id="title" class="manage-column column-title" scope="col"><?php _e('Title','hdflv'); ?> </th>
                     <th id="path" class="manage-column column-path"  scope="col"><?php _e('Path','hdflv'); ?> </th>
-                    <? if(isset($_REQUEST['plfilter']) && $_REQUEST['plfilter'] != 'no' && $_REQUEST['plfilter'] != '0' || isset($_REQUEST['playid']) ) { $id1= '1'; ?><th id="path" class="manage-column column-path"  scope="col"><?php _e('Sort Order','hdflv'); ?> </th><?}?>
+                    <?php if(isset($_REQUEST['plfilter']) && $_REQUEST['plfilter'] != 'no' && $_REQUEST['plfilter'] != '0' || isset($_REQUEST['playid']) ) { $id1= '1'; ?><th id="path" class="manage-column column-path"  scope="col"><?php _e('Sort Order','hdflv'); ?> </th><?php }?>
 
 
                 </tr>
             </thead>
             <tbody id="test-list" class="list:post">
-            <input type=hidden id=playlistid2 name=playlistid2 value=<?= $plfilter ?> >
+            <input type=hidden id=playlistid2 name=playlistid2 value=<?php echo $plfilter; ?> >
             <div name=txtHint ></div>
                 <?php
                 if($tables) {
@@ -749,7 +749,7 @@ $tables = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."hdflv".$join.$where
                                 </form>
                             </div>
                             <div id="f1-upload-progress" style="display:none">
-                                <div style="float:left"><img id="f1-upload-image" src="<? echo get_option('siteurl').'/wp-content/plugins/' . dirname( plugin_basename(__FILE__) ).'/images/empty.gif'?>" alt="Uploading"  style="padding-top:2px"/>
+                                <div style="float:left"><img id="f1-upload-image" src="<?php  echo get_option('siteurl').'/wp-content/plugins/' . dirname( plugin_basename(__FILE__) ).'/images/empty.gif'?>" alt="Uploading"  style="padding-top:2px"/>
                                 <label style="padding-top:0px;padding-left:4px;font-size:14px;font-weight:bold;vertical-align:top"  id="f1-upload-filename">PostRoll.flv</label></div>
                                <div style="float:right"> <span id="f1-upload-cancel">
                                     <a style="float:right;padding-right:10px;" href="javascript:cancelUpload('normalvideoform');" name="submitcancel">Cancel</a>
@@ -773,7 +773,7 @@ $tables = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."hdflv".$join.$where
                                 </form>
                             </div>
                             <div id="f2-upload-progress" style="display:none">
-                                <div style="float:left"><img id="f2-upload-image" src="<? echo get_option('siteurl').'/wp-content/plugins/' . dirname( plugin_basename(__FILE__) ).'/images/empty.gif'?>" alt="Uploading"  style="padding-top:2px" />
+                                <div style="float:left"><img id="f2-upload-image" src="<?php  echo get_option('siteurl').'/wp-content/plugins/' . dirname( plugin_basename(__FILE__) ).'/images/empty.gif'?>" alt="Uploading"  style="padding-top:2px" />
                                 <label style="padding-top:0px;padding-left:4px;font-size:14px;font-weight:bold;vertical-align:top"  id="f2-upload-filename">PostRoll.flv</label></div>
                                 <div style="float:right"><span id="f2-upload-cancel">
                                     <a style="float:right;padding-right:10px;" href="javascript:cancelUpload('hdvideoform');" name="submitcancel">Cancel</a>
@@ -799,7 +799,7 @@ $tables = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."hdflv".$join.$where
                                 </form>
                             </div>
                             <div id="f3-upload-progress" style="display:none">
-                                <div style="float:left"><img id="f3-upload-image" src="<? echo get_option('siteurl').'/wp-content/plugins/' . dirname( plugin_basename(__FILE__) ).'/images/empty.gif'?>" alt="Uploading" style="padding-top:2px" />
+                                <div style="float:left"><img id="f3-upload-image" src="<?php  echo get_option('siteurl').'/wp-content/plugins/' . dirname( plugin_basename(__FILE__) ).'/images/empty.gif'?>" alt="Uploading" style="padding-top:2px" />
                                 <label style="padding-top:0px;padding-left:4px;font-size:14px;font-weight:bold;vertical-align:top"  id="f3-upload-filename">PostRoll.flv</label></div>
                                <div style="float:right"> <span id="f3-upload-cancel">
                                     <a style="float:right;padding-right:10px;" href="javascript:cancelUpload('thumbimageform');" name="submitcancel">Cancel</a>
@@ -822,7 +822,7 @@ $tables = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."hdflv".$join.$where
                                 </form>
                             </div>
                             <div id="f4-upload-progress" style="display:none">
-                                <div style="float:left"><img id="f4-upload-image" src="<? echo get_option('siteurl').'/wp-content/plugins/' . dirname( plugin_basename(__FILE__) ).'/images/empty.gif'?>" alt="Uploading" style="padding-top:2px" />
+                                <div style="float:left"><img id="f4-upload-image" src="<?php  echo get_option('siteurl').'/wp-content/plugins/' . dirname( plugin_basename(__FILE__) ).'/images/empty.gif'?>" alt="Uploading" style="padding-top:2px" />
                                 <label style="padding-top:0px;padding-left:4px;font-size:14px;font-weight:bold;vertical-align:top"  id="f4-upload-filename">PostRoll.flv</label></div>
                                 <div style="float:right"><span id="f4-upload-cancel">
                                     <a style="float:right;padding-right:10px;" href="javascript:cancelUpload('previewimageform');" name="submitcancel">Cancel</a>
@@ -863,7 +863,7 @@ $tables = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."hdflv".$join.$where
                                     <?php _e('See global settings for the HDFLV Player under', 'hdflv') ?> <a href="options-general.php?page=hdflvplugin"><?php _e('Options->HDFLVPlayer', 'hdflv')?></a>
                                 </p>
                             </div>
-                            <div class="misc-pub-section"><? //if(mysql_num_rows($playid1)) { ?>
+                            <div class="misc-pub-section"><?php  //if(mysql_num_rows($playid1)) { ?>
                                 <h4><?php _e('Playlist','hdflv'); ?>&nbsp;&nbsp;
                                 <a style="cursor:pointer"  onclick="playlistdisplay()"><?php _e('Create New', 'hdflv')?></a></h4>
                                 <div id="playlistcreate1"><?php _e('Name','hdflv'); ?><input type="text" size="20" name="p_name" value="" />
