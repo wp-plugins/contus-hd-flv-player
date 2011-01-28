@@ -136,157 +136,248 @@ function FlashOptions() {
 ?>
 
     <!--HTML design for admin settings -->
+   <link rel="stylesheet" href="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/css/jquery.ui.all.css'; ?>">
+
+    <script src="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery-1.4.4.js'; ?>"></script>
+    <script src="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery.ui.core.js'; ?>"></script>
+    <script src="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery.ui.widget.js'; ?>"></script>
+    <script src="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery.ui.mouse.js'; ?>"></script>
+    <script src="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery.ui.sortable.js'; ?>"></script>
+    <style>
+        .column { width: 500px; float: left; padding-bottom: 20px; }
+        .portlet { margin: 0 1em 1em 0; }
+        .portlet-header { margin: 0.3em; padding-bottom: 4px; padding-left: 10px;padding-top: 4px;font-size:12px; }
+        .portlet-header .ui-icon { float: right; }
+        .portlet-content { padding: 0.4em; font-size:12px;}
+        .ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 50px !important; }
+        .ui-sortable-placeholder * { visibility: hidden; }
+    </style>
+    <script>
+        $(function() {
+            $( ".column" ).sortable({
+                connectWith: ".column"
+            });
+
+            $( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
+            .find( ".portlet-header" )
+            .addClass( "ui-widget-header ui-corner-all" )
+            .prepend( "<span class='ui-icon ui-icon-minusthick'></span>")
+            .end()
+            .find( ".portlet-content" );
+
+            $( ".portlet-header .ui-icon" ).click(function() {
+                $( this ).toggleClass( "ui-icon-minusthick" ).toggleClass( "ui-icon-plusthick" );
+                $( this ).parents( ".portlet:first" ).find( ".portlet-content" ).toggle();
+            });
+
+            $( ".column" ).disableSelection();
+        });
+    </script>
     <div class="wrap">
         <h2>HDFLVPlayer Options</h2>
         <form method="post" enctype="multipart/form-data" action="options-general.php?page=hdflvplugin.php">
             <p>Welcome to the HDFLVPlayer plugin options menu! &nbsp;&nbsp; <a style="color:red;" href='<?php echo $site_url; ?>/wp-admin/upload.php?page=hdflv'>Add Video</a></p>
-            <table class="form-table">
-                <tr>
-                    <th scope='row'>Auto Play</th>
-                    <td><input type='checkbox' class='check' name="autoplay" <?php if ($fetchSettings->autoplay == 1) { ?> checked <?php } ?> value="1" size=45  /></td>
-                </tr>
-                <tr>
-                    <th scope='row'>Playlist</th>
-                    <td><input type='checkbox' class='check' name="playlist" <?php if ($fetchSettings->playlist == 1) { ?> checked <?php } ?> value="1" size=45  /></td>
-                </tr>
-                     <tr>
-                    <th scope='row'>HD Default</th>
-                    <td><input type='checkbox' class='check' name="HD_default" <?php if ($fetchSettings->HD_default == 1) { ?> checked <?php } ?> value="1" size=45  /></td>
-                </tr>
-                <tr>
-                    <th scope='row'>Download</th>
-                    <td><input type='checkbox' class='check' name="download" <?php if ($fetchSettings->download == 1) { ?> checked <?php } ?> value="1" size=45  /></td>
-                </tr>
-                <tr>
-                <th scope='row'>Embed Visible</th>
-                <td><input type='checkbox' class='check' <?php if ($fetchSettings->embed_visible == 1) { ?> checked <?php } ?> name="embed_visible" value="1" size=45  /></td>
-            </tr>
-            <tr>
-                <th scope='row'>Debug</th>
-                <td><input type='checkbox' class='check' <?php if ($fetchSettings->debug == 1) { ?> checked <?php } ?> name="debug" value="1" size=45  /></td>
-            </tr>
-            <tr>
-                <th scope='row'>Timer</th>
-                <td><input type='checkbox' class='check' <?php if ($fetchSettings->timer == 1) { ?> checked <?php } ?> name="timer" value="1" size=45  /></td>
-            </tr>
-            <tr>
-                <th scope='row'>Zoom</th>
-                <td><input type='checkbox' class='check' <?php if ($fetchSettings->zoom == 1) { ?> checked <?php } ?> name="zoom" value="1" size=45  /></td>
-            </tr>
-            <tr>
-                <th scope='row'>Share</th>
-                <td><input type='checkbox' class='check' <?php if ($fetchSettings->email == 1) { ?> checked <?php } ?> name="email" value="1" size=45  /></td>
-            </tr>
-            <tr>
-                <th scope='row'>Full Screen</th>
-                <td><input type='checkbox' class='check' <?php if ($fetchSettings->fullscreen == 1) { ?> checked <?php } ?> name="fullscreen" value="1" size=45  /></td>
-            </tr>
-             <tr>
-                    <th scope='row'>Skin Autohide</th>
-                    <td><input type='checkbox' class='check' <?php if ($fetchSettings->skin_autohide == 1) { ?> checked <?php } ?> name="skin_autohide" value="1" size=45  /></td>
-                </tr>
-                 <tr>
-                <th scope='row'>Playlist Autoplay</th>
-                <td><input type='checkbox' class='check' <?php if ($fetchSettings->playlistauto == 1) { ?> checked <?php } ?> name="playlistauto" value="1" size=45  /></td>
-            </tr>
-               
-                <tr>
-                    <th scope='row'>Normal Scale</th>
-                    <td>
-                        <select name="normalscale" style="width:150px;">
-                            <option value="0" <?php if ($fetchSettings->normalscale == 0) { ?> selected="selected" <?php } ?> >Aspect Ratio</option>
-                            <option value="1" <?php if ($fetchSettings->normalscale == 1) { ?> selected="selected" <?php } ?>>Original Screen</option>
-                            <option value="2" <?php if ($fetchSettings->normalscale == 2) { ?> selected="selected" <?php } ?>>Fit To Screen</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope='row'>Full Screen Scale</th>
-                    <td>
-                        <select name="fullscreenscale" style="width:150px;">
-                            <option value="0" <?php if ($fetchSettings->fullscreenscale == 0) { ?> selected="selected" <?php } ?>>Aspect Ratio</option>
-                            <option value="1" <?php if ($fetchSettings->fullscreenscale == 1) { ?> selected="selected" <?php } ?>>Original Screen</option>
-                            <option value="2" <?php if ($fetchSettings->fullscreenscale == 2) { ?> selected="selected" <?php } ?>>Fit To Screen</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope='row'>Skin</th>
-                    <td>
-                        <select name="skin" style="width:150px;">
-                        <?php foreach ($skins as $skin) { ?>
-                            <option <?php if ($fetchSettings->skin == $skin) {
-                        ?> selected="selected" <?php } ?> value="<?php echo $skin; ?>"><?php echo $skin; ?></option>
-                            <?php } ?>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                    <th scope='row'>Logo Align</th>
-                    <td> <select name="logoalign" style="width:150px;">
-                         <option <?php if ($fetchSettings->logoalign == 'TL') {?> selected="selected" <?php } ?> value="TL">Top Left</option>
-                         <option <?php if ($fetchSettings->logoalign == 'TR') {?> selected="selected" <?php } ?> value="TR">Top Right</option>
-                         <option <?php if ($fetchSettings->logoalign == 'LB') {?> selected="selected" <?php } ?> value="LB">Left Bottom</option>
-                         <option <?php if ($fetchSettings->logoalign == 'RB') {?> selected="selected" <?php } ?> value="RB">Right Bottom</option>
-                    </select></td>
-                </tr>
-                <tr>
-                    <th scope='row'>Logo Path</th>
-                    <td><input type='file' name="logopath" value="" size=40  /><?php echo $fetchSettings->logopath ?></td>
-                </tr>
-                 <tr>
-                    <th scope='row'>Buffer</th>
-                    <td><input type='text' name="buffer" value="<?php echo $fetchSettings->buffer ?>" size=45  /></td>
-                </tr>
-                
-                <tr>
-                    <th scope='row'>Logo Target</th>
-                    <td><input type='text' name="logotarget" value="<?php echo $fetchSettings->logo_target ?>" size=45  /></td>
-                </tr>
-                <tr>
-                    <th scope='row'>Volume</th>
-                    <td><input type='text' name="volume" value="<?php echo $fetchSettings->volume ?>" size=45  /></td>
-                </tr>
-                
-           
-                <tr>
-                    <th scope='row'>Logo Alpha</th>
-                    <td><input type='text' name="logoalpha" value="<?php echo $fetchSettings->logoalpha ?>" size=45  /></td>
-                </tr>
-               
-                <tr>
-                    <th scope='row'>Stagecolor</th>
-                    <td><input type='text' name="stagecolor" value="<?php echo $fetchSettings->stagecolor ?>" size=45  /></td>
-                </tr>
-                
-            
-            <tr>
-                <th scope='row'>Player Width</th>
-                <td><input type='text' name="width" value="<?php echo $fetchSettings->width ?>" size=45  /></td>
-            </tr>
-            <tr>
-                <th scope='row'>Player Height</th>
-                <td><input type='text' name="height" value="<?php echo $fetchSettings->height ?>" size=45  /></td>
-            </tr>
-           
-            <tr>
-                <th scope='row'>Uploads</th>
-                <td>
-<!--                    <label><input name="usedefault" type='radio' value="1" <?php if ($setting['v'] == 1)
-                                echo 'checked'; ?> /> <?php _e('Standard upload folder : ', 'hdflv') ?></label><code><?php echo get_option('upload_path'); ?></code><br />-->
-                            <label><input name="usedefault" type='radio' value="0"  <?php if ($setting['v'] == 0)
-                                echo 'checked'; ?> /> <?php _e('Store uploads in this folder : ', 'hdflv') ?></label>
-                    <input type="text" size="50" maxlength="200" name='uploadurl' value="<?php echo $fetchSettings->upload_path ?>" />
-                </td>
-            </tr>
-             <tr>
-                    <th scope='row'>License Key</th>
-                    <td><input type='text' name="license" value="<?php echo $fetchSettings->license ?>" size=45  /></td>
-                </tr>
-        </table>
-        <p class='submit'><input class='button-primary' type='submit' value='Update Options'></p>
-    </form>
-</div>
+            <div class="column">
+
+                <div class="portlet">
+                    <div class="portlet-header">Display Configuration</div>
+                    <div class="portlet-content">
+                        <table class="form-table">
+                            <tr>
+                                <th scope='row'>Player Width</th>
+                                <td><input type='text' name="width" value="<?php echo $fetchSettings->width ?>" size=45  /></td>
+                            </tr>
+                            <tr>
+                                <th scope='row'>Player Height</th>
+                                <td><input type='text' name="height" value="<?php echo $fetchSettings->height ?>" size=45  /></td>
+                            </tr>
+                            <tr>
+                                <th scope='row'>Stagecolor</th>
+                                <td><input type='text' name="stagecolor" value="<?php echo $fetchSettings->stagecolor ?>" size=45  /></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="portlet">
+                <div class="portlet-header">Skin Configuration</div>
+                <div class="portlet-content">
+                    <table class="form-table">
+                        <tr>
+                            <th scope='row'>Timer</th>
+                            <td><input type='checkbox' class='check' <?php if ($fetchSettings->timer == 1) { ?> checked <?php } ?> name="timer" value="1" size=45  /></td>
+                        </tr>
+                        <tr>
+                            <th scope='row'>Zoom</th>
+                            <td><input type='checkbox' class='check' <?php if ($fetchSettings->zoom == 1) { ?> checked <?php } ?> name="zoom" value="1" size=45  /></td>
+                        </tr>
+                        <tr>
+                            <th scope='row'>Share</th>
+                            <td><input type='checkbox' class='check' <?php if ($fetchSettings->email == 1) { ?> checked <?php } ?> name="email" value="1" size=45  /></td>
+                        </tr>
+                        <tr>
+                            <th scope='row'>Full Screen</th>
+                            <td><input type='checkbox' class='check' <?php if ($fetchSettings->fullscreen == 1) { ?> checked <?php } ?> name="fullscreen" value="1" size=45  /></td>
+                        </tr>
+                        <tr>
+                            <th scope='row'>Skin Autohide</th>
+                            <td><input type='checkbox' class='check' <?php if ($fetchSettings->skin_autohide == 1) { ?> checked <?php } ?> name="skin_autohide" value="1" size=45  /></td>
+                        </tr>
+                        <tr>
+                            <th scope='row'>Skin</th>
+                            <td>
+                                <select name="skin" style="width:150px;">
+                                    <?php foreach ($skins as $skin) {
+                                    ?>
+                                                  <option <?php if ($fetchSettings->skin == $skin) { ?> selected="selected" <?php } ?> value="<?php echo $skin; ?>"><?php echo $skin; ?></option>
+                                    <?php } ?>
+                                          </select>
+                                      </td>
+                                  </tr>
+                              </table>
+                          </div>
+                      </div>
+               <div class="portlet">
+                          <div class="portlet-header">Video Configuration</div>
+                          <div class="portlet-content">
+                              <table class="form-table">
+                                  <tr>
+                                      <th scope='row'>Auto Play</th>
+                                      <td><input type='checkbox' class='check' name="autoplay" <?php if ($fetchSettings->autoplay == 1) { ?> checked <?php } ?> value="1" size=45  /></td>
+                                  </tr>
+                                  <tr>
+                                      <th scope='row'>Download</th>
+                                      <td><input type='checkbox' class='check' name="download" <?php if ($fetchSettings->download == 1) { ?> checked <?php } ?> value="1" size=45  /></td>
+                                  </tr>
+                                  <tr>
+                                      <th scope='row'>Buffer</th>
+                                      <td><input type='text' name="buffer" value="<?php echo $fetchSettings->buffer ?>" size=45  /></td>
+                                  </tr>
+                                  <tr>
+                                      <th scope='row'>Volume</th>
+                                      <td><input type='text' name="volume" value="<?php echo $fetchSettings->volume ?>" size=45  /></td>
+                                  </tr>
+                              </table>
+                          </div>
+                      </div>
+                <div class="portlet">
+                    <div class="portlet-header">License Configuration</div>
+                    <div class="portlet-content">
+                        <table class="form-table">
+                            <tr>
+                                <th scope='row'>License Key</th>
+                                <td><input type='text' name="license" value="<?php echo $fetchSettings->license ?>" size=45  /></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+
+        </div>
+        <div class="column">
+
+         <div class="portlet">
+                    <div class="portlet-header">Playlist Configuration</div>
+                    <div class="portlet-content">
+                        <table class="form-table">
+                            <tr>
+                                <th scope='row'>Playlist Display</th>
+                                <td><input type='checkbox' class='check' name="playlist" <?php if ($fetchSettings->playlist == 1) { ?> checked <?php } ?> value="1" size=45  /></td>
+                            </tr>
+                            <tr>
+                                <th scope='row'>HD Default</th>
+                                <td><input type='checkbox' class='check' name="HD_default" <?php if ($fetchSettings->HD_default == 1) { ?> checked <?php } ?> value="1" size=45  /></td>
+                            </tr>
+                            <tr>
+                                <th scope='row'>Playlist Autoplay</th>
+                                <td><input type='checkbox' class='check' <?php if ($fetchSettings->playlistauto == 1) { ?> checked <?php } ?> name="playlistauto" value="1" size=45  /></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            <div class="portlet">
+                    <div class="portlet-header">General Settings</div>
+                    <div class="portlet-content">
+                        <table class="form-table">
+                            <tr>
+                                <th scope='row'>Normal Scale</th>
+                                <td>
+                                    <select name="normalscale" style="width:150px;">
+                                        <option value="0" <?php if ($fetchSettings->normalscale == 0) { ?> selected="selected" <?php } ?> >Aspect Ratio</option>
+                                        <option value="1" <?php if ($fetchSettings->normalscale == 1) { ?> selected="selected" <?php } ?>>Original Screen</option>
+                                        <option value="2" <?php if ($fetchSettings->normalscale == 2) { ?> selected="selected" <?php } ?>>Fit To Screen</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope='row'>Full Screen Scale</th>
+                                <td>
+                                    <select name="fullscreenscale" style="width:150px;">
+                                        <option value="0" <?php if ($fetchSettings->fullscreenscale == 0) { ?> selected="selected" <?php } ?>>Aspect Ratio</option>
+                                        <option value="1" <?php if ($fetchSettings->fullscreenscale == 1) { ?> selected="selected" <?php } ?>>Original Screen</option>
+                                        <option value="2" <?php if ($fetchSettings->fullscreenscale == 2) { ?> selected="selected" <?php } ?>>Fit To Screen</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope='row'>Uploads</th>
+                                <td>
+                <!--                    <label><input name="usedefault" type='radio' value="1" <?php if ($setting['v'] == 1)
+        echo 'checked'; ?> /> <?php _e('Standard upload folder : ', 'hdflv') ?></label><code><?php echo get_option('upload_path'); ?></code><br />-->
+                                <label><input name="usedefault" type='radio' value="0"  <?php if ($setting['v'] == 0)
+                                    echo 'checked'; ?> /> <?php _e('Store uploads in this folder : ', 'hdflv') ?></label>
+                                <input type="text" size="35" maxlength="200" name='uploadurl' value="<?php echo $fetchSettings->upload_path ?>" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope='row'>Embed Visible</th>
+                            <td><input type='checkbox' class='check' <?php if ($fetchSettings->embed_visible == 1) { ?> checked <?php } ?> name="embed_visible" value="1" size=45  /></td>
+                        </tr>
+                        <tr>
+                            <th scope='row'>Debug</th>
+                            <td><input type='checkbox' class='check' <?php if ($fetchSettings->debug == 1) { ?> checked <?php } ?> name="debug" value="1" size=45  /></td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+                      <div class="portlet">
+                          <div class="portlet-header">Logo Configuration (Applicable Only For Licensed Player)</div>
+                          <div class="portlet-content">
+                              <table class="form-table">
+                                  <tr>
+                                      <th scope='row'>Logo Path</th>
+                                      <td><input type='file' name="logopath" value="" size=35  /><?php echo $fetchSettings->logopath ?></td>
+                                  </tr>
+                                  <tr>
+                                      <th scope='row'>Logo Target</th>
+                                      <td><input type='text' name="logotarget" value="<?php echo $fetchSettings->logo_target ?>" size=45  /></td>
+                                  </tr>
+                                  <tr>
+                                      <th scope='row'>Logo Align</th>
+                                      <td> <select name="logoalign" style="width:150px;">
+                                              <option <?php if ($fetchSettings->logoalign == 'TL') { ?> selected="selected" <?php } ?> value="TL">Top Left</option>
+                                              <option <?php if ($fetchSettings->logoalign == 'TR') { ?> selected="selected" <?php } ?> value="TR">Top Right</option>
+                                              <option <?php if ($fetchSettings->logoalign == 'LB') { ?> selected="selected" <?php } ?> value="LB">Left Bottom</option>
+                                              <option <?php if ($fetchSettings->logoalign == 'RB') { ?> selected="selected" <?php } ?> value="RB">Right Bottom</option>
+                                          </select></td>
+                                  </tr>
+                                  <tr>
+                                      <th scope='row'>Logo Alpha</th>
+                                      <td><input type='text' name="logoalpha" value="<?php echo $fetchSettings->logoalpha ?>" size=45  /></td>
+                                  </tr>
+                              </table>
+                          </div>
+                      </div>
+
+
+
+
+                  </div>
+                  <div style="clear: both; float: right;width:800px; margin-top:0px;"><p class='submit'><input class='button-primary' type='submit' value='Update Options'></p></div>
+              </form>
+          </div>
 
 <!-- End of settings design-->
 
@@ -316,11 +407,11 @@ function hdflv_deinstall() {
   $hd_table_pl = $wpdb->prefix . 'hdflv_playlist';
   $hd_table_set = $wpdb->prefix . 'hdflv_settings';
 
-
-  $wpdb->query("DROP TABLE IF EXISTS `" . $hd_table . "`");
-  $wpdb->query("DROP TABLE IF EXISTS `" . $hd_table_mp . "`");
-  $wpdb->query("DROP TABLE IF EXISTS `" . $hd_table_pl . "`");
-  $wpdb->query("DROP TABLE IF EXISTS `" . $hd_table_set . "`");
+//Drop tables while deactivating
+//  $wpdb->query("DROP TABLE IF EXISTS `" . $hd_table . "`");
+//  $wpdb->query("DROP TABLE IF EXISTS `" . $hd_table_mp . "`");
+//  $wpdb->query("DROP TABLE IF EXISTS `" . $hd_table_pl . "`");
+//  $wpdb->query("DROP TABLE IF EXISTS `" . $hd_table_set . "`");
 }
 
 /* Function to invoke install player plugin */
