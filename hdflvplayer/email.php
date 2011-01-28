@@ -1,4 +1,4 @@
-<?php
+<?php 
 /***************************************************\
  * PHP 4.1.0+ version of email script. For more
  * information on the mail() function for PHP, see
