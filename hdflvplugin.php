@@ -136,7 +136,7 @@ function FlashOptions() {
 ?>
 
     <!--HTML design for admin settings -->
-   <link rel="stylesheet" href="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/css/jquery.ui.all.css'; ?>">
+    <link rel="stylesheet" href="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/css/jquery.ui.all.css'; ?>">
 
     <script src="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery-1.4.4.js'; ?>"></script>
     <script src="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery.ui.core.js'; ?>"></script>
@@ -371,9 +371,6 @@ function FlashOptions() {
                           </div>
                       </div>
 
-
-
-
                   </div>
                   <div style="clear: both; float: right;width:800px; margin-top:0px;"><p class='submit'><input class='button-primary' type='submit' value='Update Options'></p></div>
               </form>
@@ -407,11 +404,11 @@ function hdflv_deinstall() {
   $hd_table_pl = $wpdb->prefix . 'hdflv_playlist';
   $hd_table_set = $wpdb->prefix . 'hdflv_settings';
 
-//Drop tables while deactivating
-//  $wpdb->query("DROP TABLE IF EXISTS `" . $hd_table . "`");
-//  $wpdb->query("DROP TABLE IF EXISTS `" . $hd_table_mp . "`");
-//  $wpdb->query("DROP TABLE IF EXISTS `" . $hd_table_pl . "`");
-//  $wpdb->query("DROP TABLE IF EXISTS `" . $hd_table_set . "`");
+
+  $wpdb->query("DROP TABLE IF EXISTS `" . $hd_table . "`");
+  $wpdb->query("DROP TABLE IF EXISTS `" . $hd_table_mp . "`");
+  $wpdb->query("DROP TABLE IF EXISTS `" . $hd_table_pl . "`");
+  $wpdb->query("DROP TABLE IF EXISTS `" . $hd_table_set . "`");
 }
 
 /* Function to invoke install player plugin */
