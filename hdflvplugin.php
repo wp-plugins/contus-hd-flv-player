@@ -33,7 +33,7 @@ function HDFLV_Render($arguments= array()) {
     $output .= 's' . $videoid . '.addParam("allowfullscreen","true");' . "\n";
     $output .= 's' . $videoid . '.addParam("allowscriptaccess","always");' . "\n";
     $output .= 's' . $videoid . '.addParam("wmode","opaque");' . "\n";
-    
+
     $output .= 's' . $videoid . '.addVariable("baserefW","' . get_option('siteurl') . '");';
     if (isset($arguments['playlistid']) && isset($arguments['id'])) {
         $output .= 's' . $videoid . '.addVariable("pid","' . $arguments['playlistid'] . '");' . "\n";
@@ -136,7 +136,7 @@ function FlashOptions() {
 ?>
 
     <!--HTML design for admin settings -->
-    <link rel="stylesheet" href="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/css/jquery.ui.all.css'; ?>">
+    <link rel="stylesheet" href="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/hdflvplayer/css/jquery.ui.all.css'; ?>">
 
     <script src="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery-1.4.4.js'; ?>"></script>
     <script src="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery.ui.core.js'; ?>"></script>
@@ -343,7 +343,7 @@ function FlashOptions() {
                 </div>
             </div>
                       <div class="portlet">
-                          <div class="portlet-header">Logo Configuration (Applicable Only For Licensed Player)</div>
+                          <div class="portlet-header">Logo Configuration (Applicable Only For Licensed Player)<a href="http://www.hdflvplayer.net/wordpress/" target="_blank" style="text-decoration: none;color:red;cursor:pointer;">Buy Now</a></div>
                           <div class="portlet-content">
                               <table class="form-table">
                                   <tr>
@@ -398,17 +398,17 @@ VALUES (1,1,1,1,1,0,1,'platoon.jpg','http://www.hdflvplayer.net/',50,'LR',1,1,0,
 /* Function to uninstall player plugin */
 function hdflv_deinstall() {
   global $wpdb, $wp_version;
-  
+
   $hd_table = $wpdb->prefix . 'hdflv';
   $hd_table_mp = $wpdb->prefix . 'hdflv_med2play';
   $hd_table_pl = $wpdb->prefix . 'hdflv_playlist';
   $hd_table_set = $wpdb->prefix . 'hdflv_settings';
 
-
-  $wpdb->query("DROP TABLE IF EXISTS `" . $hd_table . "`");
-  $wpdb->query("DROP TABLE IF EXISTS `" . $hd_table_mp . "`");
-  $wpdb->query("DROP TABLE IF EXISTS `" . $hd_table_pl . "`");
-  $wpdb->query("DROP TABLE IF EXISTS `" . $hd_table_set . "`");
+//drop table start
+//  $wpdb->query("DROP TABLE IF EXISTS `" . $hd_table . "`");
+//  $wpdb->query("DROP TABLE IF EXISTS `" . $hd_table_mp . "`");
+//  $wpdb->query("DROP TABLE IF EXISTS `" . $hd_table_pl . "`");
+//  $wpdb->query("DROP TABLE IF EXISTS `" . $hd_table_set . "`");
 }
 
 /* Function to invoke install player plugin */
