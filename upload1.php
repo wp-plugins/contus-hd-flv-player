@@ -56,7 +56,7 @@ if (isset($_POST['mode']))
         
         $exttype = $_POST['mode'];
         if ($exttype == 'video')
-        $allowedExtensions = array("flv", "FLV", "mp4", "MP4" , "m4v", "M4V", "M4A", "m4a", "MOV", "mov", "mp4v", "Mp4v", "F4V", "f4v");
+        $allowedExtensions = array("flv", "FLV", "mp4", "MP4" , "m4v", "M4V", "M4A", "m4a", "MOV", "mov", "mp4v", "Mp4v", "F4V", "f4v" ,"mp3" , "MP3");
         else
         $allowedExtensions = array("jpg", "JPG", "png", "PNG");
     }
@@ -177,27 +177,45 @@ $options1 = get_option('HDFLVSettings');
     global $errorcode;
     global $file_name;
     global $wpdb;
-            if ($options1[0][27]['v'] == 0 ) {
-
-            $dir = ABSPATH.trim( $options1[0][28]['v'] ).'/';
-            $url = trailingslashit( get_option('siteurl') ).trim( $options1[0][28]['v']).'/';
-
-            // Make sure we have an uploads dir
-            if ( ! wp_mkdir_p( $dir ) ) {
-                $message = sprintf(__('Unable to create directory %s. Is its parent directory writable by the server?','hdflv'), $dir);
-                $uploads['error'] = $message;
-                return $uploads;
-            }
-            $uploads = array('path' => $dir, 'url' => $url, 'error' => false);
-            $uploadpath =$uploads['path'];
+    $uploadPath = $wpdb->get_col("SELECT upload_path FROM " . $wpdb->prefix . "hdflv_settings");
+    $uPath = $uploadPath[0];
+    if($uPath != ''){
+        $dir = ABSPATH.trim($uPath).'/';
+        $url = trailingslashit( get_option('siteurl') ).trim($uPath).'/';
+        if ( ! wp_mkdir_p( $dir ) ) {
+            $message = sprintf(__('Unable to create directory %s. Is its parent directory writable by the server?','hdflv'), $dir);
+            $uploads['error'] = $message;
+            return $uploads;
         }
-        else
-        {
-            $wp_upload = wp_upload_dir();
-            $uploadpath = $wp_upload['path'].'/';
-                
-        }
-    
+        $uploads = array('path' => $dir, 'url' => $url, 'error' => false);
+        $uploadpath =$uploads['path'];
+    }
+    else
+    {
+        $uploadpath = ABSPATH;
+
+    } 
+//            if ($options1[0][27]['v'] == 0 ) {
+//
+//            $dir = ABSPATH.trim( $uPath ).'/';
+//            $url = trailingslashit( get_option('siteurl') ).trim( $options1[0][28]['v']).'/';
+//
+//            // Make sure we have an uploads dir
+//            if ( ! wp_mkdir_p( $dir ) ) {
+//                $message = sprintf(__('Unable to create directory %s. Is its parent directory writable by the server?','hdflv'), $dir);
+//                $uploads['error'] = $message;
+//                return $uploads;
+//            }
+//            $uploads = array('path' => $dir, 'url' => $url, 'error' => false);
+//            $uploadpath =$uploads['path'];
+//        }
+//        else
+//        {
+//            $wp_upload = wp_upload_dir();
+//            $uploadpath = $wp_upload['path'].'/';
+//
+//        }
+   
         $filesave= "select MAX(vid) from ".$wpdb->prefix."hdflv";
         $fsquery = mysql_query( $filesave);
         $row = mysql_fetch_array($fsquery , MYSQL_NUM);

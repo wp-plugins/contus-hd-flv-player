@@ -1,36 +1,40 @@
 <?php
-/* This is where you would inject your sql into the database 
-   but we're just going to format it and send it back
-*/
+
+/*
+ * version : 1.2.1
+ * Edited by : John THomas
+ * Email : johnthomas@contus.in
+ * Purpose : functions used to sort the playlist
+ * Path:/wp-content/plugins/contus-hd-flv-player/process-sortable.php
+ * Date:13/1/11
+ *
+ */
+
+/* Used to import plugin configuration */
 require_once( dirname(__FILE__) . '/hdflv-config.php');
 
-// get the path url from querystring
+function get_out_now() {
+    exit;
+}
 
-function get_out_now() { exit; }
 add_action('shutdown', 'get_out_now', -1);
 
 global $wpdb;
-
 
 $title = 'hdflv Playlist';
 
 $pid1 = $_GET['playid'];
 
 foreach ($_GET['listItem'] as $position => $item) :
-    mysql_query("UPDATE $wpdb->prefix"."hdflv_med2play SET `sorder` = $position WHERE `media_id` = $item and playlist_id=$pid1 ");
+    mysql_query("UPDATE $wpdb->prefix" . "hdflv_med2play SET `sorder` = $position WHERE `media_id` = $item and playlist_id=$pid1 ");
 endforeach;
 
-$tables = $wpdb->get_results("SELECT vid FROM $wpdb->prefix"."hdflv LEFT JOIN ".$wpdb->prefix."hdflv_med2play ON (vid = media_id) WHERE (playlist_id = '$pid1') ORDER BY sorder ASC, vid ASC");
+$tables = $wpdb->get_results("SELECT vid FROM $wpdb->prefix" . "hdflv LEFT JOIN " . $wpdb->prefix . "hdflv_med2play ON (vid = media_id) WHERE (playlist_id = '$pid1') ORDER BY sorder ASC, vid ASC");
 
 
-if($tables) {
-                    foreach($tables as $table) {
-                          $playstore1  .= $table->vid.",";
-                    }
-                }
-
-               //$comma_playstore = implode(",", $playstore);
-               print_r($playstore1);
-
-
+if ($tables) {
+    foreach ($tables as $table) {
+        $playstore1 .= $table->vid . ",";
+    }
+}
 ?>
