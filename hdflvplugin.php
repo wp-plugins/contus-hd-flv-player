@@ -1,9 +1,12 @@
 <?php
 /*
-  Plugin Name: Contus HDFLVPlayer Plugin
-  Version: 1.2.1
-  Author: Contus Support.
-  Path :wp-content\plugins\contus-hd-flv-player\hdflvplugin.php
+ * Plugin Name: Contus HDFLVPlayer Plugin
+ * Version: 1.2.1
+ * Author: Contus Support.
+ * Plugin URI: http://www.hdflvplayer.net/wordpress/
+ * Author URI: http://www.hdflvplayer.net/wordpress/
+ * Description: Simplifies the process of adding video to a WordPress blog. Powered by Contus Support HDFLVPlayer and SWFObject by Geoff Stearns.
+ * Path :wp-content\plugins\contus-hd-flv-player\hdflvplugin.php
  * Edited by : john thomas
  * date:13/1/11
  * Purpose : Main plugin file to configure
