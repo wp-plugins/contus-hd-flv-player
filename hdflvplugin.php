@@ -379,7 +379,8 @@ function FlashOptions() {
                       </div>
 
                   </div>
-                  <div style="clear: both; float: right;width:800px; margin-top:0px;"><p class='submit'><input class='button-primary' type='submit' value='Update Options'></p></div>
+                  <div class="clear"></div>
+                      <p class='submit'><input class='button-primary' type='submit' value='Update Options'></p>
               </form>
           </div>
 
