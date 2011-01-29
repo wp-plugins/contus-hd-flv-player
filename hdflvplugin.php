@@ -248,10 +248,10 @@ function FlashOptions() {
                                       <th scope='row'>Auto Play</th>
                                       <td><input type='checkbox' class='check' name="autoplay" <?php if ($fetchSettings->autoplay == 1) { ?> checked <?php } ?> value="1" size=45  /></td>
                                   </tr>
-                                  <tr>
+<!--                                  <tr>
                                       <th scope='row'>Download</th>
                                       <td><input type='checkbox' class='check' name="download" <?php if ($fetchSettings->download == 1) { ?> checked <?php } ?> value="1" size=45  /></td>
-                                  </tr>
+                                  </tr>-->
                                   <tr>
                                       <th scope='row'>Buffer</th>
                                       <td><input type='text' name="buffer" value="<?php echo $fetchSettings->buffer ?>" size=45  /></td>
@@ -333,10 +333,10 @@ function FlashOptions() {
                                 <input type="text" size="35" maxlength="200" name='uploadurl' value="<?php echo $fetchSettings->upload_path ?>" />
                             </td>
                         </tr>
-                        <tr>
+<!--                        <tr>
                             <th scope='row'>Embed Visible</th>
                             <td><input type='checkbox' class='check' <?php if ($fetchSettings->embed_visible == 1) { ?> checked <?php } ?> name="embed_visible" value="1" size=45  /></td>
-                        </tr>
+                        </tr>-->
                         <tr>
                             <th scope='row'>Debug</th>
                             <td><input type='checkbox' class='check' <?php if ($fetchSettings->debug == 1) { ?> checked <?php } ?> name="debug" value="1" size=45  /></td>
