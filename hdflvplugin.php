@@ -346,7 +346,11 @@ function FlashOptions() {
                 </div>
             </div>
                       <div class="portlet">
-                          <div class="portlet-header">Logo Configuration (Applicable Only For Licensed Player)<a href="http://www.hdflvplayer.net/wordpress/" target="_blank" style="text-decoration: none;color:red;cursor:pointer;">Buy Now</a></div>
+                          <div class="portlet-header">Logo Configuration (Applicable Only For Licensed Player)
+                           <?php if($fetchSettings->license == '' || $fetchSettings->license == 0){?>
+                              <a href="http://www.hdflvplayer.net/wordpress/" target="_blank" style="text-decoration: none;color:red;cursor:pointer;">Buy Now</a>
+                              <?php }?>
+                          </div>
                           <div class="portlet-content">
                               <table class="form-table">
                                   <tr>
