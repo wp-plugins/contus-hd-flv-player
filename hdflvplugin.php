@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: Contus HDFLVPlayer Plugin
- * Version: 1.2
+ * Version: 1.3
  * Author: Contus Support.
  * Plugin URI: http://www.hdflvplayer.net/wordpress/
  * Author URI: http://www.hdflvplayer.net/wordpress/
