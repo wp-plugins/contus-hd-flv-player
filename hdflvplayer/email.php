@@ -22,5 +22,11 @@ $headers .= "Reply-To: " . $_POST["from"] . "\r\n";
 $headers .= "Return-path: " . $_POST["from"];
 $message = $_POST["note"] . "\n\n";
 $message .= "Video URL: " . $url;
-mail($to, $subject, $message, $headers); //Mail function
+ //Mail function
+if(mail($to, $subject, $message, $headers))
+{
+	echo "output=sent";
+} else {
+	echo "output=error";
+}
 ?>
