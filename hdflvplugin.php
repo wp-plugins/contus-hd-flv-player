@@ -351,7 +351,7 @@ function FlashOptions() {
                               <a href="http://www.hdflvplayer.net/wordpress/" target="_blank" style="text-decoration: none;color:red;cursor:pointer;">Buy Now</a>
                               <?php }?>
                           </div>
-                            }
+                           
                           <div class="portlet-content">
                               <table class="form-table">
                                   <tr>
