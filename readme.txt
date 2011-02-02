@@ -71,6 +71,9 @@ This plugin standard tag style:
 3. Change the settings as you wish.
 
 == Frequently Asked Questions ==
+= Where can I see the documentation of this Video Player or Video Plugin? =
+You can see the documentation of our Flash Video Player or Video Plugin in this link - http://www.hdflvplayer.net/wordpress/Wordpress_HDFLV.pdf
+
 = Where can I see the working demo of this Video Player or Video Plugin? =
 You can see the demo of our Flash Video Player or Video Plugin in this link - http://www.hdflvplayer.net/wordpress/demo.
 
