@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: Contus HDFLVPlayer Plugin
- * Version: 1.2
+ * Version: 1.3
  * Author: Contus Support.
  * Plugin URI: http://www.hdflvplayer.net/wordpress/
  * Author URI: http://www.hdflvplayer.net/wordpress/
@@ -347,7 +347,7 @@ function FlashOptions() {
             </div>
                       <div class="portlet">
                           <div class="portlet-header">Logo Configuration (Applicable Only For Licensed Player)
-                            <?php if($fetchSettings->license == '' || $fetchSettings->license == 0){?>
+                            <?php if($fetchSettings->license == '' || $fetchSettings->license == '0'){?>
                               <a href="http://www.hdflvplayer.net/wordpress/" target="_blank" style="text-decoration: none;color:red;cursor:pointer;">Buy Now</a>
                               <?php }?>
                           </div>
