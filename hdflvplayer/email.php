@@ -1,7 +1,7 @@
 <?php
 
 /*
- * version : 1.2.1
+ * version : 1.3
  * Edited by : John THomas
  * Email : johnthomas@contus.in
  * Purpose : Used to send email from player(share)
@@ -22,5 +22,11 @@ $headers .= "Reply-To: " . $_POST["from"] . "\r\n";
 $headers .= "Return-path: " . $_POST["from"];
 $message = $_POST["note"] . "\n\n";
 $message .= "Video URL: " . $url;
-mail($to, $subject, $message, $headers); //Mail function
+ //Mail function
+if(mail($to, $subject, $message, $headers))
+{
+	echo "output=sent";
+} else {
+	echo "output=error";
+}
 ?>

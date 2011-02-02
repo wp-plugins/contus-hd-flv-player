@@ -1,6 +1,6 @@
 <?php
 /*
- * version : 1.2.1
+ * version : 1.3
  * Edited by : John THomas
  * Email : johnthomas@contus.in
  * Purpose : Player Configuration Settings
@@ -21,7 +21,7 @@ $skin = $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) 
 $skinpath = $skin . '/' . $settingsRecord->skin . '/' . $settingsRecord->skin . '.swf';
 $logoPath = $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/hdflvplayer/images/';
 $xmlPath = $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/';
-
+$emailPath = $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/hdflvplayer/email.php';
 $playXml = $xmlPath . 'myextractXML.php';
 
 $langXML = $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/hdflvplayer/xml/language/language.xml';
@@ -71,6 +71,7 @@ echo '<config
       skin="' . $skinpath . '"
       embed_visible="' . $embed_visible . '"
       playlistXML="'.$playXml.'"
+      shareURL = "'.$emailPath.'"
       UseYouTubeApi="flash"
       showPlaylist ="'. $playlist.'"
       license = "'.$settingsRecord->license.'"

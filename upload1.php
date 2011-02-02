@@ -1,4 +1,13 @@
 <?php
+/*
+ * version : 1.3
+ * Edited by : John THomas
+ * Email : johnthomas@contus.in
+ * Purpose : functions used to upload video
+ * Path:/wp-content/plugins/contus-hd-flv-player/upload1.php
+ * Date:13/1/11
+ *
+ */
 session_start();
 session_regenerate_id();
 
