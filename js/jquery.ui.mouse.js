@@ -47,7 +47,7 @@ $.widget("ui.mouse", {
 		// TODO: figure out why we have to use originalEvent
 		event.originalEvent = event.originalEvent || {};
 		if (event.originalEvent.mouseHandled) { return; }
-
+                $('input').style.disabled = 'false';
 		// we may have missed mouseup (out of window)
 		(this._mouseStarted && this._mouseUp(event));
 
