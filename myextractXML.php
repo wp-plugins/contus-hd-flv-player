@@ -80,6 +80,7 @@ if ($autoPlay[0] == 1) {
 }
 
 // Create XML output of playlist
+ob_start();
 ob_clean();
 header("content-type:text/xml;charset = utf-8");
 echo '<?xml version = "1.0" encoding = "utf-8"?>';
