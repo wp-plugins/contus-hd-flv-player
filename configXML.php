@@ -48,6 +48,7 @@ if($_SESSION['videoCount'] == 1 || $_SESSION['videoCount'] == ''){
 }
 
 /*Configuration Start*/
+ob_start();
 ob_clean();
 echo '<?xml version="1.0" encoding="utf-8"?>';
 echo '<config
