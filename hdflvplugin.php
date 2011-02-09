@@ -27,12 +27,23 @@ function HDFLV_Render($arguments= array()) {
 
     global $videoid, $site_url;
 
+    if($arguments['width'] != ''){
+        $width = $arguments['width'];
+    }else{
+        $width = $configXML->width;
+    }
+    if($arguments['height'] != ''){
+        $height = $arguments['height'];
+    }else{
+        $height = $configXML->height;
+    }
+
     $configXML = $wpdb->get_row("SELECT configXML,width,height FROM " . $wpdb->prefix . "hdflv_settings");
 
     $output .= "\n" . '<span id="video' . $videoid . '" class="HDFLV">' . "\n";
     $output .= '<a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this player.</span>' . "\n";
     $output .= '<script type="text/javascript">' . "\n";
-    $output .= 'var s' . $videoid . ' = new SWFObject("' . $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/hdflvplayer/hdplayer.swf' . '","n' . $videoid . '","' . $configXML->width . '","' . $configXML->height . '","7");' . "\n";
+    $output .= 'var s' . $videoid . ' = new SWFObject("' . $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/hdflvplayer/hdplayer.swf' . '","n' . $videoid . '","' . $width . '","' . $height . '","7");' . "\n";
     $output .= 's' . $videoid . '.addParam("allowfullscreen","true");' . "\n";
     $output .= 's' . $videoid . '.addParam("allowscriptaccess","always");' . "\n";
     $output .= 's' . $videoid . '.addParam("wmode","opaque");' . "\n";
