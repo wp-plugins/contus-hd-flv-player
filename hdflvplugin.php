@@ -27,6 +27,7 @@ function HDFLV_Render($arguments= array()) {
 
     global $videoid, $site_url;
 
+    $configXML = $wpdb->get_row("SELECT configXML,width,height FROM " . $wpdb->prefix . "hdflv_settings");
     if($arguments['width'] != ''){
         $width = $arguments['width'];
     }else{
@@ -38,7 +39,7 @@ function HDFLV_Render($arguments= array()) {
         $height = $configXML->height;
     }
 
-    $configXML = $wpdb->get_row("SELECT configXML,width,height FROM " . $wpdb->prefix . "hdflv_settings");
+    
 
     $output .= "\n" . '<span id="video' . $videoid . '" class="HDFLV">' . "\n";
     $output .= '<a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this player.</span>' . "\n";
