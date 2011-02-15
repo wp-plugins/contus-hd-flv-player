@@ -116,13 +116,12 @@ function FlashOptions() {
             $updateSettings = $wpdb->query($query);
         } else {
             $insertSettings = $wpdb->query(" INSERT INTO " . $wpdb->prefix . "hdflv_settings
-						VALUES (" . $_POST['autoplay'] . "," . $_POST['playlist'] . "," . $_POST['playlistauto'] . "," . $_POST['buffer']
-                            . "," . $_POST['normalscale'] . "," . $_POST['fullscreenscale'] . "," . $_POST['logopath'] . "," . $_POST['logotarget']
-                            . "," . $_POST['volume'] . "," . $_POST['logoalign'] . "," . $_POST['hdflvplayer_ads'] . "," . $_POST['HD_default']
-                            . "," . $_POST['download'] . "," . $_POST['logoalpha'] . "," . $_POST['skin_autohide'] . "," . $_POST['stagecolor']
-                            . "," . $_POST['skin'] . "," . $_POST['embed_visible'] . "," . $_POST['shareURL'] . "," . $_POST['playlistXML']
-                            . "," . $_POST['debug'] . "," . $_POST['timer'] . "," . $_POST['zoom'] . "," . $_POST['email']
-                            . "," . $_POST['fullscreen'] . "," . $_POST['width'] . "," . $_POST['height'] . "," . $_POST['display_logo'] ."," . $_POST['license']."," . $_POST['uploadurl'] . ")");
+						VALUES ('','" . $_POST['autoplay'] . "','" . $_POST['playlist'] . "','" . $_POST['playlistauto'] . "','" . $_POST['buffer']
+                            . "','" . $_POST['normalscale'] . "','" . $_POST['fullscreenscale'] . "','','http://www.hdflvplayer.net/','" . $_POST['volume'] . "','" . $_POST['logoalign'] . "','" . $_POST['hdflvplayer_ads'] . "','" . $_POST['HD_default']
+                            . "','" . $_POST['download'] . "','" . $_POST['logoalpha'] . "','" . $_POST['skin_autohide'] . "','" . $_POST['stagecolor']
+                            . "','" . $_POST['skin'] . "','" . $_POST['embed_visible'] . "','" . $_POST['shareURL'] . "','" . $_POST['playlistXML']
+                            . "','" . $_POST['debug'] . "','" . $_POST['timer'] . "','" . $_POST['zoom'] . "','" . $_POST['email']
+                            . "','" . $_POST['fullscreen'] . "','" . $_POST['width'] . "','" . $_POST['height'] . "','" . $_POST['display_logo'] ."','" . $_POST['license']."','','wp-content/uploads')");
         }
         move_uploaded_file($_FILES["logopath"]["tmp_name"], "../wp-content/plugins/" . dirname(plugin_basename(__FILE__)) . "/hdflvplayer/images/" . $_FILES["logopath"]["name"]);
         $message = '<div class="updated"><p><strong>Options saved.</strong></p></div>';
