@@ -115,6 +115,9 @@ function FlashOptions() {
                             . "' WHERE settings_id = " . $settings[0]['settings_id'];
             $updateSettings = $wpdb->query($query);
         } else {
+            require_once(dirname(__FILE__) . '/install.php');
+            hdflv_install();
+            HDFLVLoadDefaults();
             $insertSettings = $wpdb->query(" INSERT INTO " . $wpdb->prefix . "hdflv_settings
 						VALUES ('','" . $_POST['autoplay'] . "','" . $_POST['playlist'] . "','" . $_POST['playlistauto'] . "','" . $_POST['buffer']
                             . "','" . $_POST['normalscale'] . "','" . $_POST['fullscreenscale'] . "','','http://www.hdflvplayer.net/','" . $_POST['volume'] . "','" . $_POST['logoalign'] . "','" . $_POST['hdflvplayer_ads'] . "','" . $_POST['HD_default']
