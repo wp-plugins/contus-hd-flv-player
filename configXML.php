@@ -41,11 +41,11 @@ $autoplay = ($settingsRecord->autoplay == 1) ? 'true' : 'false';
 $autoplay = ($settingsRecord->autoplay == 1) ? 'true' : 'false';
 $autoplay = ($settingsRecord->autoplay == 1) ? 'true' : 'false';
 session_start();
-if($_SESSION['videoCount'] == 1 || $_SESSION['videoCount'] == ''){
-    $playlist = 'false';
-}else{
+//if($_SESSION['videoCount'] == 1 || $_SESSION['videoCount'] == ''){
+//    $playlist = 'false';
+//}else{
     $playlist = ($settingsRecord->playlist == 1) ? 'true' : 'false';
-}
+//}
 
 /*Configuration Start*/
 ob_start();
