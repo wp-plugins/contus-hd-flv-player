@@ -13,6 +13,8 @@ Player Demo - http://www.hdflvplayer.net/wordpress/demo
 
 Player Home Page - http://www.hdflvplayer.net/wordpress/
 
+If you need video gallery plugin for your site please visit : http://www.hdflvplayer.net/wordpress-video-gallery/demo/
+
 * Easy to install FLV Video Player Plugin comes with complete control on player through admin panel, with fantastic support.
 * FLV Video plugin which can play FLV video & H.264 encoded video including MP3, MP4, M4V, M4A, MOV, Mp4v, F4V formats.
 * Video Player which has option send to friend feature.
