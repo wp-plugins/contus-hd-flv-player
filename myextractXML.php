@@ -116,5 +116,5 @@ if (is_array($themediafiles)) {
     }
 }
 
-echo '</playlist>';
+echo '</playlist>';exit;
 ?>

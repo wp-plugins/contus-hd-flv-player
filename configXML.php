@@ -87,8 +87,4 @@ echo '<email>' . $email . '</email>';
 echo '<fullscreen>' . $fullscreen . '</fullscreen>';
 
 echo '</config>';exit;
-
-
-/*Configuration ends*/
-exit;
 ?>
