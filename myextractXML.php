@@ -111,10 +111,10 @@ if (is_array($themediafiles)) {
          echo ' download = "true"';
         echo ' hdpath = "' . $media->hdfile . '">';
         echo '<title><![CDATA[' . htmlspecialchars($media->name) . ']]></title> ';
-        echo htmlspecialchars($media->name);
+        // echo '<tagline targeturl=""><![CDATA[' . htmlspecialchars($media->name) . ']]></tagline> ';
         echo '' . '</mainvideo>';
     }
 }
 
-echo '</playlist>';exit;
+echo '</playlist>';
 ?>

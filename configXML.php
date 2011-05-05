@@ -68,7 +68,7 @@ echo '<config
       Download="' . $download . '"
       logoalpha = "' . $settingsRecord->logoalpha . '"
       skin_autohide="' . $skin_autohide . '"
-      stagecolor="' . $settingsRecord->stagecolor . '"
+      stagecolor1="' . $settingsRecord->stagecolor . '"
       skin="' . $skinpath . '"
       embed_visible="' . $embed_visible . '"
       playlistXML="'.$playXml.'"
@@ -87,4 +87,8 @@ echo '<email>' . $email . '</email>';
 echo '<fullscreen>' . $fullscreen . '</fullscreen>';
 
 echo '</config>';exit;
+
+
+/*Configuration ends*/
+exit;
 ?>
