@@ -42,7 +42,7 @@ function HDFLV_Render($arguments= array()) {
     if (isset($arguments['id'])) {
 	$videofiles = $wpdb->get_row("SELECT file,hdfile,image FROM " . $wpdb->prefix . "hdflv where vid = ".$arguments['id']);
     $file = $videofiles->file;
-	
+
 	$videofile = $videofiles->hdfile;
 	$imagefile = $videofiles->image;
 	}
@@ -56,9 +56,9 @@ function HDFLV_Render($arguments= array()) {
         $select .= " ORDER BY m.sorder ASC , m.porder " . $playlist->playlist_order . " ,w.vid " . $playlist->playlist_order . "limit 0,1";
 		echo $select;
         $videofiles = $wpdb->get_results($wpdb->prepare($select));
-   
+
     $file = $videofiles->file;
-	
+
 	$videofile = $videofiles->hdfile;
 	$imagefile = $videofiles->image;
 	}
@@ -97,7 +97,7 @@ $output .= '<iframe  type="text/html" width="'.$width.'" height="' . $height . '
 $output .= ' <video id="video" src="'.$videofile.'" poster="'.$imagefile.'" width="'.$width.'" height="' . $height . '" autobuffer controls onerror="failed(event)">
      Html5 Not support This video Format.</video>';
 	 }
-	 
+
 	$output .= ' </div><script>var txt =  navigator.platform ;if(txt =="iPod"|| txt =="iPad"|| txt =="iPhone" || txt =="Linux armv7I")
             {   document.getElementById("htmlplayer' . $videoid . '").style.display = "block";
                 document.getElementById("video' . $videoid . '").style.display = "none";
@@ -111,7 +111,7 @@ $output .= ' <video id="video" src="'.$videofile.'" poster="'.$imagefile.'" widt
    }
 }
         </script>';
-         
+
     return $output;
 }
 
@@ -203,16 +203,16 @@ function FlashOptions() {
 ?>
 
     <!--HTML design for admin settings -->
-    <link rel="stylesheet" href="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/hdflvplayer/css/jquery.ui.all.css'; ?>">
+    <link rel="stylesheet" href="<?php echo $site_url ?>/wp-content/plugins/<?php echo dirname(plugin_basename(__FILE__)) ?>/hdflvplayer/css/jquery.ui.all.css">
 
-    <script src="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery-1.4.4.js'; ?>"></script>
+    <script src="<?php echo $site_url ?>/wp-content/plugins/<?php echo dirname(plugin_basename(__FILE__)) ?>/js/jquery-1.4.4.js"></script>
     <script>
 	var eff = jQuery.noConflict();
 	</script>
-    <script src="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery.ui.core.js'; ?>"></script>
-    <script src="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery.ui.widget.js'; ?>"></script>
-    <script src="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery.ui.mouse.js'; ?>"></script>
-    <script src="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery.ui.sortable.js'; ?>"></script>
+    <script src="<?php echo $site_url ?>/wp-content/plugins/<?php echo dirname(plugin_basename(__FILE__)) ?>/js/jquery.ui.core.js"></script>
+    <script src="<?php echo $site_url ?>/wp-content/plugins/<?php echo dirname(plugin_basename(__FILE__)) ?>/js/jquery.ui.widget.js"></script>
+    <script src="<?php echo $site_url ?>/wp-content/plugins/<?php echo dirname(plugin_basename(__FILE__)) ?>/js/jquery.ui.mouse.js"></script>
+    <script src="<?php echo $site_url ?>/wp-content/plugins/<?php echo dirname(plugin_basename(__FILE__)) ?>/js/jquery.ui.sortable.js"></script>
     <style>
         .column { width: 500px; float: left; padding-bottom: 20px; }
         .portlet { margin: 0 1em 1em 0; }
@@ -420,7 +420,7 @@ function FlashOptions() {
                               <a href="http://www.hdflvplayer.net/wordpress/" target="_blank" style="text-decoration: none;color:red;cursor:pointer;">Buy Now</a>
                               <?php }?>
                           </div>
-                           
+
                           <div class="portlet-content">
                               <table class="form-table">
                                   <tr>
@@ -451,7 +451,7 @@ function FlashOptions() {
                   </div>
                   <div class="clear"></div>
                       <p class='submit'><input class='button-primary' type='submit' value='Update Options'></p>
-                  
+
               </form>
           </div>
 
