@@ -203,16 +203,16 @@ function FlashOptions() {
 ?>
 
     <!--HTML design for admin settings -->
-    <link rel="stylesheet" href="<?php echo $site_url . 'file:///wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/hdflvplayer/css/jquery.ui.all.css'; ?>">
+    <link rel="stylesheet" href="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/hdflvplayer/css/jquery.ui.all.css'; ?>">
 
-    <script src="<?php echo $site_url . 'file:///wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery-1.4.4.js'; ?>"></script>
+    <script src="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery-1.4.4.js'; ?>"></script>
     <script>
 	var eff = jQuery.noConflict();
 	</script>
-    <script src="<?php echo $site_url . 'file:///wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery.ui.core.js'; ?>"></script>
-    <script src="<?php echo $site_url . 'file:///wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery.ui.widget.js'; ?>"></script>
-    <script src="<?php echo $site_url . 'file:///wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery.ui.mouse.js'; ?>"></script>
-    <script src="<?php echo $site_url . 'file:///wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery.ui.sortable.js'; ?>"></script>
+    <script src="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery.ui.core.js'; ?>"></script>
+    <script src="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery.ui.widget.js'; ?>"></script>
+    <script src="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery.ui.mouse.js'; ?>"></script>
+    <script src="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery.ui.sortable.js'; ?>"></script>
     <style>
         .column { width: 500px; float: left; padding-bottom: 20px; }
         .portlet { margin: 0 1em 1em 0; }
