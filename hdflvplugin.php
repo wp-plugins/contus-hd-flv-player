@@ -39,8 +39,30 @@ function HDFLV_Render($arguments= array()) {
         $height = $configXML->height;
     }
 
-    
-
+    if (isset($arguments['id'])) {
+	$videofiles = $wpdb->get_row("SELECT file,hdfile,image FROM " . $wpdb->prefix . "hdflv where vid = ".$arguments['id']);
+    $file = $videofiles->file;
+	
+	$videofile = $videofiles->hdfile;
+	$imagefile = $videofiles->image;
+	}
+	elseif (isset($arguments['playlistid'])) {
+	 $playlist = $wpdb->get_row("SELECT * FROM " . $wpdb->prefix . "hdflv_playlist WHERE pid = '$playlist_id'");
+    if ($playlist) {
+        $select = " SELECT w.* FROM " . $wpdb->prefix . "hdflv w";
+        $select .= " INNER JOIN " . $wpdb->prefix . "hdflv_med2play m";
+        $select .= " WHERE (m.playlist_id = '$playlist_id'";
+        $select .= " AND m.media_id = w.vid) GROUP BY w.vid ";
+        $select .= " ORDER BY m.sorder ASC , m.porder " . $playlist->playlist_order . " ,w.vid " . $playlist->playlist_order . "limit 0,1";
+		echo $select;
+        $videofiles = $wpdb->get_results($wpdb->prepare($select));
+   
+    $file = $videofiles->file;
+	
+	$videofile = $videofiles->hdfile;
+	$imagefile = $videofiles->image;
+	}
+	}
     $output .= "\n" . '<span id="video' . $videoid . '" class="HDFLV">' . "\n";
     $output .= '<a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this player.</span>' . "\n";
     $output .= '<script type="text/javascript">' . "\n";
@@ -62,6 +84,34 @@ function HDFLV_Render($arguments= array()) {
     $output .= 's' . $videoid . '.write("video' . $videoid . '");' . "\n";
     $output .= '</script>' . "\n";
     $videoid++;
+	$output .= '<div id="htmlplayer' . $videoid . '">';
+	 if(preg_match('/www\.youtube\.com\/watch\?v=[^&]+/', $file, $vresult)) {
+
+ $urlArray = split("=", $vresult[0]);
+ $videourl = trim($urlArray[1]);
+$output .= '<iframe  type="text/html" width="'.$width.'" height="' . $height . '"  src="http://www.youtube.com/embed/'.$videourl.'" frameborder="0">
+</iframe>';
+ }
+ else
+ {
+$output .= ' <video id="video" src="'.$videofile.'" poster="'.$imagefile.'" width="'.$width.'" height="' . $height . '" autobuffer controls onerror="failed(event)">
+     Html5 Not support This video Format.</video>';
+	 }
+	 
+	$output .= ' </div><script>var txt =  navigator.platform ;if(txt =="iPod"|| txt =="iPad"|| txt =="iPhone" || txt =="Linux armv7I")
+            {   document.getElementById("htmlplayer' . $videoid . '").style.display = "block";
+                document.getElementById("video' . $videoid . '").style.display = "none";
+            }else{
+ document.getElementById("htmlplayer' . $videoid . '").style.display = "none";
+            }
+			 function failed(e) {
+			  if(txt =="iPod"|| txt =="iPad"|| txt =="iPhone" || txt =="Linux armv7I")
+            {
+   alert("Player doesnot support this video.");
+   }
+}
+        </script>';
+         
     return $output;
 }
 
@@ -153,13 +203,16 @@ function FlashOptions() {
 ?>
 
     <!--HTML design for admin settings -->
-    <link rel="stylesheet" href="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/hdflvplayer/css/jquery.ui.all.css'; ?>">
+    <link rel="stylesheet" href="<?php echo $site_url . 'file:///wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/hdflvplayer/css/jquery.ui.all.css'; ?>">
 
-    <script src="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery-1.4.4.js'; ?>"></script>
-    <script src="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery.ui.core.js'; ?>"></script>
-    <script src="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery.ui.widget.js'; ?>"></script>
-    <script src="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery.ui.mouse.js'; ?>"></script>
-    <script src="<?php echo $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery.ui.sortable.js'; ?>"></script>
+    <script src="<?php echo $site_url . 'file:///wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery-1.4.4.js'; ?>"></script>
+    <script>
+	var eff = jQuery.noConflict();
+	</script>
+    <script src="<?php echo $site_url . 'file:///wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery.ui.core.js'; ?>"></script>
+    <script src="<?php echo $site_url . 'file:///wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery.ui.widget.js'; ?>"></script>
+    <script src="<?php echo $site_url . 'file:///wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery.ui.mouse.js'; ?>"></script>
+    <script src="<?php echo $site_url . 'file:///wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/js/jquery.ui.sortable.js'; ?>"></script>
     <style>
         .column { width: 500px; float: left; padding-bottom: 20px; }
         .portlet { margin: 0 1em 1em 0; }
@@ -170,24 +223,26 @@ function FlashOptions() {
         .ui-sortable-placeholder * { visibility: hidden; }
     </style>
     <script>
-        $(function() {
-            $( ".column" ).sortable({
+	var eff = jQuery.noConflict();
+
+        eff(function() {
+            eff( ".column" ).sortable({
                 connectWith: ".column"
             });
 
-            $( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
+            eff( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
             .find( ".portlet-header" )
             .addClass( "ui-widget-header ui-corner-all" )
             .prepend( "<span class='ui-icon ui-icon-minusthick'></span>")
             .end()
             .find( ".portlet-content" );
 
-            $( ".portlet-header .ui-icon" ).click(function() {
-                $( this ).toggleClass( "ui-icon-minusthick" ).toggleClass( "ui-icon-plusthick" );
-                $( this ).parents( ".portlet:first" ).find( ".portlet-content" ).toggle();
+            eff( ".portlet-header .ui-icon" ).click(function() {
+                eff( this ).toggleClass( "ui-icon-minusthick" ).toggleClass( "ui-icon-plusthick" );
+                eff( this ).parents( ".portlet:first" ).find( ".portlet-content" ).toggle();
             });
 
-            $( ".column" ).disableSelection();
+            eff( ".column" ).disableSelection();
         });
     </script>
     <div class="wrap">
