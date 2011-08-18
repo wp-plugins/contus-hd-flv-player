@@ -367,7 +367,8 @@ class HDFLVManage {
 
     function controller() {
         global $wpdb;
-        $this->mode = trim($_GET['mode']);
+        filter_input(INPUT_GET, 'playid');
+        $this->mode = trim(filter_input(INPUT_GET, 'mode'));
 
         $this->act_vid = (int) $_GET['id'];
         $this->act_pid = (int) $_GET['pid'];
