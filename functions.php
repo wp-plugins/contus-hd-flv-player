@@ -9,8 +9,11 @@
  *
  */
 require_once( dirname(__FILE__) . '/hdflv-config.php');
-if(isset($_GET['name'])){
-    return hd_ajax_add_playlist($_GET['name'], $_GET['media']);
+
+$name = filter_input(INPUT_GET,'name');
+$media = filter_input(INPUT_GET,'media');
+if(isset($name)){
+    return hd_ajax_add_playlist($name, $media);
 }
 
 //Function used for rendering error message
