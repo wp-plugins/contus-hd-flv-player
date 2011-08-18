@@ -45,7 +45,7 @@ Player Home Page - http://www.hdflvplayer.net/wordpress/
 = Basic Installation =
 1. Download and unzip the current version of the HD FLV Video Player plugin.
 2. Transfer the entire hd flv plugin directory to your /wp-content/plugins/ directory
-3. Activate the FLV Player plugin through the 'Plugins' menu in WordPress
+3. Activate the FLV Player plugin through the ' Plugins ' menu in WordPress
 4. That's it! You're done.
 
 == Other Notes ==
