@@ -15,7 +15,8 @@
 require_once( dirname(__FILE__) . '/hdflv-config.php');
 
 // get the path url from querystring
-$playlist_id = $_GET['pid'];
+
+$playlist_id = filter_input(INPUT_GET, 'pid');
 
 function get_out_now() {
     exit;
