@@ -153,7 +153,7 @@ function youtubeurl($url) {
     return array($vid_location1, $vid_location2);
 }
 
-$url = $_GET['url'];
+$url = filter_input(INPUT_GET, 'url');
 $location = youtubeurl($url);
 $location[0] = str_replace("&", "$", $location[0]);
 $location[1] = str_replace("&", "$", $location[1]);
