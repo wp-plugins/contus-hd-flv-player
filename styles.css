@@ -1,0 +1,23 @@
+* {	margin: 0; padding: 0; }
+
+#info {
+	display: block;
+	padding: 10px; margin-bottom: 20px;
+	border: 1px solid #333;
+	background-color: #efefef;
+}
+
+#test-list {
+	list-style: none;
+}
+
+#test-list li {
+	display: block;
+	padding: 20px 10px; margin-bottom: 3px;
+	background-color: #efefef;
+}
+
+img.handle {
+	margin-right: 20px;
+	cursor: move;
+}
