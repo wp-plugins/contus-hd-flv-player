@@ -23,9 +23,9 @@ global $wpdb;
 
 $title = 'hdflv Playlist';
 
-$pid1 = $_GET['playid'];
+$pid1 = filter_input(INPUT_GET, 'playid');
 
-foreach ($_GET['listItem'] as $position => $item) :
+foreach (filter_input(INPUT_GET, 'listItem') as $position => $item) :
     mysql_query("UPDATE $wpdb->prefix" . "hdflv_med2play SET `sorder` = $position WHERE `media_id` = $item and playlist_id=$pid1 ");
 endforeach;
 
