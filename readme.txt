@@ -9,7 +9,7 @@ The HDFLVPlayer plugin for WordPress allows the addition of video to a WordPress
 
 == Description ==
 
-Player Demo         - www.hdflvplayer.net/wordpress/demo
+Player Demo         - www.hdflvplayer.net/wordpress/demo 
 
 Player Home Page    - www.hdflvplayer.net/wordpress/
 
