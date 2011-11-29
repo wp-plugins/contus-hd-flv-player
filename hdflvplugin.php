@@ -94,7 +94,7 @@ $output .= '<iframe  type="text/html" width="'.$width.'" height="' . $height . '
  }
  else
  {
-$output .= ' <video id="video" src="'.$videofile.'" poster="'.$imagefile.'" width="'.$width.'" height="' . $height . '" autobuffer controls onerror="failed(event)">
+$output .= ' <video id="video" src="'.$file.'" poster="'.$imagefile.'" width="'.$width.'" height="' . $height . '" autobuffer controls onerror="failed(event)">
      Html5 Not support This video Format.</video>';
 	 }
 
