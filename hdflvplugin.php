@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: Contus HDFLVPlayer Plugin
- * Version: 1.5
+ * Version: 1.6
  * Author: Apptha
  * Plugin URI: http://www.apptha.com/category/extension/Wordpress/HD-FLV-Player-Plugin/
  * Author URI: http://www.apptha.com/
