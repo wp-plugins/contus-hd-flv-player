@@ -1,6 +1,6 @@
 <?php
 /*jj
- * version : 1.3
+ * version : 1.6
  * Edited by : John THomas
  * Email : johnthomas@contus.in
  * Purpose : Player Configuration Settings
