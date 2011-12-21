@@ -65,7 +65,7 @@ if ($playlist_id != '' && $video_id != '') {//Condition if both playlist id  && 
 ($autoPlay[0] == 1)? $ap = 'true' : $ap = 'false';
 
 // Create XML output of playlist
-ob_start();ob_end_flush();ob_end_clean();
+//ob_start();ob_end_flush();ob_end_clean();
 
 header("content-type:text/xml;charset = utf-8"); //mime type
 echo '<?xml version = "1.0" encoding = "utf-8"?>';
