@@ -1,4 +1,5 @@
 <?php
+ob_start();
 /* Purpose : Common functions needed throughout the plugin
  * Edited by : kranthi kumar
  * Email : kranthikumar@contus.in
