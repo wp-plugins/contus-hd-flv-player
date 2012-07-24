@@ -1,11 +1,19 @@
 <?php
-ob_start();
-/* Purpose : Common functions needed throughout the plugin
- * Edited by : kranthi kumar
- * Email : kranthikumar@contus.in
- * Path:/wp-content/plugins/contus-hd-flv-player/function.php
- * Date:9/12/11
- */
+/**
+ * @name          : Common functions needed throughout the plugin
+ * @version	  	  : 1.8
+ * @package       : apptha
+ * @subpackage    : contus-hd-flv-player
+ * @author        : Apptha - http://www.apptha.com
+ * @copyright     : Copyright (C) 2011 Powered by Apptha
+ * @license	      : GNU General Public License version 2 or later; see LICENSE.txt
+ * @Purpose       : Common functions needed throughout the plugin
+ * @Creation Date : Dec 09, 2011
+ * @Modified Date : Jul 23, 2012
+ * */
+
+ob_start(); 
+
 require_once( dirname(__FILE__) . '/hdflv-config.php');
 
 $name = filter_input(INPUT_GET,'name');
@@ -201,7 +209,8 @@ function hd_add_media($wptfile_abspath, $wp_urlpath) {
 // Get input informations from POST
     $sorder = $_POST['sorder'];
 
-    $act_name = trim($_POST['name']);
+    $act_name = strip_tags(trim($_POST['name']));
+    $act_name = preg_replace("/[^a-zA-Z0-9\/_-\s]/", '', $act_name);
 
     if ($_POST['youtube-value'] != '') {
 
@@ -289,7 +298,7 @@ function hd_update_thumb($wptfile_abspath,$showPath,$updateID) {
     global $wpdb;
     $uploadPath = $wpdb->get_col("SELECT upload_path FROM " . $wpdb->prefix . "hdflv_settings");
     $uPath = $uploadPath[0];
-    //echo "<pre>"; print_r($_POST); echo "</pre>";
+    $uploadStatus = '';
     
     if($uPath != ''){
         $wp_urlpath = $wptfile_abspath.$uPath.'/';
@@ -303,18 +312,24 @@ function hd_update_thumb($wptfile_abspath,$showPath,$updateID) {
                     $random_digit = rand(0000,9999);
                     $new_file_name=$random_digit.'_'.$cname;
                     if(move_uploaded_file($tname ,$wp_urlpath . $new_file_name)){
+                    $uploadStatus = true;
                     $updated_thumb=$new_file_name;
                     }
+                }else{
+                $uploadStatus = false;
+                render_error(__('Invalid File Format Uploaded', 'hdflv'));
                 }
 if($uPath != ''){
         $wp_showPath = $showPath.$uPath.'/';
     }else{
         $wp_showPath = $showPath.'/';
     }
+    if($uploadStatus == '1'){
    $updated_thumb_value = $wp_showPath.$updated_thumb;
    $wpdb->query(" UPDATE " . $wpdb->prefix . "hdflv SET image= '$updated_thumb_value' WHERE vid = '$updateID'");
    render_message(__('Image Update Successfully', 'hdflv'));
     return;
+    }
 }
 //Function for updating preview image
 function hd_update_preview($wptfile_abspath,$showPath,$updateID) {
@@ -322,7 +337,7 @@ function hd_update_preview($wptfile_abspath,$showPath,$updateID) {
      global $wpdb;
     $uploadPath = $wpdb->get_col("SELECT upload_path FROM " . $wpdb->prefix . "hdflv_settings");
     $uPath = $uploadPath[0];
-    //echo "<pre>"; print_r($_POST); echo "</pre>";
+    $uploadStatus = '';
     
     if($uPath != ''){
         $wp_urlpath = $wptfile_abspath.$uPath.'/';
@@ -337,18 +352,24 @@ function hd_update_preview($wptfile_abspath,$showPath,$updateID) {
                     $random_digit = rand(0000,9999);
                     $new_file_name=$random_digit.'_'.$cname;
                     if(move_uploaded_file($tname ,$wp_urlpath . $new_file_name)){
+                    $uploadStatus = true;
                     $updated_preview = $new_file_name;
                     }
+                }else{
+                $uploadStatus = false;
+                render_error(__('Invalid File Format Uploaded', 'hdflv'));
                 }
 if($uPath != ''){
         $wp_showPath = $showPath.$uPath.'/';
     }else{
         $wp_showPath = $showPath.'/';
     }
+   if($uploadStatus == '1'){
    $updated_preview_value = $wp_showPath.$updated_preview;
    $wpdb->query(" UPDATE " . $wpdb->prefix . "hdflv SET opimage= '$updated_preview_value' WHERE vid = '$updateID'");
    render_message(__('Image Update Successfully', 'hdflv'));
     return;
+   }
 }
 //Function used for retrieving YOUTUBE url
 function youtubeurl() {
@@ -376,7 +397,8 @@ function hd_update_media($media_id) {
     global $wpdb;
     $pieces = explode(",", $_POST['hid']);
     $sorder = $_POST['sorder'];
-    $act_name = addslashes(trim($_POST['act_name']));
+    $act_name = strip_tags(trim($_POST['act_name']));    
+    $act_name = preg_replace("/[^a-zA-Z0-9\/_-\s]/", '', $act_name);    
     $act_filepath = addslashes(trim($_POST['act_filepath']));
     $act_image = addslashes(trim($_POST['act_image']));
     $act_hdpath = addslashes(trim($_POST['act_hdpath']));
@@ -509,8 +531,9 @@ function hd_add_playlist() {
     global $wpdb;
    
     // Get input informations from POST
-    $p_name = addslashes(trim($_POST['p_name']));
-    $p_description = addslashes(trim($_POST['p_description']));
+    $p_name = strip_tags(trim($_POST['p_name']));
+    $p_name = preg_replace("/[^a-zA-Z0-9\/_-\s]/", '', $p_name);
+    $p_description = strip_tags(trim($_POST['p_description']));
     $p_playlistorder = $_POST['sortorder'];
     if (empty($p_playlistorder))
         $p_playlistorder = "ASC";
@@ -541,9 +564,9 @@ function hd_update_playlist() {
 
     // Get input informations from POST
     $p_id = (int) ($_POST['p_id']);
-    $p_name = addslashes(trim($_POST['p_name']));
-    		 
-    $p_description = addslashes(trim($_POST['p_description']));
+    $p_name = strip_tags(trim($_POST['p_name']));
+    $p_name = preg_replace("/[^a-zA-Z0-9\/_-\s]/", '', $p_name);		 
+    $p_description = strip_tags(trim($_POST['p_description']));
     $p_playlistorder = $_POST['sortorder'];
 
 //echo $siteUrl = $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?page='.$_GET['page'].'&mode='.$_GET['mode'];

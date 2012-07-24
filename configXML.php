@@ -1,15 +1,16 @@
 <?php
-/*
- *
- * Purpose : Player Configuration Settings
- * Path:/wp-content/plugins/contus-hd-flv-player/configXML.php
- * Edited by : kranthi kumar
- * Version: 1.7
- * Email : kranthikumar@contus.in
- * Date:9/12/11
- *
- */
-
+/**
+ * @name          : Player Configuration Settings
+ * @version	  	  : 1.8
+ * @package       : apptha
+ * @subpackage    : contus-hd-flv-player
+ * @author        : Apptha - http://www.apptha.com
+ * @copyright     : Copyright (C) 2011 Powered by Apptha
+ * @license	      : GNU General Public License version 2 or later; see LICENSE.txt
+ * @Purpose       : Player Configuration Settings
+ * @Creation Date : Dec 09, 2011
+ * @Modified Date : Jul 23, 2012
+ * */
 
 header("content-type:text/xml;charset=utf-8");
 require_once( dirname(__FILE__) . '/hdflv-config.php');

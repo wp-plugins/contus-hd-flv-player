@@ -1,13 +1,17 @@
 <?php
-/*
- * version : 1.6
- * Edited by : kranthi kumar
- * Email : kranthikumar@contus.in
- * Purpose : configuration of plugin
- * Path:/wp-content/plugins/contus-hd-flv-player/hdflv-config.php
- * Date:9/12/11
- *
- */
+/**
+ * @name          : configuration of plugin
+ * @version	  	  : 1.8
+ * @package       : apptha
+ * @subpackage    : contus-hd-flv-player
+ * @author        : Apptha - http://www.apptha.com
+ * @copyright     : Copyright (C) 2011 Powered by Apptha
+ * @license	      : GNU General Public License version 2 or later; see LICENSE.txt
+ * @Purpose       : configuration of plugin
+ * @Creation Date : Dec 09, 2011
+ * @Modified Date : Jul 23, 2012
+ * */
+
 /**
  * Bootstrap file for getting the ABSPATH constant to wp-load.php
  * This is requried when a plugin requires access not via the admin screen.

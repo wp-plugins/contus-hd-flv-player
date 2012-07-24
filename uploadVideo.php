@@ -1,16 +1,26 @@
 <?php
-/* 
- * Purpose : functions used to upload video
- * Path:/wp-content/plugins/contus-hd-flv-player/upload1.php
- * Version: 1.7
- * Edited by : kranthi kumar
- * Email : kranthikumar@contus.in
- * Date:9/12/11
- *
- */
+/**
+ * @name          : functions used to upload video
+ * @version	  	  : 1.8
+ * @package       : apptha
+ * @subpackage    : contus-hd-flv-player
+ * @author        : Apptha - http://www.apptha.com
+ * @copyright     : Copyright (C) 2011 Powered by Apptha
+ * @license	      : GNU General Public License version 2 or later; see LICENSE.txt
+ * @Purpose       : functions used to upload video
+ * @Creation Date : Dec 09, 2011
+ * @Modified Date : Jul 23, 2012
+ * */
 
 /*		This file is use to validate uploadvideos  in Add a new video file first tab upload file option	*/
+require_once('../../../wp-load.php');
 
+$dbtoken = md5(DB_NAME);
+$token = trim($_REQUEST["token"]);
+
+if($dbtoken != $token ){
+    die("You are not authorized to access this file");
+}
 require_once( dirname(__FILE__) . '/hdflv-config.php');
 			
 $errormsg = array();

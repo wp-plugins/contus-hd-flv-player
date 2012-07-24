@@ -1,15 +1,14 @@
 <?php
 /*
  * Plugin Name: Contus HDFLVPlayer Plugin
- * Version: 1.7
+ * Version: 1.8
  * Author: Apptha
  * Plugin URI: http://www.apptha.com/category/extension/Wordpress/HD-FLV-Player-Plugin/
  * Author URI: http://www.apptha.com/
  * Description: Contus HD FLV Player simplifies the process of adding high definition videos to the Wordpress blog. The plugin efficiently plays your Videos with high quality video and audio output.  
  * Path :wp-content\plugins\contus-hd-flv-player\hdflvplugin.php
- * Edited by : kranthi kumar
- * Email : kranthikumar@contus.in
- * date:09/12/11
+ * Creation Date : Dec 09, 2011
+ * Modified Date : Jul 23, 2012
  * Purpose : Main plugin file to configure
  */
 session_start();

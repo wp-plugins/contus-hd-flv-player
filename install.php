@@ -1,10 +1,17 @@
 <?php
-/* 
- * Purpose : Used for installing player plugin (Creating tables)
- * Edited By : kranthi kumar
- * Version: 1.7
- * Email : kranthikumar@contus.in
-*/
+/**
+ * @name          : Used for installing player plugin (Creating tables)
+ * @version	  	  : 1.8
+ * @package       : apptha
+ * @subpackage    : contus-hd-flv-player
+ * @author        : Apptha - http://www.apptha.com
+ * @copyright     : Copyright (C) 2011 Powered by Apptha
+ * @license	      : GNU General Public License version 2 or later; see LICENSE.txt
+ * @Purpose       : Used for installing player plugin (Creating tables)
+ * @Creation Date : Dec 09, 2011
+ * @Modified Date : Jul 23, 2012
+ * */
+
 /****************************************************************/
 /* Install routine for hdflvplayer
 /****************************************************************/

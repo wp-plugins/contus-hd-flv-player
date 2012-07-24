@@ -1,13 +1,17 @@
 <?php
-/*
- * version : 1.7
- * Edited by : kranthi kumar
- * Email : kranthikumar@contus.in
- * Purpose : Create playlist for player
- * Path:/wp-content/plugins/contus-hd-flv-player/myextractXML.php
- * Date:09/12/11
- *
- */
+/**
+ * @name          : Common functions needed throughout the plugin
+ * @version	  	  : 1.8
+ * @package       : apptha
+ * @subpackage    : contus-hd-flv-player
+ * @author        : Apptha - http://www.apptha.com
+ * @copyright     : Copyright (C) 2011 Powered by Apptha
+ * @license	      : GNU General Public License version 2 or later; see LICENSE.txt
+ * @Purpose       : Common functions needed throughout the plugin
+ * @Creation Date : Dec 09, 2011
+ * @Modified Date : Jul 23, 2012
+ * */
+
 /* Used to import plugin configuration */
 require_once( dirname(__FILE__) . '/hdflv-config.php');
 
@@ -65,7 +69,6 @@ if ($playlist_id != '' && $video_id != '') {//Condition if both playlist id  && 
 ($autoPlay[0] == 1)? $ap = 'true' : $ap = 'false';
 
 // Create XML output of playlist
-//ob_start();ob_end_flush();ob_end_clean();
 
 header("content-type:text/xml;charset = utf-8"); //mime type
 echo '<?xml version = "1.0" encoding = "utf-8"?>';

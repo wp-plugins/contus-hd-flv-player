@@ -1,12 +1,17 @@
 <?php
-/* 
- * Purpose : Common functions needed throughout the plugin
- * Path:/wp-content/plugins/contus-hd-flv-player/manage.php
- * Version: 1.7
- * Edited by : kranthi kumar
- * Email : kranthikumar@contus.in
- * Date:9/12/11
- */
+/**
+ * @name          : Common functions needed throughout the plugin
+ * @version	  	  : 1.8
+ * @package       : apptha
+ * @subpackage    : contus-hd-flv-player
+ * @author        : Apptha - http://www.apptha.com
+ * @copyright     : Copyright (C) 2011 Powered by Apptha
+ * @license	      : GNU General Public License version 2 or later; see LICENSE.txt
+ * @Purpose       : Common functions needed throughout the plugin
+ * @Creation Date : Dec 09, 2011
+ * @Modified Date : Jul 23, 2012
+ * */
+
 $contus = dirname(plugin_basename(__FILE__));
 $siteUrl = get_option('siteurl');
 define('SITEURL',$siteUrl);
@@ -103,13 +108,13 @@ cursor: default;
         setStatus(form_handler,statuscode);
         uploadqueue.shift();
         processQueue();
-
     }
 
     function submitUploadForm(form_handle)
     {
+        var token = '<?php echo md5(DB_NAME);?>';
         document.forms[form_handle].target = "uploadvideo_target";
-        document.forms[form_handle].action = "../wp-content/plugins/contus-hd-flv-player/uploadVideo.php?processing=1";
+        document.forms[form_handle].action = "../wp-content/plugins/contus-hd-flv-player/uploadVideo.php?processing=1&token="+token;
         document.forms[form_handle].submit();
     }
     function setStatus(form_handle,status)
@@ -765,24 +770,28 @@ class HDFLVManage {
                         <tr valign="top">
                             <th scope="row"><?php _e('Thumbnail URL', 'hdflv') ?></th>
                             <td><input type="text" size="80"  name="act_image" value="<?php echo $act_image ?>" id="act_image"/>
-                                <br /><?php _e('Enter the URL to show a thumbnail of the video file or upload a image', 'hdflv') ?><?php if($act_image != ''): ?><br /><span id="alert_IMGURL" style="color:red;font-size:12px;font-weight:bold;"></span><?php endif; ?>
-                                <br />
+                                <br/><?php _e('Enter the URL to show a thumbnail of the video file or upload a image', 'hdflv') ?><?php if($act_image != ''): ?><br /><span id="alert_IMGURL" style="color:red;font-size:12px;font-weight:bold;"></span><?php endif; ?>
+                                <br/>
                                 <form name="edit_thumb_form" method="post" enctype="multipart/form-data">
-                                <input type="file" name="edit_thumb">
-                                <input type="submit" name="thumb-update" value="upload" class="button-secondary">
+                                <input type="file" name="edit_thumb" id="edit_thumb">
+                                <input type="submit" name="thumb-update" value="Upload" class="button-secondary" onclick ="return validateFileExt();">
                                 </form>
-                                </td>
+                                <br />
+                                <span id="errmsg_thumbimg" style="color:red;font-size:12px;font-weight:bold;display: none;"></span>
+                             </td>
                         </tr>
                         <tr valign="top">
                             <th scope="row"><?php _e('Preview Image URL', 'hdflv') ?></th>
                             <td><input type="text" size="80"  name="act_opimg" value="<?php echo $act_opimg ?>" id="act_opimg"/>
                                 <br /><?php _e('Enter the URL to show a preview of the video file or upload a image', 'hdflv') ?><?php if($act_opimg != ''): ?><br /> <span id="alert_prIMGURL" style="color:red;font-size:12px;font-weight:bold;"></span><?php endif; ?>
                                 <br />
-                                <form name="edit_preview_form" method="post" enctype="multipart/form-data">
-                                <input type="file" name="edit_preview">
-                                <input type="submit" name="preview-update" value="upload" class="button-secondary">
+                                <form name="edit_preview_form" method="post" enctype="multipart/form-data" onSubmit ="return validateFileExt();">
+                                <input type="file" name="edit_preview" id="edit_preview">
+                                <input type="submit" name="preview-update" value="Upload" class="button-secondary">
                                 </form>
-                                </td>
+                                <br />
+                                <span id="errmsg_previewimg" style="color:red;font-size:12px;font-weight:bold;display: none;"></span>
+                             </td>
                         </tr>
                         <tr valign="top">
                             <th scope="row"><?php _e('Link URL', 'hdflv') ?></th>
@@ -793,44 +802,7 @@ class HDFLVManage {
                 </div>
                 <script type="text/javascript">
                 
-                function edtValidate(){
-                	var edtVideoTitle = document.getElementById('act_name').value;
-                	var videoUrl = document.getElementById('act_filepath').value;
-                	var hdUrl = document.getElementById('act_hdpath').value;
-                	var thumbimgUrl = document.getElementById('act_image').value;
-                	var previewimgUrl = document.getElementById('act_opimg').value;
-                	var linkUrl = document.getElementById('act_link').value;
-                    if(edtVideoTitle.trim() == '' ){
-                		document.getElementById('alert_title').innerHTML = 'Please Enter Video Title';
-                  	   return false;      
-                        }
-                	
-                   		if (videoUrl.trim() == '' )
-                  	     {
-                  			 document.getElementById('alert_VUrl').innerHTML = 'Please Enter Video URL';
-                  	         return false;
-                  	     }
-                   		else if (hdUrl.trim() == '' )
-                	     {
-                			// document.getElementById('alert_HDURL').innerHTML = 'Please Enter HD Url';
-                	        // return false;
-                	     }
-                   		
-                   		else if (thumbimgUrl.trim() == '' )
-                    	{
-                		 document.getElementById('alert_IMGURL').innerHTML = 'Please Enter Thumb Image Url';
-                         return false;
-                    	}
-                   		else if (previewimgUrl.trim() == '' )
-                    {
-                		 document.getElementById('alert_prIMGURL').innerHTML = 'Please Enter Preview Image  Url';
-                        return false;
-                    }	else if (linkUrl.trim() == '' )
-                    {
-               		 document.getElementById('alert_linkURL').innerHTML = 'Please Enter valid Link Url';
-                       return false;
-                   }
-                 }
+               
                          
                  </script>
                 <p>
@@ -863,18 +835,20 @@ class HDFLVManage {
 
                                             function t1(t2)
                                             {
-                                                if(t2.value == "y" )
-                                                {
-                                                    document.getElementById('upload2').style.display = "block"
+                                                if(t2.value == "y" ){
+                                                	document.getElementById('message').style.display = "none";
+                                                    document.getElementById('upload2').style.display = "block";
                                                     document.getElementById('youtube').style.display = "none";
                                                     document.getElementById('customurl').style.display = "none";
                                                 }
                                                 if(t2.value == "c" ){
+                                                	document.getElementById('message').style.display = "none";
                                                     document.getElementById('youtube').style.display = "block";
                                                     document.getElementById('upload2').style.display = "none";
                                                     document.getElementById('customurl').style.display = "none";
                                                 }
                                                 if(t2.value == "url" ){
+                                                	document.getElementById('message').style.display = "none";
                                                     document.getElementById('customurl').style.display = "block";
                                                     document.getElementById('youtube').style.display = "none";
                                                     document.getElementById('upload2').style.display = "none";
@@ -1219,7 +1193,7 @@ if($isTable){ //yes already in DB so add fields only
                                             echo "<th style='padding-left: 2%;' scope=\"row\">$table->pid</th>\n";
                                             echo "<td><a onclick=\"submitplay($table->pid)\" href=\"#\" >" . stripslashes($table->playlist_name) . "</td>\n";
                                             echo "<td><a href=?page=hdflvplaylist&pid=$table->pid class=\"edit\">" . __('Edit') . "</a> |
-                                                      <a href=?page=hdflvplaylist&pname=$table->playlist_name&did=$table->pid class=\"delete\" onclick=\"javascript:check=confirm( '" . __("Delete this file ?", 'hdflv') . "');if(check==false) return false;\">" . __('Delete') . "</a></td>\n";
+                                                      <a href='?page=hdflvplaylist&pname=$table->playlist_name&did=$table->pid' class=\"delete\" onclick=\"javascript:check=confirm( '" . __("Delete this file ?", 'hdflv') . "');if(check==false) return false;\">" . __('Delete') . "</a></td>\n";
                                             echo "<td></td>";
 				                            if($table->is_pactive){
 				                            	
