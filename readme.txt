@@ -48,6 +48,12 @@ Player Home Page - http://www.apptha.com/category/extension/Wordpress/HD-FLV-Pla
 3. Activate the FLV Player plugin through the ' Plugins ' menu in WordPress
 4. That's it! You're done.
 
+== Changelog ==
+
+= 2.5 =
+
+* Fixed vulnerability issue
+
 == Other Notes ==
 
 = Usage Example =

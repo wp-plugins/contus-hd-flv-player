@@ -221,7 +221,6 @@ function hd_add_media($wptfile_abspath, $wp_urlpath) {
     if (!empty($act_filepath)) {
         $ytb_pattern = "@youtube.com\/watch\?v=([0-9a-zA-Z_-]*)@i";
         if (preg_match($ytb_pattern, stripslashes($act_filepath), $match)) {
-            //print_r($match);
             $youtube_data = hd_GetSingleYoutubeVideo($match[1]);
             $act_image = "http://img.youtube.com/vi/" . $imageUrl . "/0.jpg";
             $act_opimage = "http://img.youtube.com/vi/" . $imageUrl . "/2.jpg";
@@ -494,16 +493,16 @@ function hd_ajax_add_playlist($name, $media) {
         $p_playlistorder = "ASC";
 
     $playlistname1 = "select playlist_name from " . $wpdb->prefix . "hdflv_playlist where playlist_name='" . $p_name . "'";
-    $planame1 = mysql_query($playlistname1);
-    if (mysql_fetch_array($planame1, MYSQL_NUM)) {
+    $planame1 = $wpdb->get_var($playlistname1);
+    if (!empty($planame1)) {
         hdflv_render_error(__('Failed, Playlist name already exist', 'hdflv')) . get_playlist_for_dbx($media);
         return;
     }
 
     // Add playlist in db
     if (!empty($p_name)) {
-        $insert_plist = mysql_query(" INSERT INTO " . $wpdb->prefix . "hdflv_playlist (playlist_name, playlist_desc, playlist_order) VALUES ('$p_name', '$p_description', '$p_playlistorder')");
-        if ($insert_plist != 0) {
+        $videoData = array ('playlist_name' => $p_name, 'playlist_desc' => $p_description, 'playlist_order' => $p_playlistorder );   
+        if ( $wpdb->insert( $wpdb->prefix . "hdflv_playlist", $videoData )) {
             $pid = $wpdb->insert_id;  // get index_id
             render_message(__('Playlist', 'hdflv') . ' ' . $name . __(' added successfully', 'hdflv')) . get_playlist_for_dbx($media);
         }
@@ -525,15 +524,15 @@ function hd_add_playlist() {
         $p_playlistorder = "ASC";
 
     $playlistname1 = "select playlist_name from " . $wpdb->prefix . "hdflv_playlist where playlist_name='" . $p_name . "'";
-    $planame1 = mysql_query($playlistname1);
-    if (mysql_fetch_array($planame1, MYSQL_NUM)) {
+    $planame1 = $wpdb->get_var($playlistname1);
+    if (!empty($planame1)) {
         hdflv_render_error(__('Failed, Playlist name already exist', 'hdflv'));
         return;
     }
 
     // Add playlist in db
     if (!empty($p_name)) {
-        $insert_plist = $wpdb->query(" INSERT INTO " . $wpdb->prefix . "hdflv_playlist (playlist_name, playlist_desc, playlist_order) VALUES ('$p_name', '$p_description', '$p_playlistorder')");
+      $insert_plist = $wpdb->query(" INSERT INTO " . $wpdb->prefix . "hdflv_playlist (playlist_name, playlist_desc, playlist_order) VALUES ('$p_name', '$p_description', '$p_playlistorder')");
         if ($insert_plist != 0) {
             $pid = $wpdb->insert_id;  // get index_id
             render_message(__('Playlist', 'hdflv') . ' ' . $p_name . __(' added successfully', 'hdflv'));

@@ -492,7 +492,6 @@ class HDFLVManage {
         $plfil = filter_input(INPUT_POST, 'plfilter');
         $plfilter = ( isset($plfil)) ? $plfil : (isset($pl_id) ? $pl_id : '0' );
 
-        //print_r($_POST);
         if ($search != '') {
             if ($where != '')
                 $where .= " AND ";
@@ -503,7 +502,7 @@ class HDFLVManage {
             $join = " LEFT JOIN " . $wpdb->prefix . "hdflv_med2play ON (vid = media_id) ";
             if ($where != '')
                 $where .= " AND ";
-            $where .= " (playlist_id = '" . $plfilter . "') ";
+            $where .= " (playlist_id = '" . intval($plfilter) . "') ";
             $pledit = true;
         } elseif ($plfilter == 'no') {
             $join = "  WHERE `vid` NOT IN( SELECT media_id FROM " . $wpdb->prefix . "hdflv_med2play ) ";
@@ -632,13 +631,11 @@ class HDFLVManage {
                             $plfilter = filter_input(INPUT_POST, 'plfilter');
                             $tablevid = intval($table->vid);
                             if (isset($plfilter) && $plfilter != 'no' && $plfilter != '0') {
-                                $a1 = mysql_query("SELECT sorder FROM " . $wpdb->prefix . "hdflv_med2play where playlist_id=" . $plfilter . " and media_id=$tablevid");
-                                $playlist1 = mysql_fetch_array($a1);
-                                echo "<td id=txtHint[$table->vid] >" . $playlist1[0] . "</td>\n";
+                                $playlist1 = $wpdb->get_var("SELECT sorder FROM " . $wpdb->prefix . "hdflv_med2play where playlist_id=" . intval($_REQUEST['plfilter']) . " and media_id=$table->vid");
+                                echo "<td id=txtHint[$table->vid] >" . $playlist1 . "</td>\n";
                             } elseif (isset($playid)) {
-                                $a1 = mysql_query("SELECT sorder FROM " . $wpdb->prefix . "hdflv_med2play where playlist_id=" . $playid . " and media_id=$tablevid");
-                                $playlist1 = mysql_fetch_array($a1);
-                                echo "<td id=txtHint[$table->vid]>" . $playlist1[0] . "</td>\n";
+                                $playlist1 = $wpdb->get_var("SELECT sorder FROM " . $wpdb->prefix . "hdflv_med2play where playlist_id=" . intval($_REQUEST['playid']) . " and media_id=$table->vid");
+                                echo "<td id=txtHint[$table->vid]>" . $playlist1 . "</td>\n";
                             }
                             if ($table->is_active) {
 
@@ -1008,7 +1005,7 @@ class HDFLVManage {
                                                 <div class="inside" >
                                                     <div id="submitpost" class="submitbox">
                                                          
-                                    <div class="misc-pub-section"><?php //if(mysql_num_rows($playid1)) {    ?>
+                                    <div class="misc-pub-section">
                                         <h4><?php _e('Playlist', 'hdflv'); ?>&nbsp;&nbsp;
                                             <a style="cursor:pointer"  onclick="playlistdisplay()"><?php _e('Create New', 'hdflv') ?></a></h4>
 
