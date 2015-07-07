@@ -1,27 +1,15 @@
 <?php
-/**
- * @name          : configuration of plugin
- * @version	  	  : 1.8
- * @package       : apptha
- * @subpackage    : contus-hd-flv-player
- * @author        : Apptha - http://www.apptha.com
- * @copyright     : Copyright (C) 2011 Powered by Apptha
- * @license	      : GNU General Public License version 2 or later; see LICENSE.txt
- * @Purpose       : configuration of plugin
- * @Creation Date : Dec 09, 2011
- * @Modified Date : Jul 23, 2012
- * */
-
-/**
- * Bootstrap file for getting the ABSPATH constant to wp-load.php
- * This is requried when a plugin requires access not via the admin screen.
- *
- * If the wp-load.php file is not found, then an error will be displayed 
+/*
+  Name: Contus HD FLV Player
+  Plugin URI: http://www.apptha.com/category/extension/Wordpress/HD-FLV-Player-Plugin/
+  Description: HD FLV player config file.
+  Version: 2.5
+  Author: Apptha
+  Author URI: http://www.apptha.com
+  License: GPL2
  */
-/** Define the server path to the file wp-config here, if you placed WP-CONTENT outside the classic file structure */
-$path = ''; // It should be end with a trailing slash
+$path = ''; 
 
-/** That's all, stop editing from here * */
 if (!defined('WP_LOAD_PATH')) {
 
     /** classic root path if wp-content and plugins is below wp-config.php */

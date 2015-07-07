@@ -58,7 +58,13 @@
 <tweet>tweet</tweet>
 
 <furl>furl</furl>
-<download1>dowmload1</download1>
-<download2>dload2</download2>
+
 <download>Download This Video</download>
+
+<volume>Volume</volume>
+
+<skip>Skip this video</skip>
+
+<adindicator>Your selection will follow this sponsors message in - seconds</adindicator>
+
 </english>

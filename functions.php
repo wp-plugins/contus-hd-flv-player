@@ -1,28 +1,23 @@
 <?php
-/**
- * @name          : Common functions needed throughout the plugin
- * @version	  	  : 1.8
- * @package       : apptha
- * @subpackage    : contus-hd-flv-player
- * @author        : Apptha - http://www.apptha.com
- * @copyright     : Copyright (C) 2011 Powered by Apptha
- * @license	      : GNU General Public License version 2 or later; see LICENSE.txt
- * @Purpose       : Common functions needed throughout the plugin
- * @Creation Date : Dec 09, 2011
- * @Modified Date : Jul 23, 2012
- * */
+/*
+  Name: Contus HD FLV Player
+  Plugin URI: http://www.apptha.com/category/extension/Wordpress/HD-FLV-Player-Plugin/
+  Description: Player main function file.
+  Version: 2.5
+  Author: Apptha
+  Author URI: http://www.apptha.com
+  License: GPL2
+ */
 
-ob_start(); 
-
+ob_start();
 require_once( dirname(__FILE__) . '/hdflv-config.php');
-
-$name = filter_input(INPUT_GET,'name');
-$media = filter_input(INPUT_GET,'media');
-if(isset($name)){
+$name = filter_input(INPUT_GET, 'name');
+$media = filter_input(INPUT_GET, 'media');
+if (isset($name)) {
     return hd_ajax_add_playlist($name, $media);
 }
 //Function used for rendering error message
-function render_error($message) {
+function hdflv_render_error($message) {
 ?>
     <div class="wrap"><h2>&nbsp;</h2>
         <div class="error" id="error">
@@ -33,21 +28,20 @@ function render_error($message) {
 //Function used for getting playlist by ID
 function get_playlistname_by_ID($pid = 0) {
     global $wpdb;
-
     $pid = (int) $pid;
     $result = $wpdb->get_var("SELECT playlist_name FROM " . $wpdb->prefix . "hdflv_playlist WHERE pid = $pid AND is_pactive = 1 ");
-
     return $result;
 }
 
 //Function used for get playlist order
 function get_sortorder($mediaid = 0, $pid) {
     global $wpdb;
-
+    $pid = intval($pid);
     $mediaid = (int) $mediaid;
     $result = $wpdb->get_var("SELECT sorder FROM " . $wpdb->prefix . "hdflv_med2play WHERE media_id = $mediaid and playlist_id= $pid");
     return $result;
 }
+
 //Function used for get complete URL of file name
 function wpt_filename($urlpath) {
     $filename = substr(($t = strrchr($urlpath, '/')) !== false ? $t : '', 1);
@@ -59,14 +53,12 @@ function get_playlist_for_dbx($mediaid) {
 
     global $wpdb;
     $playids = $wpdb->get_col("SELECT pid FROM " . $wpdb->prefix . "hdflv_playlist WHERE is_pactive = 1");
-    
-   
     $mediaid = (int) $mediaid;
     $checked_playlist = $wpdb->get_col("
 		SELECT playlist_id,sorder
 		FROM " . $wpdb->prefix . "hdflv_playlist," . $wpdb->prefix . "hdflv_med2play
 		WHERE " . $wpdb->prefix . "hdflv_med2play.playlist_id = pid AND " . $wpdb->prefix . "hdflv_med2play.media_id = '$mediaid' AND is_pactive = 1");
-	
+
     if (count($checked_playlist) == 0)
         $checked_playlist[] = 0;
 
@@ -89,7 +81,7 @@ function get_playlist_for_dbx($mediaid) {
         echo '<tr><td style="font-size:11px"><label for="playlist-' . $playlist['playid']
         . '" class="selectit"><input value="' . $playlist['playid']
         . '" type="checkbox" name="playlist[]" id="playlist-' . $playlist['playid']
-        . '"' . ($playlist['checked'] ? ' checked="checked"' : "") . '/> ' . wp_specialchars($playlist['name']) . "</label></td >&nbsp;<td style='font-size:11px;padding-left:13px'><input type=text size=3 id=sort-" . $playlist['playid'] . " name=sorder[] value=" . $playlist['sorder'] . ">Sort order</td></tr>
+        . '"' . ($playlist['checked'] ? ' checked="checked"' : "") . '/> ' . wp_specialchars($playlist['name']) . "</label></td ></tr>
             ";
     }
     echo "</table>";
@@ -129,7 +121,7 @@ function get_ajax_playlist_for_dbx() {
         echo '<tr><td style="font-size:11px"><label for="playlist-' . $playlist['playid']
         . '" class="selectit"><input value="' . $playlist['playid']
         . '" type="checkbox" name="playlist[]" id="playlist-' . $playlist['playid']
-        . '"' . ($playlist['checked'] ? ' checked="checked"' : "") . '/> ' . wp_specialchars($playlist['name']) . "</label></td >&nbsp;<td style='font-size:11px;padding-left:13px'><input type=text size=3 id=sort-" . $playlist['playid'] . " name=sorder[] value=" . $playlist['sorder'] . ">Sort order</td></tr>
+        . '"' . ($playlist['checked'] ? ' checked="checked"' : "") . '/> ' . wp_specialchars($playlist['name']) . "</label></td ></tr>
             ";
     }
     echo "</table>";
@@ -169,7 +161,7 @@ function get_playlist() {
         echo '<tr><td style="font-size:11px"><label for="playlist-' . $playlist['playid']
         . '" class="selectit"><input value="' . $playlist['playid']
         . '" type="checkbox" name="playlist[]" id="playlist-' . $playlist['playid']
-        . '"' . ($playlist['checked'] ? ' checked="checked"' : "") . '/> ' . wp_specialchars($playlist['name']) . "</label></td >&nbsp;<td style='font-size:11px;padding-left:13px'><input type=text size=3 id=sort-" . $playlist['playid'] . " name=sorder[] value=" . $playlist['sorder'] . ">Sort order</td></tr>
+        . '"' . ($playlist['checked'] ? ' checked="checked"' : "") . '/> ' . wp_specialchars($playlist['name']) . "</label></td ></tr>
             ";
     }
     echo "</table>";
@@ -183,58 +175,55 @@ function hd_add_media($wptfile_abspath, $wp_urlpath) {
     global $wpdb;
     $uploadPath = $wpdb->get_col("SELECT upload_path FROM " . $wpdb->prefix . "hdflv_settings");
     $uPath = $uploadPath[0];
-    //echo "<pre>"; print_r($_POST); echo "</pre>";
-    $imageUrl = filter_input(INPUT_POST ,'youtube-value' );
-   if($imageUrl){  
-    $imageUrl =  explode('v=', $imageUrl);
-    
-    $imageUrl =  explode('&', $imageUrl[1]);
-    $imageUrl = $imageUrl[0];
-   } 
-     
-    $pieces = explode(",", $_POST['hid']);
-    $video1 = $_POST['normalvideoform-value'];
-    $video2 = $_POST['hdvideoform-value'];
-    $img1 = $_POST['thumbimageform-value'];
-    $img2 = $_POST['previewimageform-value'];
-    $img3 = $_POST['customimage'];
-    $pre_image = $_POST['custompreimage'];
-    if($uPath != ''){
-        $wp_urlpath = $wp_urlpath.$uPath.'/';
-    }else{
-        $wp_urlpath = $wp_urlpath.'/';
+    $imageUrl = filter_input(INPUT_POST, 'youtube-value');
+    if ($imageUrl) {
+        $imageUrl = explode('v=', $imageUrl);
+
+        $imageUrl = explode('&', $imageUrl[1]);
+        $imageUrl = $imageUrl[0];
     }
-    
+    $hid = filter_input(INPUT_POST, 'hid');
+    $pieces = explode(",", $hid);
+    $video1 = filter_input(INPUT_POST, 'normalvideoform-value');
+    $video2 = filter_input(INPUT_POST, 'hdvideoform-value');
+    $img1 = filter_input(INPUT_POST, 'thumbimageform-value');
+    $img2 = filter_input(INPUT_POST, 'previewimageform-value');
+    $img3 = filter_input(INPUT_POST, 'customimage');
+    $pre_image = filter_input(INPUT_POST, 'custompreimage');
+
+    if ($uPath != '') {
+        $wp_urlpath = $wp_urlpath . $uPath . '/';
+    } else {
+        $wp_urlpath = $wp_urlpath . '/';
+    }
+
 
 // Get input informations from POST
-    $sorder = $_POST['sorder'];
-
-    $act_name = strip_tags(trim($_POST['name']));
+    $sorder = filter_input(INPUT_POST, 'sorder', FILTER_VALIDATE_INT, FILTER_REQUIRE_ARRAY);
+    $act_name = strip_tags(trim(filter_input(INPUT_POST, 'name')));
     $act_name = preg_replace("/[^a-zA-Z0-9\/_-\s]/", '', $act_name);
+    $youtubevalue = filter_input(INPUT_POST, 'youtube-value');
+    if ($youtubevalue != '') {
 
-    if ($_POST['youtube-value'] != '') {
-
-        $act_filepath = addslashes(trim($_POST['youtube-value']));
+        $act_filepath = addslashes(trim(filter_input(INPUT_POST, 'youtube-value')));
     } else {
 
-        $act_filepath = addslashes(trim($_POST['customurl']));
+        $act_filepath = addslashes(trim(filter_input(INPUT_POST, 'customurl')));
     }
 
-    $act_filepath2 = trim($_POST['customhd']);
-    $act_image = addslashes(trim($_POST['urlimage']));
+    $act_filepath2 = trim(filter_input(INPUT_POST, 'customhd'));
+    $act_image = addslashes(trim(filter_input(INPUT_POST, 'urlimage')));
     $act_link = '';
+    $act_playlist = filter_input(INPUT_POST, 'playlist', FILTER_VALIDATE_INT, FILTER_REQUIRE_ARRAY);
 
-    $act_playlist = $_POST['playlist'];
-
-    $act_tags = addslashes(trim($_POST['act_tags']));
+    $act_tags = addslashes(trim(filter_input(INPUT_POST, 'act_tags')));
 
     if (!empty($act_filepath)) {
         $ytb_pattern = "@youtube.com\/watch\?v=([0-9a-zA-Z_-]*)@i";
         if (preg_match($ytb_pattern, stripslashes($act_filepath), $match)) {
-            //print_r($match);
             $youtube_data = hd_GetSingleYoutubeVideo($match[1]);
-              $act_image = "http://img.youtube.com/vi/".$imageUrl."/0.jpg";
-              $act_opimage = "http://img.youtube.com/vi/".$imageUrl."/2.jpg";
+            $act_image = "http://img.youtube.com/vi/" . $imageUrl . "/0.jpg";
+            $act_opimage = "http://img.youtube.com/vi/" . $imageUrl . "/2.jpg";
             if ($youtube_data) {
                 if ($act_name == '')
                     $act_name = addslashes($youtube_data['title']);
@@ -242,9 +231,9 @@ function hd_add_media($wptfile_abspath, $wp_urlpath) {
                     $act_image = $youtube_data['thumbnail_url'];
                 if ($act_link == '')
                     $act_link = $act_filepath;
-                $act_filepath = preg_replace('/^(http)s?:\/+/i', '', $act_filepath);
+                $act_filepath = preg_replace('/^(http)(http)s?:\/+/i', '', $act_filepath);
             } else
-                render_error(__('Could not retrieve Youtube video information', 'hdflv'));
+                hdflv_render_error(__('Could not retrieve Youtube video information', 'hdflv'));
         }else {
             $act_hdpath = $act_filepath2;
             $act_image = $img3;
@@ -260,14 +249,14 @@ function hd_add_media($wptfile_abspath, $wp_urlpath) {
         if ($img2 != '')
             $act_opimage = $wp_urlpath . "$img2";
     }
-    
+
     $insert_video = $wpdb->query(" INSERT INTO " . $wpdb->prefix . "hdflv ( name, file, hdfile , image, opimage , link )
 	VALUES ( '$act_name',  '$act_filepath','$act_hdpath', '$act_image', '$act_opimage', '$act_link' )");
-	$videoName = substr($act_name, 0 , 30).' ...';
+    $videoName = substr($act_name, 0, 30) . ' ...';
     if ($insert_video != 0) {
         $video_aid = $wpdb->insert_id;  // get index_id
         $tags = explode(',', $act_tags);
-        
+
         render_message(__('Video file', 'hdflv') . ' ' . ' \'' . $videoName . '\' ' . __(' added successfully', 'hdflv'));
     }
 
@@ -292,88 +281,91 @@ function hd_add_media($wptfile_abspath, $wp_urlpath) {
     }
     return;
 }
+
 //Function for updating thumb image
-function hd_update_thumb($wptfile_abspath,$showPath,$updateID) {
+function hd_update_thumb($wptfile_abspath, $showPath, $updateID) {
 
     global $wpdb;
     $uploadPath = $wpdb->get_col("SELECT upload_path FROM " . $wpdb->prefix . "hdflv_settings");
     $uPath = $uploadPath[0];
     $uploadStatus = '';
-    
-    if($uPath != ''){
-        $wp_urlpath = $wptfile_abspath.$uPath.'/';
-    }else{
-        $wp_urlpath = $wptfile_abspath.'/';
+
+    if ($uPath != '') {
+        $wp_urlpath = $wptfile_abspath . $uPath . '/';
+    } else {
+        $wp_urlpath = $wptfile_abspath . '/';
     }
-    if ($_FILES ["edit_thumb"]["error"] == 0  && $_FILES ["edit_thumb"]["type"]== 'image/jpeg' || $_FILES ["edit_thumb"]["type"]== 'image/gif' || $_FILES ["edit_thumb"]["type"]== 'image/pjpeg' || $_FILES ["edit_thumb"]["type"]== 'image/png')
-                {
-                    $cname = $_FILES["edit_thumb"]["name"];
-                    $tname =  $_FILES["edit_thumb"]["tmp_name"];
-                    $random_digit = rand(0000,9999);
-                    $new_file_name=$random_digit.'_'.$cname;
-                    if(move_uploaded_file($tname ,$wp_urlpath . $new_file_name)){
-                    $uploadStatus = true;
-                    $updated_thumb=$new_file_name;
-                    }
-                }else{
-                $uploadStatus = false;
-                render_error(__('Invalid File Format Uploaded', 'hdflv'));
-                }
-if($uPath != ''){
-        $wp_showPath = $showPath.$uPath.'/';
-    }else{
-        $wp_showPath = $showPath.'/';
+    if ($_FILES ["edit_thumb"]["error"] == 0 && $_FILES ["edit_thumb"]["type"] == 'image/jpeg' || $_FILES ["edit_thumb"]["type"] == 'image/gif' || $_FILES ["edit_thumb"]["type"] == 'image/pjpeg' || $_FILES ["edit_thumb"]["type"] == 'image/png') {
+        $cname = $_FILES["edit_thumb"]["name"];
+        $tname = $_FILES["edit_thumb"]["tmp_name"];
+        $random_digit = rand(0000, 9999);
+        $new_file_name = $random_digit . '_' . $cname;
+        if (move_uploaded_file($tname, $wp_urlpath . $new_file_name)) {
+            $uploadStatus = true;
+            $updated_thumb = $new_file_name;
+        }
+    } else {
+        $uploadStatus = false;
+        hdflv_render_error(__('Invalid File Format Uploaded', 'hdflv'));
     }
-    if($uploadStatus == '1'){
-   $updated_thumb_value = $wp_showPath.$updated_thumb;
-   $wpdb->query(" UPDATE " . $wpdb->prefix . "hdflv SET image= '$updated_thumb_value' WHERE vid = '$updateID'");
-   render_message(__('Image Update Successfully', 'hdflv'));
-    return;
+    if ($uPath != '') {
+        $wp_showPath = $showPath . $uPath . '/';
+    } else {
+        $wp_showPath = $showPath . '/';
+    }
+    if ($uploadStatus == '1') {
+        $updated_thumb_value = $wp_showPath . $updated_thumb;
+        $updateID = intval($updateID);
+        $wpdb->query(" UPDATE " . $wpdb->prefix . "hdflv SET image= '$updated_thumb_value' WHERE vid = '$updateID'");
+        render_message(__('Image Update Successfully', 'hdflv'));
+        return;
     }
 }
-//Function for updating preview image
-function hd_update_preview($wptfile_abspath,$showPath,$updateID) {
 
-     global $wpdb;
+//Function for updating preview image
+function hd_update_preview($wptfile_abspath, $showPath, $updateID) {
+
+    global $wpdb;
     $uploadPath = $wpdb->get_col("SELECT upload_path FROM " . $wpdb->prefix . "hdflv_settings");
     $uPath = $uploadPath[0];
     $uploadStatus = '';
-    
-    if($uPath != ''){
-        $wp_urlpath = $wptfile_abspath.$uPath.'/';
-    }else{
-        $wp_urlpath = $wptfile_abspath.'/';
+
+    if ($uPath != '') {
+        $wp_urlpath = $wptfile_abspath . $uPath . '/';
+    } else {
+        $wp_urlpath = $wptfile_abspath . '/';
     }
-    
-	if ($_FILES ["edit_preview"]["error"] == 0  && $_FILES ["edit_preview"]["type"]== 'image/jpeg'  || $_FILES ["edit_preview"]["type"]== 'image/gif' || $_FILES ["edit_preview"]["type"]== 'image/pjpeg' || $_FILES ["edit_preview"]["type"]== 'image/png' )
-                {
-                    $cname = $_FILES["edit_preview"]["name"];
-                    $tname =  $_FILES["edit_preview"]["tmp_name"];
-                    $random_digit = rand(0000,9999);
-                    $new_file_name=$random_digit.'_'.$cname;
-                    if(move_uploaded_file($tname ,$wp_urlpath . $new_file_name)){
-                    $uploadStatus = true;
-                    $updated_preview = $new_file_name;
-                    }
-                }else{
-                $uploadStatus = false;
-                render_error(__('Invalid File Format Uploaded', 'hdflv'));
-                }
-if($uPath != ''){
-        $wp_showPath = $showPath.$uPath.'/';
-    }else{
-        $wp_showPath = $showPath.'/';
+
+    if ($_FILES ["edit_preview"]["error"] == 0 && $_FILES ["edit_preview"]["type"] == 'image/jpeg' || $_FILES ["edit_preview"]["type"] == 'image/gif' || $_FILES ["edit_preview"]["type"] == 'image/pjpeg' || $_FILES ["edit_preview"]["type"] == 'image/png') {
+        $cname = $_FILES["edit_preview"]["name"];
+        $tname = $_FILES["edit_preview"]["tmp_name"];
+        $random_digit = rand(0000, 9999);
+        $new_file_name = $random_digit . '_' . $cname;
+        if (move_uploaded_file($tname, $wp_urlpath . $new_file_name)) {
+            $uploadStatus = true;
+            $updated_preview = $new_file_name;
+        }
+    } else {
+        $uploadStatus = false;
+        hdflv_render_error(__('Invalid File Format Uploaded', 'hdflv'));
     }
-   if($uploadStatus == '1'){
-   $updated_preview_value = $wp_showPath.$updated_preview;
-   $wpdb->query(" UPDATE " . $wpdb->prefix . "hdflv SET opimage= '$updated_preview_value' WHERE vid = '$updateID'");
-   render_message(__('Image Update Successfully', 'hdflv'));
-    return;
-   }
+    if ($uPath != '') {
+        $wp_showPath = $showPath . $uPath . '/';
+    } else {
+        $wp_showPath = $showPath . '/';
+    }
+    $updateID = intval($updateID);
+    if ($uploadStatus == '1') {
+        $updated_preview_value = $wp_showPath . $updated_preview;
+        $wpdb->query(" UPDATE " . $wpdb->prefix . "hdflv SET opimage= '$updated_preview_value' WHERE vid = '$updateID'");
+        render_message(__('Image Update Successfully', 'hdflv'));
+        return;
+    }
 }
+
 //Function used for retrieving YOUTUBE url
 function youtubeurl() {
-    $act_filepath = addslashes(trim($_POST['filepath']));
+    $act_filepath = addslashes(trim(filter_input(INPUT_POST, 'filepath')));
     if (!empty($act_filepath)) {
         $ytb_pattern = "@youtube.com\/watch\?v=([0-9a-zA-Z_-]*)@i";
         if (preg_match($ytb_pattern, stripslashes($act_filepath), $match)) {
@@ -383,10 +375,10 @@ function youtubeurl() {
                 $act[3] = $youtube_data['thumbnail_url'];
                 $act[4] = $act_filepath;
             } else
-                render_error(__('Could not retrieve Youtube video information', 'hdflv'));
+                hdflv_render_error(__('Could not retrieve Youtube video information', 'hdflv'));
         }else {
             $act[4] = $act_filepath;
-            render_error(__('URL entered is not a valid Youtube Url', 'hdflv'));
+            hdflv_render_error(__('URL entered is not a valid Youtube Url', 'hdflv'));
         }
         return $act;
     }
@@ -395,19 +387,19 @@ function youtubeurl() {
 //Function used for updating media data(File path,name,etc..)
 function hd_update_media($media_id) {
     global $wpdb;
-    $pieces = explode(",", $_POST['hid']);
-    $sorder = $_POST['sorder'];
-    $act_name = strip_tags(trim($_POST['act_name']));    
-    $act_name = preg_replace("/[^a-zA-Z0-9\/_-\s]/", '', $act_name);    
-    $act_filepath = addslashes(trim($_POST['act_filepath']));
-    $act_image = addslashes(trim($_POST['act_image']));
-    $act_hdpath = addslashes(trim($_POST['act_hdpath']));
-    $act_link = addslashes(trim($_POST['act_link']));
-    $act_opimg = addslashes(trim($_POST['act_opimg']));
-
-    $act_playlist = $_POST['playlist'];
+    $pieces = explode(",", filter_input(INPUT_POST, 'hid'));
+    $sorder = filter_input(INPUT_POST, 'sorder', FILTER_VALIDATE_INT, FILTER_REQUIRE_ARRAY);
+    $act_name = strip_tags(trim(filter_input(INPUT_POST, 'act_name')));
+    $act_name = preg_replace("/[^a-zA-Z0-9\/_-\s]/", '', $act_name);
+    $act_filepath = addslashes(trim(filter_input(INPUT_POST, 'act_filepath')));
+    $act_image = addslashes(trim(filter_input(INPUT_POST, 'act_image')));
+    $act_hdpath = addslashes(trim(filter_input(INPUT_POST, 'act_hdpath')));
+    $act_link = addslashes(trim(filter_input(INPUT_POST, 'act_link')));
+    $act_opimg = addslashes(trim(filter_input(INPUT_POST, 'act_opimg')));
+    $media_id = intval($media_id);
+    $act_playlist = filter_input(INPUT_POST, 'playlist', FILTER_VALIDATE_INT, FILTER_REQUIRE_ARRAY);
     // Update tags
-    $act_tags = addslashes(trim($_POST['act_tags']));
+    $act_tags = addslashes(trim(filter_input(INPUT_POST, 'act_tags')));
     $tags = explode(',', $act_tags);
     if (!$act_playlist)
         $act_playlist = array();
@@ -428,8 +420,6 @@ function hd_update_media($media_id) {
         }
     }
     $add_list = array_diff($act_playlist, $old_playlist);
-
-
     if ($add_list) {
         foreach ($add_list as $new_list) {
             $new_list1 = $new_list - 1;
@@ -443,21 +433,17 @@ function hd_update_media($media_id) {
         $wpdb->query(" UPDATE " . $wpdb->prefix . "hdflv_med2play SET sorder= '$sorder[$i]' WHERE media_id = '$media_id' and playlist_id = '$new_list'");
         $i++;
     }
-
-
     if (!empty($act_filepath)) {
         $result = $wpdb->query("UPDATE " . $wpdb->prefix . "hdflv SET name = '$act_name',  file='$act_filepath' ,hdfile='$act_hdpath' , image='$act_image' , opimage='$act_opimg' , link='$act_link'  WHERE vid = '$media_id' ");
     }
-  
-  
     render_message(__('Update Successfully', 'hdflv'));
     return;
 }
 
 //Function used for deleting media(video)
-function hd_delete_media($act_vid, $deletefile , $video_name) {
+function hd_delete_media($act_vid, $deletefile, $video_name) {
     global $wpdb;
-
+    $act_vid = intval($act_vid);
     if ($deletefile) {
 
         $act_videoset = $wpdb->get_row("SELECT * FROM " . $wpdb->prefix . "hdflv WHERE vid = $act_vid ");
@@ -468,7 +454,7 @@ function hd_delete_media($act_vid, $deletefile , $video_name) {
 
             $wpt_checkdel = @unlink($abs_filename);
             if (!$wpt_checkdel)
-                render_error(__('Error in deleting file', 'hdflv'));
+                hdflv_render_error(__('Error in deleting file', 'hdflv'));
         }
 
         $act_filename = wpt_filename($act_videoset->image);
@@ -477,7 +463,7 @@ function hd_delete_media($act_vid, $deletefile , $video_name) {
 
             $wpt_checkdel = @unlink($abs_filename);
             if (!$wpt_checkdel)
-                render_error(__('Error in deleting file', 'hdflv'));
+                hdflv_render_error(__('Error in deleting file', 'hdflv'));
         }
     }
 
@@ -486,7 +472,7 @@ function hd_delete_media($act_vid, $deletefile , $video_name) {
 
     $delete_video = $wpdb->query("DELETE FROM " . $wpdb->prefix . "hdflv WHERE vid = $act_vid");
     if (!$delete_video)
-        render_error(__('Error in deleting media file', 'hdflv'));
+        hdflv_render_error(__('Error in deleting media file', 'hdflv'));
 
     if (empty($text))
         render_message(__('Video file', 'hdflv') . ' \'' . $video_name . '\' ' . __('deleted successfully', 'hdflv'));
@@ -494,10 +480,9 @@ function hd_delete_media($act_vid, $deletefile , $video_name) {
     return;
 }
 
-
 //calling via Ajax to add playlist    hdflvscript.js file this is calling
-function hd_ajax_add_playlist($name,$media) {
-   
+function hd_ajax_add_playlist($name, $media) {
+
     global $wpdb;
 
     // Get input informations from POST
@@ -508,50 +493,49 @@ function hd_ajax_add_playlist($name,$media) {
         $p_playlistorder = "ASC";
 
     $playlistname1 = "select playlist_name from " . $wpdb->prefix . "hdflv_playlist where playlist_name='" . $p_name . "'";
-    $planame1 = mysql_query($playlistname1);
-    if (mysql_fetch_array($planame1, MYSQL_NUM)) {
-        render_error(__('Failed, Playlist name already exist', 'hdflv')).get_playlist_for_dbx($media);
-        return ;
-    }
-
-    // Add playlist in db
-    if (!empty($p_name)) {
-        $insert_plist = mysql_query(" INSERT INTO " . $wpdb->prefix . "hdflv_playlist (playlist_name, playlist_desc, playlist_order) VALUES ('$p_name', '$p_description', '$p_playlistorder')");
-        if ($insert_plist != 0) {
-            $pid = $wpdb->insert_id;  // get index_id
-            render_message(__('Playlist', 'hdflv') . ' ' . $name . __(' added successfully', 'hdflv')).get_playlist_for_dbx($media);
-        }
-    }
-
-    return ;
-}
-
-//Function used to add playlist
-function hd_add_playlist() {
-    global $wpdb;
-   
-    // Get input informations from POST
-    $p_name = strip_tags(trim($_POST['p_name']));
-    $p_name = preg_replace("/[^a-zA-Z0-9\/_-\s]/", '', $p_name);
-    $p_description = strip_tags(trim($_POST['p_description']));
-    $p_playlistorder = $_POST['sortorder'];
-    if (empty($p_playlistorder))
-        $p_playlistorder = "ASC";
-
-    $playlistname1 = "select playlist_name from " . $wpdb->prefix . "hdflv_playlist where playlist_name='" . $p_name . "'";
-    $planame1 = mysql_query($playlistname1);
-    if (mysql_fetch_array($planame1, MYSQL_NUM)) {
-      render_error(__('Failed, Playlist name already exist', 'hdflv'));
+    $planame1 = $wpdb->get_var($playlistname1);
+    if (!empty($planame1)) {
+        hdflv_render_error(__('Failed, Playlist name already exist', 'hdflv')) . get_playlist_for_dbx($media);
         return;
     }
 
     // Add playlist in db
     if (!empty($p_name)) {
-        $insert_plist = $wpdb->query(" INSERT INTO " . $wpdb->prefix . "hdflv_playlist (playlist_name, playlist_desc, playlist_order) VALUES ('$p_name', '$p_description', '$p_playlistorder')");
+        $videoData = array ('playlist_name' => $p_name, 'playlist_desc' => $p_description, 'playlist_order' => $p_playlistorder );   
+        if ( $wpdb->insert( $wpdb->prefix . "hdflv_playlist", $videoData )) {
+            $pid = $wpdb->insert_id;  // get index_id
+            render_message(__('Playlist', 'hdflv') . ' ' . $name . __(' added successfully', 'hdflv')) . get_playlist_for_dbx($media);
+        }
+    }
+
+    return;
+}
+
+//Function used to add playlist
+function hd_add_playlist() {
+    global $wpdb;
+
+    // Get input informations from POST
+    $p_name = strip_tags(trim(filter_input(INPUT_POST, 'p_name')));
+    $p_name = preg_replace("/[^a-zA-Z0-9\/_-\s]/", '', $p_name);
+    $p_description = strip_tags(trim(filter_input(INPUT_POST, 'p_description')));
+    $p_playlistorder = filter_input(INPUT_POST, 'sortorder');
+    if (empty($p_playlistorder))
+        $p_playlistorder = "ASC";
+
+    $playlistname1 = "select playlist_name from " . $wpdb->prefix . "hdflv_playlist where playlist_name='" . $p_name . "'";
+    $planame1 = $wpdb->get_var($playlistname1);
+    if (!empty($planame1)) {
+        hdflv_render_error(__('Failed, Playlist name already exist', 'hdflv'));
+        return;
+    }
+
+    // Add playlist in db
+    if (!empty($p_name)) {
+      $insert_plist = $wpdb->query(" INSERT INTO " . $wpdb->prefix . "hdflv_playlist (playlist_name, playlist_desc, playlist_order) VALUES ('$p_name', '$p_description', '$p_playlistorder')");
         if ($insert_plist != 0) {
             $pid = $wpdb->insert_id;  // get index_id
-          render_message(__('Playlist', 'hdflv') . ' ' . $p_name . __(' added successfully', 'hdflv'));
-           
+            render_message(__('Playlist', 'hdflv') . ' ' . $p_name . __(' added successfully', 'hdflv'));
         }
     }
 
@@ -563,41 +547,44 @@ function hd_update_playlist() {
     global $wpdb;
 
     // Get input informations from POST
-    $p_id = (int) ($_POST['p_id']);
-    $p_name = strip_tags(trim($_POST['p_name']));
-    $p_name = preg_replace("/[^a-zA-Z0-9\/_-\s]/", '', $p_name);		 
-    $p_description = strip_tags(trim($_POST['p_description']));
-    $p_playlistorder = $_POST['sortorder'];
+    $p_id = (int) (filter_input(INPUT_POST, 'p_id'));
+    $p_name = strip_tags(trim(filter_input(INPUT_POST, 'p_name')));
+    $p_name = preg_replace("/[^a-zA-Z0-9\/_-\s]/", '', $p_name);
+    $p_description = strip_tags(trim(filter_input(INPUT_POST, 'p_description')));
+    $p_playlistorder = filter_input(INPUT_POST, 'sortorder');
+    $pager = filter_input(INPUT_POST, 'page');
+    $mode = filter_input(INPUT_POST, 'mode');
 
-//echo $siteUrl = $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?page='.$_GET['page'].'&mode='.$_GET['mode'];
-$siteUrl = 'admin.php?page=hdflvplaylist'.$_GET['page'].'&mode='.$_GET['mode'].'&sus=1';
+    $siteUrl = 'admin.php?page=hdflvplaylist' . $pager . '&mode=' . $mode . '&sus=1';
     if (!empty($p_name)) {
         $wpdb->query(" UPDATE " . $wpdb->prefix . "hdflv_playlist SET playlist_name = '$p_name', playlist_desc = '$p_description', playlist_order = '$p_playlistorder' WHERE pid = '$p_id' ");
-            
-      render_message(__('Playlist', 'hdflv') . ' ' . $p_name.' '.__('Update Successfully', 'hdflv'));
+
+        render_message(__('Playlist', 'hdflv') . ' ' . $p_name . ' ' . __('Update Successfully', 'hdflv'));
     }
     return;
 }
 
 //Function used to delete playlist
-function hd_delete_playlist($act_pid , $playlist_name ) {
+function hd_delete_playlist($act_pid, $playlist_name) {
     global $wpdb;
-   
+    $act_pid = $wpdb->escape($act_pid);
+    $act_pid = intval($act_pid);
     $delete_plist = $wpdb->query("DELETE FROM " . $wpdb->prefix . "hdflv_playlist WHERE pid = $act_pid");
+
     $delete_plist2 = $wpdb->query("DELETE FROM " . $wpdb->prefix . "hdflv_med2play WHERE playlist_id = $act_pid");
-    
-        render_message(__('Playlist', 'hdflv') . ' \'' . $playlist_name . '\' ' . __('deleted successfully', 'hdflv'));
-    
+
+    render_message(__('Playlist', 'hdflv') . ' \'' . $playlist_name . '\' ' . __('deleted successfully', 'hdflv'));
+
     return;
-     
 }
+
 //Function used for rendering message
 function render_message($message, $timeout = 0) {
 ?>
-   
-        <div  style="margin:0px ;" class="fade updated" id="message" onclick="this.parentNode.removeChild (this)">
-            <p><strong><?php echo $message ?></strong></p>
-        </div>
+
+    <div  style="margin:0px ;" class="fade updated" id="message" onclick="this.parentNode.removeChild (this)">
+        <p><strong><?php echo $message ?></strong></p>
+    </div>
 <?php
 }
 
@@ -716,102 +703,93 @@ function hd_GetYoutubePage($url) {
     }
 
     return $xml;
-} ?>
+}
+?>
 <style type="text/css">
-	
-        /*             =============================================================================*/
+    /*             =============================================================================*/
+    .pagination {
+        clear:both;
+        padding:3px 0;
+        position:relative;
+        font-size:11px;
+        line-height:13px;
+    }
 
-.pagination {
-clear:both;
-padding:3px 0;
-position:relative;
-font-size:11px;
-line-height:13px;
-}
+    .pagination span, .pagination a {
+        display:block;
+        float:left;
+        margin: 2px 2px 2px 0;
+        padding:6px 9px 5px 9px;
+        text-decoration:none;
+        width:auto;
+        color: #333;
 
-.pagination span, .pagination a {
-display:block;
-float:left;
-margin: 2px 2px 2px 0;
-padding:6px 9px 5px 9px;
-text-decoration:none;
-width:auto;
-color: #333;
+        background-color: #EEE;
+        border: 1px solid #B1B1B1;
+        font-family: verdana;
+        font-size: 11px;
+    }
 
-background-color: #EEE;
-border: 1px solid #B1B1B1;
-font-family: verdana;
-font-size: 11px;
-}
+    .pagination a:hover{
+        color:#fff;
+        background: #3279BB;
+    }
 
-.pagination a:hover{
-color:#fff;
-background: #3279BB;
-}
-
-.pagination .current{
-padding:6px 9px 5px 9px;
-background: #3279BB;
-color:#fff;
-}  	
+    .pagination .current{
+        padding:6px 9px 5px 9px;
+        background: #3279BB;
+        color:#fff;
+    }
 
 </style> 
-<?php         function pagination($pages = '', $range = '')
-        {
- 
-     
-            $showitems = ($range * 1)+1;
-            $nextvalue =  filter_input(INPUT_GET , 'paged') ;
-            if(!$nextvalue)$nextvalue = 1;
-            global $paged;
-            if(empty($paged)) $paged = 0;
-            if($pages == '')
-            {
-                global $wp_query;
-                $pages = $wp_query->max_num_pages;
-                if(!$pages)
-                {
-                    $pages = 1;
-                }
-            }
-            if(1 != $pages)
-            {
-                echo "<div class=\"pagination\"><span>Page ".$nextvalue." of ".intval($pages)."</span>";
-                $lastVal = intval($pages); 
-                $diffis =  intval($pages) - $nextvalue;
-                if($diffis <= 2 && $nextvalue != 1)
-                {
-                    echo "<a href='".get_pagenum_link(1)."'>&laquo; First</a>";
-                }
-                if($nextvalue > 1 )
-                {
-                	$previous = $_GET['paged'] - 1;
-                	
-                echo "<a href='".get_pagenum_link()."&paged=$previous#videostableid'>&lsaquo; Previous</a>";
-                }
-               
-                    	if(!$_GET['paged'] || $_GET['paged'] == 1 )
-                    	{
-                    		$i = 1;
-                    		$pages = 2;
-                    		$showitems = 0;
-                    	}
-                    	else{
-                    		$i = $_GET['paged'];
-                    	}                    
-                        echo  ($paged == $i)? "<span class=\"current\">".$i."</span>":"<a href='".get_pagenum_link($i)."#videostableid' class=\"inactive\">".$i."</a>";
-                    
-               
-                if ($diffis > 1 ){
-                	
-                	echo "<a href=\"".get_pagenum_link(++$nextvalue)."#videostableid\">Next &rsaquo;</a>";
-                }
-                if ($diffis > 0)
-                {
-                	echo "<a href='".get_pagenum_link($lastVal)."#videostableid'>Last &raquo;</a>";
-                }
-                echo "</div>\n";
-            }
-        }
+<?php
 
+function pagination($pages = '', $range = '') {
+    $showitems = ($range * 1) + 1;
+    $nextvalue = filter_input(INPUT_GET, 'paged');
+    if (!$nextvalue
+        )$nextvalue = 1;
+    global $paged;
+    if (empty($paged))
+        $paged = 0;
+    if ($pages == '') {
+        global $wp_query;
+        $pages = $wp_query->max_num_pages;
+        if (!$pages) {
+            $pages = 1;
+        }
+    }
+    if (1 != $pages) {
+        echo "<div class=\"pagination\"><span>Page " . $nextvalue . " of " . intval($pages) . "</span>";
+        $lastVal = intval($pages);
+        $diffis = intval($pages) - $nextvalue;
+        if ($diffis <= 2 && $nextvalue != 1) {
+            echo "<a href='" . get_pagenum_link(1) . "'>&laquo; First</a>";
+        }
+        if ($nextvalue > 1) {
+            $previous = filter_input(INPUT_GET, 'paged') - 1;
+
+            echo "<a href='" . get_pagenum_link() . "&paged=$previous#videostableid'>&lsaquo; Previous</a>";
+        }
+        $paged = filter_input(INPUT_GET, 'paged');
+        if (!$paged || $paged == 1) {
+            $i = 1;
+            $pages = 2;
+            $showitems = 0;
+        } else {
+            $i = $paged;
+        }
+        echo ($paged == $i) ? "<span class=\"current\">" . $i . "</span>" : "<a href='" . get_pagenum_link($i) . "#videostableid' class=\"inactive\">" . $i . "</a>";
+
+
+        if ($diffis > 1) {
+
+            echo "<a href=\"" . get_pagenum_link(++$nextvalue) . "#videostableid\">Next &rsaquo;</a>";
+        }
+        if ($diffis > 0) {
+            echo "<a href='" . get_pagenum_link($lastVal) . "#videostableid'>Last &raquo;</a>";
+        }
+        echo "</div>\n";
+    }
+}
 ?>

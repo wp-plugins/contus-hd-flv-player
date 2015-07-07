@@ -1,4 +1,4 @@
-=== HD FLV Player ===
+=== HD FLV PLayer ===
 Contributors: Contus Support
 Tags: Video Player plugin, video, flash player, flv player, flash Video Player, flv player wordpress, hd flv player, youtube plugin, youtube Video Player, high definition Video Player, flash, play flv wordpress, player, Video Plugin, wp flv player, wp flv plugin, flv player 2009, Wp flash Video Player, wp flv, wordpress flv plugin, wp hd flv player, flv player plugin, wordpress flv player
 Requires at least: 2.8
@@ -47,6 +47,12 @@ Player Home Page - http://www.apptha.com/category/extension/Wordpress/HD-FLV-Pla
 2. Transfer the entire hd flv plugin directory to your /wp-content/plugins/ directory
 3. Activate the FLV Player plugin through the ' Plugins ' menu in WordPress
 4. That's it! You're done.
+
+== Changelog ==
+
+= 2.5 =
+
+* Fixed vulnerability issue
 
 == Other Notes ==
 

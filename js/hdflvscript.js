@@ -1,6 +1,6 @@
 /**
  * @name          : Script for Hd Flv Player
- * @version	  	  : 1.8
+ * @version	  : 2.5
  * @package       : apptha
  * @subpackage    : contus-hd-flv-player
  * @author        : Apptha - http://www.apptha.com
@@ -15,15 +15,17 @@ var xmlhttp;
 var myarray = [];
 var myarray1;
 function showUser(str, order) {
+	var hdflv_token = document.getElementById('app_wp_token').value;
+	var plugin_name = document.getElementById('plugin_name').value;
 	xmlhttp = GetXmlHttpObject();
 	if (xmlhttp == null) {
 		alert("Browser does not support HTTP Request");
 		return;
 	}
-	var url = "../wp-content/plugins/contus-hd-flv-player/process-sortable.php";
+	var url = "../wp-content/plugins/"+plugin_name+"/process-sortable.php";
 	url = url + "?" + order;
 	url = url + "&playid=" + str;
-	url = url + "&sid=" + Math.random();
+	url = url + "&sid=" + Math.random()+'&hdflv_token='+hdflv_token;
 	xmlhttp.onreadystatechange = stateChanged;
 	xmlhttp.open("GET", url, true);
 	xmlhttp.send(null);
@@ -71,8 +73,10 @@ function hideContentDives(divIdIs, id) {
 }
 
 function divStyleDisplaySet(IdValue, setValue) {
+	var plugin_name = document.getElementById('plugin_name').value;
+	var hdflv_token = document.getElementById('app_wp_token').value;
 	var xmlhttp;
-	var url = "../wp-content/plugins/contus-hd-flv-player/process-sortable.php";
+	var url = "../wp-content/plugins/"+plugin_name+"/process-sortable.php";
 	if (IdValue.length == 0) {
 
 		return;
@@ -90,16 +94,17 @@ function divStyleDisplaySet(IdValue, setValue) {
 	}
 
 	xmlhttp.open("GET", url + '?updatedisplay=1&IdValue=' + IdValue
-			+ '&setValue=' + setValue, true);
+			+ '&setValue=' + setValue + '&hdflv_token=' + hdflv_token, true);
 	xmlhttp.send();
 }
 
 function setVideoStatusOff(videoId, status, flag) //click on status image then it exe
-{
+{	
 	//if flag is set 1 then it is playlist status else video status
-
+	var hdflv_token = document.getElementById('app_wp_token').value;	
+	var plugin_name = document.getElementById('plugin_name').value;
 	var xmlhttp;
-	var url = "../wp-content/plugins/contus-hd-flv-player/process-sortable.php";
+	var url = "../wp-content/plugins/"+plugin_name+"/process-sortable.php";
 	//var statusImgPath = document.getElementById('imagepath').value;
 	if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
 		xmlhttp = new XMLHttpRequest();
@@ -119,10 +124,10 @@ function setVideoStatusOff(videoId, status, flag) //click on status image then i
 	if (flag) {
 		//	alert( url+'?changeplaylistStatus=1&videoId='+videoId+'&status='+status);
 		xmlhttp.open("GET", url + '?changeplaylistStatus=1&videoId=' + videoId
-				+ '&status=' + status, true);//for playlist status
+				+ '&status=' + status + '&hdflv_token=' + hdflv_token, true);//for playlist status
 	} else {
 		xmlhttp.open("GET", url + '?changeVideoStatus=1&videoId=' + videoId
-				+ '&status=' + status, true); //for video status
+				+ '&status=' + status + '&hdflv_token=' + hdflv_token, true); //for video status
 	}
 
 	xmlhttp.send();
@@ -130,8 +135,12 @@ function setVideoStatusOff(videoId, status, flag) //click on status image then i
 
 /*   manage.php  script                                  */
 
-function savePlaylist(playlistName, mediaId) {
+function savePlaylist(playlistName, mediaId) {	
 	var name = playlistName.value;
+        if(name==''){
+            alert("Enter Playlist Name");
+            return false;
+        }else{
 	var pluginUrl = document.getElementById('pluginUrl').value;
 
 	$.ajax({
@@ -144,6 +153,8 @@ function savePlaylist(playlistName, mediaId) {
 			document.getElementById('playlistchecklist').innerHTML = msg;
 		}
 	});
+        document.getElementById('p_name').value='';
+        }
 }
 
 /**
@@ -151,8 +162,9 @@ function savePlaylist(playlistName, mediaId) {
  * 
  */
 
-function validateInput() {
+function validateInput() { 
 	document.getElementById('message').style.display = '';
+        document.getElementById('message').innerHTML = '';
 	var YouTubeUrl = document.getElementById('filepath1').value;
 	var CustomUrl = document.getElementById('filepath2').value;
 	var HdUrl = document.getElementById('filepath3').value;
@@ -177,6 +189,12 @@ function validateInput() {
 		document.getElementById('message').innerHTML = 'Please enter valid You Tube Url';
 		return false;
 	}
+
+        if (document.getElementById('btn3').checked == true
+			&& document.getElementById('filepath4').value == '') {
+		document.getElementById('message').innerHTML = 'Please enter Thumb Image Url';
+		return false;
+	}
 	if (document.getElementById('btn2').checked == true
 			&& document.getElementById('filepath1').value == '') {
 		document.getElementById('message').innerHTML = 'Enter Youtube URL';
@@ -185,6 +203,11 @@ function validateInput() {
 	if (document.getElementById('btn1').checked == true
 			&& document.getElementById('f1-upload-form').style.display != 'none') {
 		document.getElementById('message').innerHTML = 'Upload Video';
+		return false;
+	}
+        if (document.getElementById('btn1').checked == true
+			&& document.getElementById('thumbimageform-value').value == '') {
+		document.getElementById('message').innerHTML = 'Upload Thumb Image';
 		return false;
 	}
 	if (document.getElementById('btn3').checked == true
@@ -214,6 +237,7 @@ function edtValidate() {
 	var thumbimgUrl = document.getElementById('act_image').value;
 	var previewimgUrl = document.getElementById('act_opimg').value;
 	var linkUrl = document.getElementById('act_link').value;
+        var edit_thumb = document.getElementById('edit_thumb').value;
 	
 	var regexp = /^(((ht|f){1}((tp|tps):[/][/]){1}))[-a-zA-Z0-9@:%_\+.~#!?&//=]+$/;
 	
@@ -230,13 +254,11 @@ function edtValidate() {
 		document.getElementById('alert_HDURL').innerHTML = 'Please Enter Valid HD Url';
 		return false;
 	}else if (thumbimgUrl == '') {
+              if(edit_thumb == ''){
 		document.getElementById('errmsg_thumbimg').style.display = '';
 		document.getElementById('errmsg_thumbimg').innerHTML = 'Please Enter Thumb Image/Url';
 		return false;
-	}else if (previewimgUrl == '') {
-		document.getElementById('errmsg_previewimg').style.display = '';
-		document.getElementById('errmsg_previewimg').innerHTML = 'Please Enter Preview Image/Url';
-		return false;
+              }
 	}else if(linkUrl != '' && regexp.test(linkUrl)== false) {
 		document.getElementById('alert_linkURL').innerHTML = 'Please Enter Valid Link Url';
 		return false;

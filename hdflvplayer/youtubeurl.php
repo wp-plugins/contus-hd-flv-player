@@ -1,12 +1,15 @@
 <?php
 
 /*
- * version : 1.6
- * Edited by : John THomas
- * Email : johnthomas@contus.in
- * Purpose : Common functions needed throughout the plugin
- * Path:/wp-content/plugins/contus-hd-flv-player/hdflvplayer/youtubeurl.php
- * Date:13/1/11
+* @version	  : 2.5
+ * @package       : apptha
+ * @subpackage    : contus-hd-flv-player
+ * @author        : Apptha - http://www.apptha.com
+ * @copyright     : Copyright (C) 2011 Powered by Apptha
+ * @license	      : GNU General Public License version 2 or later; see LICENSE.txt
+ * @Purpose       : Common functions needed throughout the plugin
+ * @Creation Date : Dec 09, 2011
+ * @Modified Date : Jul 23, 2012
  *
  */
 

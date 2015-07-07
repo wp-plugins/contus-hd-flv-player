@@ -1,28 +1,24 @@
 <?php
-/**
- * @name          : functions used to upload video
- * @version	  	  : 1.8
- * @package       : apptha
- * @subpackage    : contus-hd-flv-player
- * @author        : Apptha - http://www.apptha.com
- * @copyright     : Copyright (C) 2011 Powered by Apptha
- * @license	      : GNU General Public License version 2 or later; see LICENSE.txt
- * @Purpose       : functions used to upload video
- * @Creation Date : Dec 09, 2011
- * @Modified Date : Jul 23, 2012
- * */
+/*
+  Name: Contus HD FLV Player
+  Plugin URI: http://www.apptha.com/category/extension/Wordpress/HD-FLV-Player-Plugin/
+  Description: video upload file.
+  Version: 2.5
+  Author: Apptha
+  Author URI: http://www.apptha.com
+  License: GPL2
+ */
 
-/*		This file is use to validate uploadvideos  in Add a new video file first tab upload file option	*/
-require_once('../../../wp-load.php');
+@session_start();
+$sessionToken = $_SESSION['app_wp_token'];
+$reqToken = trim($_REQUEST["hdflv_token"]);
 
-$dbtoken = md5(DB_NAME);
-$token = trim($_REQUEST["token"]);
-
-if($dbtoken != $token ){
+if ($sessionToken != $reqToken) {
     die("You are not authorized to access this file");
 }
+
 require_once( dirname(__FILE__) . '/hdflv-config.php');
-			
+
 $errormsg = array();
 $file_name = '';
 $error = "";
@@ -42,34 +38,37 @@ $errormsg[11] = "<b>Upload Failed:</b> File upload stopped by extension";
 $errormsg[12] = "<b>Upload Failed:</b> Unknown upload error.";
 $errormsg[13] = "<b>Upload Failed:</b> Please check post_max_size in php.ini settings";
 
-if (isset($_GET['error'])) {
-    $error = $_GET['error'];  //its is use to cancel uploading if any error is find
+$error_f = filter_input(INPUT_GET, 'error');
+$processing_f = filter_input(INPUT_GET, 'processing');
+
+$mode_f = filter_input(INPUT_POST, 'mode');
+
+if (isset($error_f)) {
+    $error = $error_f;  //its is use to cancel uploading if any error is find
 }
 
-if (isset($_GET['processing'])) {
-    $pro = $_GET['processing'];
+if (isset($processing_f)) {
+    $pro = $processing_f;
 }
- 
-if (isset($_POST['mode']))
-    {
-        
-        $exttype = $_POST['mode'];
-        if ($exttype == 'video')  // for videos upload
-        $allowedExtensions = array("flv", "FLV", "mp4", "MP4" , "m4v", "M4V", "M4A", "m4a", "MOV", "mov", "mp4v", "Mp4v", "F4V", "f4v" ,"mp3" , "MP3");
-        else                      // for image upload
+
+if (isset($mode_f)) {
+
+    $exttype = $mode_f;
+    if ($exttype == 'video')  // for videos upload
+        $allowedExtensions = array("flv", "FLV", "mp4", "MP4", "m4v", "M4V", "M4A", "m4a", "MOV", "mov", "mp4v", "Mp4v", "F4V", "f4v", "mp3", "MP3");
+    else                      // for image upload
         $allowedExtensions = array("jpg", "JPG", "png", "PNG");
-    }
+}
 
-					//This if condition ctrl all functions in this file check if upload is success or cancelled. 
+//This if condition ctrl all functions in this file check if upload is success or cancelled. 
 if (!iserror()) {
     //check if stopped by post_max_size
     if (($pro == 1) && (empty($_FILES['myfile']))) {
         $errorcode = 13;
-    }
-    else {
+    } else {
         $file = $_FILES['myfile'];
         if (noFileUploadError($file)) {
-            
+
             if (isAllowedExtension($file)) {
                 //check file size
                 if (!fileSizeExceeds($file)) {
@@ -86,8 +85,7 @@ function iserror() {  // if it is  success return false;
     if ($error == "cancel") {
         $errorcode = 1;
         return true;
-    }
-    else {
+    } else {
         return false;
     }
 }
@@ -130,15 +128,13 @@ function isAllowedExtension($file) {  //CHECK VALIDE EXTENSION -- if uploaded fi
     global $allowedExtensions;
     global $errorcode;
     $filename = $file['name'];
-    $output =  in_array(end(explode(".", $filename)), $allowedExtensions);
+    $output = in_array(end(explode(".", $filename)), $allowedExtensions);
     if (!$output) {
         $errorcode = 2;
         return false;
-    }
-    else {
+    } else {
         return true;
     }
-
 }
 
 function fileSizeExceeds($file) {
@@ -146,11 +142,10 @@ function fileSizeExceeds($file) {
     $filesize = $file['size'];                 //uploaded file size
     $mul = substr($POST_MAX_SIZE, -1);
     $mul = ($mul == 'M' ? 1048576 : ($mul == 'K' ? 1024 : ($mul == 'G' ? 1073741824 : 1))); // in mega bytes, kilo bytes, gega byts
-    if ($_SERVER['CONTENT_LENGTH'] > $mul*(int)$POST_MAX_SIZE && $POST_MAX_SIZE) {
+    if ($_SERVER['CONTENT_LENGTH'] > $mul * (int) $POST_MAX_SIZE && $POST_MAX_SIZE) {
         $errorcode = 3;
-         return true;
-    }
-    else {
+        return true;
+    } else {
         return false;
     }
 }
@@ -158,11 +153,8 @@ function fileSizeExceeds($file) {
 function doFileUploading($file) {
 
     global $options1;
-
-
     global $wptfile_abspath1;
-
-$options1 = get_option('HDFLVSettings');
+    $options1 = get_option('HDFLVSettings');
     global $uploadpath;
     global $file;
     global $errorcode;
@@ -170,53 +162,40 @@ $options1 = get_option('HDFLVSettings');
     global $wpdb;
     $uploadPath = $wpdb->get_col("SELECT upload_path FROM " . $wpdb->prefix . "hdflv_settings");
     $uPath = $uploadPath[0];
-    if($uPath != ''){
-        $dir = ABSPATH.trim($uPath).'/';
-        $url = trailingslashit( get_option('siteurl') ).trim($uPath).'/';
-        if ( ! wp_mkdir_p( $dir ) ) {
-            $message = sprintf(__('Unable to create directory %s. Is its parent directory writable by the server?','hdflv'), $dir);
+    if ($uPath != '') {
+        $dir = ABSPATH . trim($uPath) . '/';
+        $url = trailingslashit(get_option('siteurl')) . trim($uPath) . '/';
+        if (!wp_mkdir_p($dir)) {
+            $message = sprintf(__('Unable to create directory %s. Is its parent directory writable by the server?', 'hdflv'), $dir);
             $uploads['error'] = $message;
             return $uploads;
         }
         $uploads = array('path' => $dir, 'url' => $url, 'error' => false);
-        $uploadpath =$uploads['path'];
-    }
-    else
-    {
+        $uploadpath = $uploads['path'];
+    } else {
         $uploadpath = ABSPATH;
+    }
+    $filesave = "select MAX(vid) from " . $wpdb->prefix . "hdflv";
+    $fsquery = mysql_query($filesave);
+    $row = mysql_fetch_array($fsquery, MYSQL_NUM);
 
-    } 
-
-   
-        $filesave= "select MAX(vid) from ".$wpdb->prefix."hdflv";
-        $fsquery = mysql_query( $filesave);
-        $row = mysql_fetch_array($fsquery , MYSQL_NUM);
-  
     $destination_path = $uploadpath;
 
-    $row1 = $row[0]+1;
-    $file_name = $row1."_".$_FILES['myfile']['name'];
+    $row1 = $row[0] + 1;
+    $file_name = $row1 . "_" . $_FILES['myfile']['name'];
 
-    $target_path = $destination_path ."". $file_name;
+    $target_path = $destination_path . "" . $file_name;
 
-  
-    if(@move_uploaded_file($file['tmp_name'], $target_path))
-    {
+
+    if (@move_uploaded_file($file['tmp_name'], $target_path)) {
         $errorcode = 0;  //if success 
-       
-    }
-    else
-    {
+    } else {
         $errorcode = 4;  //unknow error
     }
-  
+
     sleep(1);
-    
 }
 ?>
 <script language="javascript" type="text/javascript">
-
-    window.top.window.updateQueue(<?php echo $errorcode;  //show the message after uploaded task is completed.
-?>,"<?php echo $errormsg[$errorcode]; ?>","<?php echo $file_name; ?>");
-
+    window.top.window.updateQueue(<?php echo $errorcode;  //show the message after uploaded task is completed. ?>,"<?php echo $errormsg[$errorcode]; ?>","<?php echo $file_name; ?>");
 </script>
