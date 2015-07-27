@@ -3,7 +3,7 @@
   Name: Contus HD FLV Player
   Plugin URI: http://www.apptha.com/category/extension/Wordpress/HD-FLV-Player-Plugin/
   Description: Video configxml file.
-  Version: 2.5
+  Version: 2.6
   Author: Apptha
   Author URI: http://www.apptha.com
   License: GPL2

@@ -2,8 +2,8 @@
 /**
  * Email File for video player
  * @category   Apptha
- * @package    Contus video Gallery
- * @version    2.8
+ * @package    Contus HD FLV Player
+ * @version    2.6
  * @author     Apptha Team <developers@contus.in>
  * @copyright  Copyright (C) 2014 Apptha. All rights reserved.
  * @license    GNU General Public License http://www.gnu.org/copyleft/gpl.html 
