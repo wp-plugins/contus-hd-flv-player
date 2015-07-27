@@ -3,7 +3,7 @@
   Name: Contus HD FLV Player
   Plugin URI: http://www.apptha.com/category/extension/Wordpress/HD-FLV-Player-Plugin/
   Description: Player main function file.
-  Version: 2.5.1
+  Version: 2.5
   Author: Apptha
   Author URI: http://www.apptha.com
   License: GPL2
@@ -11,7 +11,7 @@
 
 ob_start();
 require_once( dirname(__FILE__) . '/hdflv-config.php');
-$name = filter_input(INPUT_GET, 'name');
+$name = strip_tags(filter_input(INPUT_GET, 'name'));
 $media = filter_input(INPUT_GET, 'media');
 if (isset($name)) {
     return hd_ajax_add_playlist($name, $media);
@@ -200,8 +200,8 @@ function hd_add_media($wptfile_abspath, $wp_urlpath) {
 
 // Get input informations from POST
     $sorder = filter_input(INPUT_POST, 'sorder', FILTER_VALIDATE_INT, FILTER_REQUIRE_ARRAY);
-    $act_name = strip_tags(trim(filter_input(INPUT_POST, 'name')));
-    $act_name = preg_replace("/[^a-zA-Z0-9\/_-\s]/", '', $act_name);
+    $act_name = trim(filter_input(INPUT_POST, 'name'));
+    $act_name = preg_replace("/[^a-zA-Z0-9\/-_\\s]/", '', $act_name);
     $youtubevalue = filter_input(INPUT_POST, 'youtube-value');
     if ($youtubevalue != '') {
 
@@ -390,7 +390,7 @@ function hd_update_media($media_id) {
     $pieces = explode(",", filter_input(INPUT_POST, 'hid'));
     $sorder = filter_input(INPUT_POST, 'sorder', FILTER_VALIDATE_INT, FILTER_REQUIRE_ARRAY);
     $act_name = strip_tags(trim(filter_input(INPUT_POST, 'act_name')));
-    $act_name = preg_replace("/[^a-zA-Z0-9\/_-\s]/", '', $act_name);
+    $act_name = preg_replace("/[^a-zA-Z0-9\/-_\\s]/", '', $act_name);
     $act_filepath = addslashes(trim(filter_input(INPUT_POST, 'act_filepath')));
     $act_image = addslashes(trim(filter_input(INPUT_POST, 'act_image')));
     $act_hdpath = addslashes(trim(filter_input(INPUT_POST, 'act_hdpath')));
@@ -486,7 +486,7 @@ function hd_ajax_add_playlist($name, $media) {
     global $wpdb;
 
     // Get input informations from POST
-    $p_name = addslashes(trim($name));
+    $p_name = strip_tags(addslashes(trim($name)));
     $p_description = '';
     $p_playlistorder = 0;
     if (empty($p_playlistorder))
@@ -517,7 +517,7 @@ function hd_add_playlist() {
 
     // Get input informations from POST
     $p_name = strip_tags(trim(filter_input(INPUT_POST, 'p_name')));
-    $p_name = preg_replace("/[^a-zA-Z0-9\/_-\s]/", '', $p_name);
+    $p_name = preg_replace("/[^a-zA-Z0-9\/-_\\s]/", '', $p_name);
     $p_description = strip_tags(trim(filter_input(INPUT_POST, 'p_description')));
     $p_playlistorder = filter_input(INPUT_POST, 'sortorder');
     if (empty($p_playlistorder))

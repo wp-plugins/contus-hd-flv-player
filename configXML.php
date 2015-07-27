@@ -3,7 +3,7 @@
   Name: Contus HD FLV Player
   Plugin URI: http://www.apptha.com/category/extension/Wordpress/HD-FLV-Player-Plugin/
   Description: Video configxml file.
-  Version: 2.5.1
+  Version: 2.5
   Author: Apptha
   Author URI: http://www.apptha.com
   License: GPL2
@@ -18,7 +18,7 @@ $skin = $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) 
 $skinpath = $skin . '/' . $settingsRecord->skin . '/' . $settingsRecord->skin . '.swf';
 $logoPath = $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/hdflvplayer/css/images/';
 $xmlPath = $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/';
-$emailPath = $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/hdflvplayer/email.php';
+$emailPath = $site_url . '/wp-admin/admin-ajax.php?action=email';
 $playXml = $xmlPath . 'myextractXML.php';
 $langXML = $site_url . '/wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/hdflvplayer/xml/language/language.xml';
 $timer = $settingsRecord->timer == 1 ? 'true' : 'false';

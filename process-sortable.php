@@ -3,7 +3,7 @@
   Name: Contus HD FLV Player
   Plugin URI: http://www.apptha.com/category/extension/Wordpress/HD-FLV-Player-Plugin/
   Description: HD FLV Player common function file.
-  Version: 2.5.1
+  Version: 2.5
   Author: Apptha
   Author URI: http://www.apptha.com
   License: GPL2
@@ -34,8 +34,8 @@ if (isset($updatedisplay)) {
     update_option($IdValue, $setValue);
     exit;
 } else if (isset($changeVideoStatus)) {
-    $videoId = filter_input(INPUT_GET, 'videoId');
-    $status = filter_input(INPUT_GET, 'status');
+    $videoId = intval(filter_input(INPUT_GET, 'videoId'));
+    $status = intval(filter_input(INPUT_GET, 'status'));
     $sql = "UPDATE " . $wpdb->prefix . "hdflv  SET  is_active = $status WHERE vid = $videoId ";
     $wpdb->query($sql);
     if ($status) {
@@ -46,8 +46,8 @@ if (isset($updatedisplay)) {
 
     exit;
 } else if (isset($changeplaylistStatus)) {
-    $videoId = filter_input(INPUT_GET, 'videoId');
-    $status = filter_input(INPUT_GET, 'status');
+    $videoId = intval(filter_input(INPUT_GET, 'videoId'));
+    $status = intval(filter_input(INPUT_GET, 'status'));
     $sql = "UPDATE " . $wpdb->prefix . "hdflv_playlist  SET  is_pactive = $status WHERE pid = $videoId ";
     $wpdb->query($sql);
     if ($status) {
@@ -60,7 +60,7 @@ if (isset($updatedisplay)) {
 
 
 $title = 'hdflv Playlist';
-$pid1 = filter_input(INPUT_GET, 'playid');
+$pid1 = intval(filter_input(INPUT_GET, 'playid'));
 $f_listItem = filter_input(INPUT_GET, 'listItem');
 foreach ($f_listItem as $position => $item) :
     $wpdb->query("UPDATE $wpdb->prefix" . "hdflv_med2play SET `sorder` = $position WHERE `media_id` = $item and playlist_id=$pid1 ");

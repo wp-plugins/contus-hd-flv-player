@@ -3,7 +3,7 @@
   Plugin Name: Contus HD FLV Player
   Plugin URI: http://www.apptha.com/category/extension/Wordpress/HD-FLV-Player-Plugin/
   Description: Contus HD FLV Player simplifies the process of adding high definition videos to the Wordpress blog. The plugin efficiently plays your Videos with high quality video and audio output.
-  Version: 2.5.1
+  Version: 2.5
   Author: Apptha
   Author URI: http://www.apptha.com
   License: GPL2
@@ -39,7 +39,7 @@ function hdflvPlayerReader($arguments= array()) {
     }
 
     if (isset($arguments['id'])) {
-        $videoid1=$arguments['id'];
+        $videoid1=(int) $arguments['id'];
         $videofiles = $wpdb->get_row("SELECT vid,file,hdfile,image,name FROM " . $wpdb->prefix . "hdflv where vid = " . intval($arguments['id']));
         $file = $videofiles->file;
 
@@ -89,12 +89,12 @@ function hdflvPlayerReader($arguments= array()) {
 
     $play_url = get_option('siteurl');
     if (isset($arguments['playlistid']) && isset($arguments['id'])) {
-        $play_url .= "&pid=" . $arguments['playlistid'];
-        $play_url .= "&vid=" . $arguments['id'];
+        $play_url .= "&pid=" . (int) $arguments['playlistid'];
+        $play_url .= "&vid=" . (int) $arguments['id'];
     } elseif (isset($arguments['playlistid'])) {
-        $play_url .= "&pid=" . $arguments['playlistid'];
+        $play_url .= "&pid=" . (int) $arguments['playlistid'];
     } else {
-        $play_url .= "&vid=" . $arguments['id'];
+        $play_url .= "&vid=" . (int) $arguments['id'];
     }
 if(isset($arguments['flashvars'])){
         $play_url .= "&" . $arguments['flashvars'];
@@ -163,6 +163,17 @@ function showMenu() {      // HDFLV Videos submenu coding in manage.php file
     }
 }
 
+/**
+ * Email function
+ */
+add_action( 'wp_ajax_email', 'email_function' );
+add_action( 'wp_ajax_nopriv_email', 'email_function' );
+
+function email_function() {
+	require_once( dirname( __FILE__ ) . '/email.php' );
+	die();
+}
+
 /*  function use to set  div is hide or show in settings tab */
 
 function getDisplayValueOfDiv($divId) {
@@ -222,8 +233,8 @@ function FlashOptions() {
             $zoom = filter_input(INPUT_POST, 'zoom', FILTER_SANITIZE_STRING);
             $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
             $fullscreen = filter_input(INPUT_POST, 'fullscreen', FILTER_SANITIZE_STRING);
-            $width = filter_input(INPUT_POST, 'width', FILTER_SANITIZE_STRING);
-            $height = filter_input(INPUT_POST, 'height', FILTER_SANITIZE_STRING);
+            $width = (int) filter_input(INPUT_POST, 'width', FILTER_SANITIZE_STRING);
+            $height = (int) filter_input(INPUT_POST, 'height', FILTER_SANITIZE_STRING);
             $display_logo = filter_input(INPUT_POST, 'display_logo', FILTER_SANITIZE_STRING);
             $license = filter_input(INPUT_POST, 'license', FILTER_SANITIZE_STRING);
             $ima_ads = filter_input(INPUT_POST, 'ima_ads', FILTER_SANITIZE_STRING);

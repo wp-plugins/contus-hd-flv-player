@@ -3,7 +3,7 @@
   Name: Contus HD FLV Player
   Plugin URI: http://www.apptha.com/category/extension/Wordpress/HD-FLV-Player-Plugin/
   Description: HD FLV Player manage file.
-  Version: 2.5.1
+  Version: 2.5
   Author: Apptha
   Author URI: http://www.apptha.com
   License: GPL2
@@ -348,9 +348,10 @@ class HDFLVManage {
 
     function controller() {
         global $wpdb;
-        filter_input(INPUT_GET, 'playid');
         $modeType = trim(filter_input(INPUT_GET, 'mode'));  //it show the menu tab;
         $page = trim(filter_input(INPUT_GET, 'page'));
+        $id = (int) filter_input(INPUT_GET, 'id');
+        $pid = (int) filter_input(INPUT_GET, 'pid');
         if (isset($modeType)) {
             switch ($modeType) {
                 case 'playlist' : echo $this->mode = 'playlist';
@@ -363,7 +364,6 @@ class HDFLVManage {
 
                     $video_name_in = filter_input(INPUT_GET, 'video_name');
                     $video_name = substr($video_name_in, 0, 35) . ' ...';
-                    $id = filter_input(INPUT_GET, 'id');
                     hd_delete_media($id, 0, $video_name);
                     $this->mode = 'main';
 
@@ -373,11 +373,9 @@ class HDFLVManage {
         if ($page == 'hdflvplaylist') {
             $this->mode = 'playlist';
         }
-        $id = filter_input(INPUT_GET, 'id');
-        $pid = filter_input(INPUT_GET, 'pid');
 
-        $this->act_vid = (int) $id;
-        $this->act_pid = (int) $pid;
+        $this->act_vid = $id;
+        $this->act_pid = $pid;
 
 //TODO:Include nonce !!!
         $add_media = filter_input(INPUT_POST, 'add_media');
@@ -483,14 +481,19 @@ class HDFLVManage {
         $where = '';
         $join = '';
 
-        $search_input = filter_input(INPUT_POST, 'search');
+        $search_input = strip_tags(filter_input(INPUT_POST, 'search'));
 // check for page navigation
         $sort = 'ASC';
         $search = ( isset($search_input)) ? $search_input : '';
         $search_results = $search;
-        $pl_id = filter_input(INPUT_POST, 'playid');
-        $plfil = filter_input(INPUT_POST, 'plfilter');
-        $plfilter = ( isset($plfil)) ? $plfil : (isset($pl_id) ? $pl_id : '0' );
+        $pl_id = (int) filter_input(INPUT_POST, 'playid');
+        $plfil = (int)strip_tags(filter_input(INPUT_POST, 'plfilter'));
+        if( isset($plfil))
+            $plfilter = $plfil;
+        else if(isset($pl_id))
+            $plfilter = $pl_id;
+        else 
+            $plfilter = 0;
 
         if ($search != '') {
             if ($where != '')
@@ -498,13 +501,13 @@ class HDFLVManage {
             $where .= " (name LIKE '%$search_results%')";
         }
 
-        if ($plfilter != '0' && $plfilter != 'no') {
+        if ($plfilter != 0 && $plfilter != 'no') {
             $join = " LEFT JOIN " . $wpdb->prefix . "hdflv_med2play ON (vid = media_id) ";
             if ($where != '')
                 $where .= " AND ";
             $where .= " (playlist_id = '" . intval($plfilter) . "') ";
             $pledit = true;
-        } elseif ($plfilter == 'no') {
+        } elseif ($plfilter === 'no') {
             $join = "  WHERE `vid` NOT IN( SELECT media_id FROM " . $wpdb->prefix . "hdflv_med2play ) ";
             $pledit = false;
         }
@@ -627,8 +630,8 @@ class HDFLVManage {
                                                               </span>";
                             echo "</td>\n";
                             echo "<td>" . htmlspecialchars(stripslashes($table->file), ENT_QUOTES) . "</td>\n";
-                            $playid = filter_input(INPUT_GET, 'playid');
-                            $plfilter = filter_input(INPUT_POST, 'plfilter');
+                            $playid = (int) filter_input(INPUT_GET, 'playid');
+                            $plfilter = strip_tags(filter_input(INPUT_POST, 'plfilter'));
                             $tablevid = intval($table->vid);
                             if (isset($plfilter) && $plfilter != 'no' && $plfilter != '0') {
                                 $playlist1 = $wpdb->get_var("SELECT sorder FROM " . $wpdb->prefix . "hdflv_med2play where playlist_id=" . intval($_REQUEST['plfilter']) . " and media_id=$table->vid");

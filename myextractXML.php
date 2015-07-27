@@ -3,7 +3,7 @@
   Name: Contus HD FLV Player
   Plugin URI: http://www.apptha.com/category/extension/Wordpress/HD-FLV-Player-Plugin/
   Description: Video playlist xml file.
-  Version: 2.5.1
+  Version: 2.5
   Author: Apptha
   Author URI: http://www.apptha.com
   License: GPL2
@@ -55,8 +55,8 @@ if ($playlist_id != '' && $video_id != '') {//Condition if both playlist id  && 
 }
 
 
-$settingsRecord = $autoPlay = $wpdb->get_col("SELECT autoplay , download FROM " . $wpdb->prefix . "hdflv_settings");
-($autoPlay[0] == 1) ? $ap = 'true' : $ap = 'false';
+$settingsRecord = $wpdb->get_row("SELECT autoplay , download FROM " . $wpdb->prefix . "hdflv_settings");
+($settingsRecord->autoplay == 1) ? $ap = 'true' : $ap = 'false';
 
 // Create XML output of playlist
 
